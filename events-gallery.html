@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <title>GOODFUN TEAM｜Event Photo Archive</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family:"Times New Roman", Times, serif;
+      background:#c8c3a1;
+      background-image:
+        radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.18) 1px, transparent 1px);
+      background-size:6px 6px, 9px 9px;
+      background-position:0 0, 2px 3px;
+    }
+    a{ color:#0b61ff; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .wrap{
+      width:980px;
+      margin:14px auto 40px;
+    }
+
+    .bar{
+      border:3px solid #000;
+      background:#111;
+      box-shadow:4px 4px 0 rgba(0,0,0,.35);
+      margin-bottom:10px;
+    }
+    .bar marquee{
+      color:#00ff66;
+      padding:6px 8px;
+      font-family:"Courier New", monospace;
+      display:block;
+    }
+
+    .header{
+      border:3px solid #000;
+      background:#d6d1ad;
+      box-shadow:4px 4px 0 rgba(0,0,0,.35);
+      padding:10px 12px;
+      margin-bottom:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+    }
+    .header h1{
+      margin:0;
+      font-size:28px;
+      font-weight:900;
+      letter-spacing:1px;
+    }
+    .header p{
+      margin:4px 0 0;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .btn{
+      border:3px solid #000;
+      background:#ffe600;
+      padding:6px 10px;
+      font-family:Arial,sans-serif;
+      font-weight:900;
+      box-shadow:2px 2px 0 rgba(0,0,0,.25);
+    }
+
+    .panel{
+      border:3px solid #000;
+      background:#d6d1ad;
+      box-shadow:4px 4px 0 rgba(0,0,0,.35);
+      padding:10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+    }
+
+    .shot{
+      border:3px solid #000;
+      background:#f5f0cc;
+      box-shadow:3px 3px 0 rgba(0,0,0,.25);
+    }
+    .shot img{
+      width:100%;
+      height:140px;
+      object-fit:cover;
+      border-bottom:3px solid #000;
+      display:block;
+    }
+    .cap{
+      padding:6px 8px;
+      font-size:12px;
+      font-weight:700;
+    }
+    .meta{
+      padding:0 8px 8px;
+      font-size:12px;
+      color:#333;
+    }
+
+    .footer{
+      margin-top:12px;
+      font-size:12px;
+      opacity:.9;
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="bar">
+    <marquee scrollamount="6">
+      GOODFUN TEAM｜EVENT PHOTO ARCHIVE｜
+      參展 / 擺攤 / 展示 紀錄｜
+      把 placeholder 換成你的照片即可
+    </marquee>
+  </div>
+
+  <div class="header">
+    <div>
+      <h1>EVENT PHOTO ARCHIVE</h1>
+      <p>之前參展的照片分享（以團隊為主）</p>
+    </div>
+    <a class="btn" href="index.html">← BACK</a>
+  </div>
+
+  <div class="panel">
+    <div class="grid">
+
+      <!-- 假圖佔位 -->
+      <!-- 換圖時只要改 img src -->
+
+      <div class="shot">
+        <img src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
+        <rect width='100%25' height='100%25' fill='%23ddd'/>
+        <text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'
+        font-family='Arial' font-size='40'>EVENT PHOTO 01</text>
+        </svg>">
+        <div class="cap">event_01_booth.jpg</div>
+        <div class="meta">攤位 / 展場</div>
+      </div>
+
+      <div class="shot">
+        <img src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
+        <rect width='100%25' height='100%25' fill='%23cfe7ff'/>
+        <text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'
+        font-family='Arial' font-size='40'>EVENT PHOTO 02</text>
+        </svg>">
+        <div class="cap">event_02_display.png</div>
+        <div class="meta">作品陳列</div>
+      </div>
+
+      <div class="shot">
+        <img src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
+        <rect width='100%25' height='100%25' fill='%23ffe8c9'/>
+        <text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'
+        font-family='Arial' font-size='40'>EVENT PHOTO 03</text>
+        </svg>">
+        <div class="cap">event_03_people.tif</div>
+        <div class="meta">觀眾互動</div>
+      </div>
+
+      <div class="shot">
+        <img src="data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
+        <rect width='100%25' height='100%25' fill='%23f0ffe8'/>
+        <text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'
+        font-family='Arial' font-size='40'>EVENT PHOTO 04</text>
+        </svg>">
+        <div class="cap">event_04_setup.bmp</div>
+        <div class="meta">佈展中</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    建議照片放在 <b>assets/events/</b>，命名用「年份_活動_序號」。
+  </div>
+
+</div>
+</body>
+</html>
