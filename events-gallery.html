@@ -2,191 +2,236 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <title>GOODFUN TEAM｜Event Photo Archive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GOODFUN TEAM | Event Photo Archive</title>
 
   <style>
+    :root{
+      --blue:#2d5c8a;
+      --blue2:#1f456a;
+      --panel:#ffffff;
+      --ink:#102030;
+      --orange:#f6a21a;
+      --steel2:#eef6ff;
+      --shadow: rgba(0,0,0,.25);
+      --link:#0b61ff;
+    }
+    *{ box-sizing:border-box; }
     body{
       margin:0;
-      font-family:"Times New Roman", Times, serif;
-      background:#c8c3a1;
-      background-image:
-        radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px),
-        radial-gradient(rgba(255,255,255,.18) 1px, transparent 1px);
-      background-size:6px 6px, 9px 9px;
-      background-position:0 0, 2px 3px;
+      font-family: Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      background: radial-gradient(circle at 30% 10%, #3f78ad, var(--blue) 55%, var(--blue2) 100%);
     }
-    a{ color:#0b61ff; text-decoration:none; }
+    a{ color:var(--link); text-decoration:none; }
     a:hover{ text-decoration:underline; }
 
-    .wrap{
-      width:980px;
-      margin:14px auto 40px;
+    .wrap{ width: 900px; margin: 14px auto 28px; }
+    .frame{
+      background: var(--panel);
+      border: 4px solid #fff;
+      outline: 2px solid #0f2c49;
+      box-shadow: 0 8px 0 rgba(0,0,0,.22);
+      padding: 10px;
     }
 
-    .bar{
-      border:3px solid #000;
-      background:#111;
-      box-shadow:4px 4px 0 rgba(0,0,0,.35);
-      margin-bottom:10px;
+    .top{
+      border: 2px solid #0f2c49;
+      background: var(--steel2);
+      padding: 10px;
+      font-size: 12px;
+      line-height: 1.3;
     }
-    .bar marquee{
-      color:#00ff66;
-      padding:6px 8px;
-      font-family:"Courier New", monospace;
+
+    .marqBar{
+      margin-top:10px;
+      border:2px solid #0f2c49;
+      background:#0f2c49;
+      color:#fff;
+    }
+    .marqBar marquee{
       display:block;
+      padding: 6px 8px;
+      font-size: 12px;
     }
 
-    .header{
-      border:3px solid #000;
-      background:#d6d1ad;
-      box-shadow:4px 4px 0 rgba(0,0,0,.35);
-      padding:10px 12px;
-      margin-bottom:12px;
+    .head{
+      margin-top:10px;
       display:flex;
-      justify-content:space-between;
       align-items:flex-end;
+      justify-content:space-between;
+      gap: 10px;
+      flex-wrap:wrap;
     }
-    .header h1{
-      margin:0;
-      font-size:28px;
-      font-weight:900;
-      letter-spacing:1px;
+    .title{
+      font-size: 22px;
+      font-weight: 900;
+      color:#0f2c49;
     }
-    .header p{
-      margin:4px 0 0;
-      font-size:13px;
-      font-weight:700;
-    }
-
     .btn{
-      border:3px solid #000;
-      background:#ffe600;
-      padding:6px 10px;
-      font-family:Arial,sans-serif;
-      font-weight:900;
-      box-shadow:2px 2px 0 rgba(0,0,0,.25);
+      display:inline-block;
+      padding: 6px 10px;
+      border: 2px solid #0f2c49;
+      background: #ffcc73;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 12px;
+      box-shadow: 2px 2px 0 var(--shadow);
     }
 
     .panel{
-      border:3px solid #000;
-      background:#d6d1ad;
-      box-shadow:4px 4px 0 rgba(0,0,0,.35);
-      padding:10px;
+      margin-top:10px;
+      border:2px solid #0f2c49;
+      box-shadow: 0 2px 0 var(--shadow);
+      overflow:hidden;
+    }
+    .panel .bar{
+      background: var(--orange);
+      color:#fff;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 12px;
+      padding: 6px 8px;
+      border-bottom: 2px solid #0f2c49;
+      letter-spacing:.6px;
+    }
+    .panel .body{
+      padding: 10px;
+      background:#fff;
     }
 
     .grid{
       display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
     }
-
     .shot{
-      border:3px solid #000;
-      background:#f5f0cc;
-      box-shadow:3px 3px 0 rgba(0,0,0,.25);
+      border:2px solid #0f2c49;
+      background:#fff;
     }
     .shot img{
       width:100%;
-      height:140px;
-      object-fit:cover;
-      border-bottom:3px solid #000;
+      height: 130px;
+      object-fit: cover;
       display:block;
+      border-bottom: 2px solid #0f2c49;
+      image-rendering: pixelated;
     }
     .cap{
-      padding:6px 8px;
-      font-size:12px;
-      font-weight:700;
+      padding: 5px 6px;
+      font-size: 11px;
+      font-weight: 700;
     }
     .meta{
-      padding:0 8px 8px;
-      font-size:12px;
-      color:#333;
+      padding: 0 6px 8px;
+      font-size: 11px;
+      color:#334;
+      opacity:.9;
     }
 
-    .footer{
-      margin-top:12px;
-      font-size:12px;
-      opacity:.9;
+    @media (max-width: 940px){
+      .wrap{ width: 92%; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+      .shot img{ height: 160px; }
     }
   </style>
 </head>
 
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <div class="frame">
 
-  <div class="bar">
-    <marquee scrollamount="6">
-      GOODFUN TEAM｜EVENT PHOTO ARCHIVE｜
-      參展 / 擺攤 / 展示 紀錄｜
-      把 placeholder 換成你的照片即可
-    </marquee>
-  </div>
+      <div class="top">
+        <b>Event Photo Archive</b><br>
+        這頁專門放「之前參展/擺攤」的照片。先用假圖佔位，你之後把 img src 換成真照片就好。<br>
+        建議資料夾：<b>assets/events/</b>（例如：2025_grass_01.jpg）
+      </div>
 
-  <div class="header">
-    <div>
-      <h1>EVENT PHOTO ARCHIVE</h1>
-      <p>之前參展的照片分享（以團隊為主）</p>
+      <div class="marqBar">
+        <marquee behavior="scroll" direction="left" scrollamount="6">
+          GOODFUN TEAM｜EVENT PHOTO ARCHIVE｜
+          click thumbnails to pretend it’s 2003｜
+          replace later｜
+        </marquee>
+      </div>
+
+      <div class="head">
+        <div class="title">EVENT PHOTO ARCHIVE（參展照片分享）</div>
+        <div>
+          <a class="btn" href="index.html">Back</a>
+          <a class="btn" href="events-gallery.html">Refresh</a>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="bar">Latest Event Photos</div>
+        <div class="body">
+          <div class="grid">
+
+            <!-- 8 張假圖佔位（你可增加/減少） -->
+            <!-- 換圖：把 src="data:image..." 改成 assets/events/xxx.jpg -->
+
+            <div class="shot">
+              <img alt="ph"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='100%25' height='100%25' fill='%23dbe9f7'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='44' fill='%230f2c49'>EVENT 01</text></svg>">
+              <div class="cap">event_01_booth.jpg</div>
+              <div class="meta">攤位 / 展場</div>
+            </div>
+
+            <div class="shot">
+              <img alt="ph"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='100%25' height='100%25' fill='%23ffe6a3'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='44'>EVENT 02</text></svg>">
+              <div class="cap">event_02_display.jpg</div>
+              <div class="meta">作品陳列</div>
+            </div>
+
+            <div class="shot">
+              <img alt="ph"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='100%25' height='100%25' fill='%23ffd0d0'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='44'>EVENT 03</text></svg>">
+              <div class="cap">event_03_people.tif</div>
+              <div class="meta">互動 / 交換</div>
+            </div>
+
+            <div class="shot">
+              <img alt="ph"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='100%25' height='100%25' fill='%23d9ffd6'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='44'>EVENT 04</text></svg>">
+              <div class="cap">event_04_setup.bmp</div>
+              <div class="meta">佈展中</div>
+            </div>
+
+            <div class="shot">
+              <img alt="ph"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='100%25' height='100%25' fill='%23c7e9ff'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='44'>EVENT 05</text></svg>">
+              <div class="cap">event_05_table.jpg</div>
+              <div class="meta">桌面 / 小誌</div>
+            </div>
+
+            <div class="shot">
+              <img alt="ph"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='100%25' height='100%25' fill='%23ffe8c9'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='44'>EVENT 06</text></svg>">
+              <div class="cap">event_06_signage.png</div>
+              <div class="meta">招牌 / 價目</div>
+            </div>
+
+            <div class="shot">
+              <img alt="ph"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='100%25' height='100%25' fill='%23f0f0f0'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='44'>EVENT 07</text></svg>">
+              <div class="cap">event_07_night.jpg</div>
+              <div class="meta">收攤 / 夜晚</div>
+            </div>
+
+            <div class="shot">
+              <img alt="ph"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='600'><rect width='100%25' height='100%25' fill='%23fff0f6'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='44'>EVENT 08</text></svg>">
+              <div class="cap">event_08_bestof.tif</div>
+              <div class="meta">精選</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
-    <a class="btn" href="index.html">← BACK</a>
   </div>
-
-  <div class="panel">
-    <div class="grid">
-
-      <!-- 假圖佔位 -->
-      <!-- 換圖時只要改 img src -->
-
-      <div class="shot">
-        <img src="data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
-        <rect width='100%25' height='100%25' fill='%23ddd'/>
-        <text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'
-        font-family='Arial' font-size='40'>EVENT PHOTO 01</text>
-        </svg>">
-        <div class="cap">event_01_booth.jpg</div>
-        <div class="meta">攤位 / 展場</div>
-      </div>
-
-      <div class="shot">
-        <img src="data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
-        <rect width='100%25' height='100%25' fill='%23cfe7ff'/>
-        <text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'
-        font-family='Arial' font-size='40'>EVENT PHOTO 02</text>
-        </svg>">
-        <div class="cap">event_02_display.png</div>
-        <div class="meta">作品陳列</div>
-      </div>
-
-      <div class="shot">
-        <img src="data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
-        <rect width='100%25' height='100%25' fill='%23ffe8c9'/>
-        <text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'
-        font-family='Arial' font-size='40'>EVENT PHOTO 03</text>
-        </svg>">
-        <div class="cap">event_03_people.tif</div>
-        <div class="meta">觀眾互動</div>
-      </div>
-
-      <div class="shot">
-        <img src="data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
-        <rect width='100%25' height='100%25' fill='%23f0ffe8'/>
-        <text x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle'
-        font-family='Arial' font-size='40'>EVENT PHOTO 04</text>
-        </svg>">
-        <div class="cap">event_04_setup.bmp</div>
-        <div class="meta">佈展中</div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="footer">
-    建議照片放在 <b>assets/events/</b>，命名用「年份_活動_序號」。
-  </div>
-
-</div>
 </body>
 </html>
