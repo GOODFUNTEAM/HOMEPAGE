@@ -2,368 +2,271 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GOODFUN TEAM | 孤芳小隊入口站</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <title>GOODFUN TEAM｜孤芳小隊</title>
 
   <style>
     :root{
-      --bg: #cfcfcf;
-      --panel: #dcdcdc;
-      --ink: #111;
-      --link: #0000ee;
-      --visited: #551a8b;
-      --hi: #ffffff;
-      --shadow: #3a3a3a;
-      --accent: #ff0033;
-      --ok:#00ff66;
+      --paper:#c8c3a1;
+      --panel:#d6d1ad;
+      --ink:#111;
+      --accent:#ff2b2b;
+      --blue:#0b61ff;
+      --shadow: rgba(0,0,0,.35);
     }
+
+    *{ box-sizing:border-box; }
 
     body{
       margin:0;
-      color: var(--ink);
-      background: var(--bg);
-      /* 背景平鋪先用 CSS 的簡單點狀（你之後要換成圖片 tile 也行） */
+      font-family:"Times New Roman", Times, serif;
+      color:var(--ink);
+      background: var(--paper);
       background-image:
-        radial-gradient(#b8b8b8 1px, transparent 1px),
-        radial-gradient(#e2e2e2 1px, transparent 1px);
-      background-position: 0 0, 6px 6px;
-      background-size: 12px 12px;
-
-      font-family: "Times New Roman", Times, serif;
-      font-size: 16px;
-      line-height: 1.25;
+        radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,.18) 1px, transparent 1px);
+      background-size: 6px 6px, 9px 9px;
+      background-position: 0 0, 2px 3px;
     }
 
-    a{ color: var(--link); }
-    a:visited{ color: var(--visited); }
-    a:hover{ text-decoration: none; background: #ffff99; }
+    a{ color:var(--blue); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
 
-    .wrap{ width: 880px; margin: 18px auto 48px; }
-
-    .bevel{
-      background: var(--panel);
-      border-top: 2px solid var(--hi);
-      border-left: 2px solid var(--hi);
-      border-right: 2px solid var(--shadow);
-      border-bottom: 2px solid var(--shadow);
-      padding: 10px;
-    }
-    .bevel.inset{
-      border-top: 2px solid var(--shadow);
-      border-left: 2px solid var(--shadow);
-      border-right: 2px solid var(--hi);
-      border-bottom: 2px solid var(--hi);
+    .wrap{
+      width: 980px;
+      margin: 14px auto 40px;
     }
 
-    .masthead{ text-align:center; margin-bottom: 10px; }
-    .masthead h1{
+    /* ===== LOGO ===== */
+    .logo{
+      border: 4px solid #000;
+      background:#000;
+      padding: 14px;
+      box-shadow: 5px 5px 0 var(--shadow);
+    }
+    .logo h1{
       margin:0;
+      font-size:64px;
+      font-weight:900;
       letter-spacing:2px;
-      font-weight:800;
-      font-size:46px;
-      color: var(--accent);
-      text-shadow: 1px 1px 0 #fff, 2px 2px 0 #000;
+      color:#f7f1c7;
+      -webkit-text-stroke: 3px #000;
+      text-shadow: 4px 4px 0 rgba(0,0,0,.4);
     }
-    .tagline{ margin-top:6px; font-size:14px; }
-    .stamp{
-      display:inline-block;
-      padding:6px 10px;
-      margin-top:10px;
-      background:#fff;
-      border:2px solid #000;
-      transform: rotate(-2deg);
-      font-family: "Press Start 2P","Courier New",monospace;
-      font-size:10px;
-    }
-
-    .marq{
-      margin: 10px 0;
-      padding: 6px 8px;
-      background: #000;
-      color: var(--ok);
-      font-family: "Courier New", monospace;
-      font-size: 13px;
-    }
-    .marq span{ color:#fffd37; }
-
-    .row{
-      display:flex;
-      gap: 12px;
-      align-items:flex-start;
-    }
-    .left{ flex: 1 1 auto; }
-    .right{ width: 290px; flex: 0 0 auto; }
-
-    table.grid{
-      width:100%;
-      border-collapse: separate;
-      border-spacing: 10px;
-    }
-    td.cell{ width:33.33%; vertical-align: top; }
-
-    .iconbox{
-      text-align:left;
-      padding:8px;
-      height: 160px;
-    }
-    .thumb{
-      width:100%;
-      height: 88px;
-      object-fit: cover;
-      border: 2px solid #000;
-      background:#fff;
-      image-rendering: pixelated;
-    }
-
-    .fileline{
-      margin-top:6px;
-      font-size:13px;
-      background:#fff;
-      border:1px solid #000;
-      padding:2px 6px;
-      display:inline-block;
-    }
-    .meta{
-      margin-top:6px;
-      font-size:12px;
-      color:#333;
-    }
-    .pill{
-      display:inline-block;
-      font-size:11px;
-      border:1px solid #000;
-      padding:1px 6px;
-      margin-right:6px;
-      background:#ffffcc;
-    }
-    .pill.blue{ background:#d8f0ff; }
-    .pill.pink{ background:#ffd8ef; }
-    .pill.gray{ background:#efefef; }
-
-    .panelTitle{
-      font-family: "MS Sans Serif", Arial, sans-serif;
+    .logo p{
+      margin:6px 0 0;
+      font-size:14px;
+      color:#eee;
       font-weight:700;
-      font-size:12px;
-      margin-bottom:6px;
-      background:#000080;
-      color:#fff;
-      padding:4px 6px;
     }
-    .mono{
-      font-family:"Courier New", monospace;
-      font-size:13px;
-    }
-    .small{ font-size:12px; color:#222; }
 
-    .bigbar{
-      margin-top:12px;
+    /* ===== TABS ===== */
+    .tabs{
+      margin-top:10px;
       display:flex;
       gap:10px;
-      justify-content:center;
+      padding:8px;
+      border:3px solid #000;
+      background:var(--panel);
+      box-shadow:4px 4px 0 var(--shadow);
       flex-wrap:wrap;
     }
-    .bigbtn{
-      width:180px;
-      height:44px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-decoration:none;
-      font-weight:700;
-      letter-spacing:1px;
+    .tab{
       border:2px solid #000;
-      box-shadow: 2px 2px 0 #000;
-      color:#000;
+      background:#f2edc7;
+      padding:4px 10px;
+      font-family:Arial,sans-serif;
+      font-weight:900;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      box-shadow:2px 2px 0 rgba(0,0,0,.25);
     }
-    .b1{ background:#ffee00; }
-    .b2{ background:#66ffcc; }
-    .b3{ background:#66aaff; }
-    .b4{ background:#ffa366; }
+    .tab.hot{
+      background:#000;
+      color:#ffe600;
+    }
 
-    .footer{
-      text-align:center;
-      margin-top:16px;
-      font-size:12px;
-      color:#222;
+    /* ===== MARQUEE + COUNTER ===== */
+    .marqBar{
+      margin-top:10px;
+      border:3px solid #000;
+      box-shadow:4px 4px 0 var(--shadow);
+    }
+    .marqBar marquee{
+      background:#111;
+      color:#00ff66;
+      padding:6px 8px;
+      font-family:"Courier New", monospace;
+      display:block;
+    }
+    .counterBox{
+      background:#f2edc7;
+      border-top:3px solid #000;
+      padding:6px 10px;
+      font-size:13px;
     }
     .counter{
-      font-family:"Press Start 2P","Courier New",monospace;
-      font-size:10px;
-      display:inline-block;
-      padding:6px 10px;
       background:#111;
       color:#fff;
       border:2px solid #000;
+      padding:4px 8px;
+      font-family:"Courier New", monospace;
+      font-weight:700;
+      margin-left:8px;
+    }
+
+    /* ===== MAIN ===== */
+    .main{
+      margin-top:12px;
+      display:flex;
+      gap:12px;
+    }
+
+    .sidebar{
+      width:260px;
+    }
+
+    .sideBlock{
+      border:3px solid #000;
+      background:var(--panel);
+      box-shadow:4px 4px 0 var(--shadow);
+      margin-bottom:12px;
+    }
+    .sideTitle{
+      background:#222;
+      color:#fff;
+      padding:6px 8px;
+      font-family:Arial,sans-serif;
+      font-weight:900;
+      letter-spacing:1px;
+      border-bottom:3px solid #000;
+    }
+    .sideBody{
+      padding:8px 10px;
+      font-size:14px;
+    }
+    .sideBody ul{
+      margin:0;
+      padding-left:18px;
+    }
+    .sideBody li{ margin:6px 0; }
+
+    .content{
+      flex:1;
+      border:3px solid #000;
+      background:var(--panel);
+      box-shadow:4px 4px 0 var(--shadow);
+      padding:12px;
+    }
+
+    .content h2{
+      margin:0 0 8px;
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:1px;
+    }
+    .content p{
+      font-size:15px;
+      line-height:1.4;
+    }
+
+    .footer{
+      margin-top:14px;
+      font-size:12px;
+      opacity:.9;
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="masthead">
-      <h1>GOODFUN TEAM</h1>
-      <div class="tagline">
-        孤芳小隊 · <b>專門解決無聊問題的單位</b><br>
-        <span class="small">把日常裡「看起來沒用」的東西，做成可以被收集、被玩、被記住的作品。</span>
-      </div>
-      <div class="stamp">NO BORING · JUST GOODFUN</div>
-    </div>
+<div class="wrap">
 
-    <div class="marq">
-      <marquee behavior="scroll" direction="left" scrollamount="6">
-        入口站功能：認識我們｜看作品｜查活動｜進可疑實驗室｜聯絡合作｜
-        今日狀態：<span>仍在處理無聊</span>（請放心）
-      </marquee>
-    </div>
+  <div class="logo">
+    <h1>GOODFUN TEAM</h1>
+    <p>孤芳小隊｜專門解決無聊問題的單位</p>
+  </div>
 
-    <div class="row">
-      <div class="left">
-        <div class="bevel">
-          <div class="bevel inset">
-            <table class="grid" aria-label="假圖佔位的入口格">
-              <tr>
-                <td class="cell">
-                  <div class="bevel iconbox">
-                    <img class="thumb" alt="Placeholder 01"
-                      src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='300'><rect width='100%25' height='100%25' fill='%23eaeaea'/><path d='M0 240 L260 120 L420 210 L620 90 L900 240 L900 300 L0 300 Z' fill='%23cfcfcf'/><rect x='18' y='18' width='864' height='264' fill='none' stroke='%23000' stroke-width='6'/><text x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='44' fill='%23000'>PROJECT PHOTO 01</text><text x='50%25' y='68%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='22' fill='%23333'>replace later</text></svg>">
-                    <div class="fileline"><a href="works.html">p01_goodfun_object.jpg</a></div>
-                    <div class="meta">
-                      <span class="pill">作品</span><span class="pill gray">物件</span>
-                      版位測試用描述文字。
-                    </div>
-                  </div>
-                </td>
+  <div class="tabs">
+    <a class="tab hot" href="#">HOME</a>
+    <a class="tab" href="#">WORKS</a>
+    <a class="tab" href="#">EVENTS</a>
+    <a class="tab" href="events-gallery.html">EVENT PHOTOS</a>
+    <a class="tab" href="#">GAMES</a>
+    <a class="tab" href="#">CONTACT</a>
+  </div>
 
-                <td class="cell">
-                  <div class="bevel iconbox">
-                    <img class="thumb" alt="Placeholder 02"
-                      src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='300'><rect width='100%25' height='100%25' fill='%23e8f4ff'/><circle cx='160' cy='150' r='70' fill='%23b9dcff'/><circle cx='280' cy='150' r='70' fill='%2397c9ff'/><circle cx='400' cy='150' r='70' fill='%237fbaff'/><rect x='18' y='18' width='864' height='264' fill='none' stroke='%23000' stroke-width='6'/><text x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='44' fill='%23000'>PROJECT PHOTO 02</text><text x='50%25' y='68%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='22' fill='%23333'>replace later</text></svg>">
-                    <div class="fileline"><a href="works.html">p02_zine_stack.png</a></div>
-                    <div class="meta">
-                      <span class="pill">作品</span><span class="pill gray">小誌</span>
-                      版位測試用描述文字。
-                    </div>
-                  </div>
-                </td>
-
-                <td class="cell">
-                  <div class="bevel iconbox">
-                    <img class="thumb" alt="Placeholder 03"
-                      src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='300'><rect width='100%25' height='100%25' fill='%23fff1e8'/><path d='M40 240 Q240 40 440 240 T840 240' fill='none' stroke='%23000' stroke-width='10'/><rect x='18' y='18' width='864' height='264' fill='none' stroke='%23000' stroke-width='6'/><text x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='44' fill='%23000'>PROJECT PHOTO 03</text><text x='50%25' y='68%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='22' fill='%23333'>replace later</text></svg>">
-                    <div class="fileline"><a href="games.html">p03_game_portal.gif</a></div>
-                    <div class="meta">
-                      <span class="pill blue">遊戲</span><span class="pill gray">實驗</span>
-                      版位測試用描述文字。
-                    </div>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="cell">
-                  <div class="bevel iconbox">
-                    <img class="thumb" alt="Placeholder 04"
-                      src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='300'><rect width='100%25' height='100%25' fill='%23f0ffe8'/><rect x='60' y='70' width='220' height='160' fill='%23c6ffb6'/><rect x='320' y='70' width='220' height='160' fill='%239eff86'/><rect x='580' y='70' width='220' height='160' fill='%237ae45f'/><rect x='18' y='18' width='864' height='264' fill='none' stroke='%23000' stroke-width='6'/><text x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='44' fill='%23000'>PROJECT PHOTO 04</text><text x='50%25' y='68%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='22' fill='%23333'>replace later</text></svg>">
-                    <div class="fileline"><a href="events.html">p04_event_photo.jpg</a></div>
-                    <div class="meta">
-                      <span class="pill pink">活動</span><span class="pill gray">出沒</span>
-                      版位測試用描述文字。
-                    </div>
-                  </div>
-                </td>
-
-                <td class="cell">
-                  <div class="bevel iconbox">
-                    <img class="thumb" alt="Placeholder 05"
-                      src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='300'><rect width='100%25' height='100%25' fill='%23f3f3f3'/><path d='M0 90 H900 M0 150 H900 M0 210 H900' stroke='%23bdbdbd' stroke-width='6'/><rect x='18' y='18' width='864' height='264' fill='none' stroke='%23000' stroke-width='6'/><text x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='44' fill='%23000'>PROJECT PHOTO 05</text><text x='50%25' y='68%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='22' fill='%23333'>replace later</text></svg>">
-                    <div class="fileline"><a href="works.html">p05_archive_scan.tif</a></div>
-                    <div class="meta">
-                      <span class="pill">作品</span><span class="pill gray">檔案</span>
-                      版位測試用描述文字。
-                    </div>
-                  </div>
-                </td>
-
-                <td class="cell">
-                  <div class="bevel iconbox">
-                    <img class="thumb" alt="Placeholder 06"
-                      src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='300'><rect width='100%25' height='100%25' fill='%23fff0f6'/><circle cx='180' cy='150' r='90' fill='%23ffd2e6'/><circle cx='330' cy='150' r='90' fill='%23ffb6da'/><circle cx='480' cy='150' r='90' fill='%23ff9bcd'/><rect x='18' y='18' width='864' height='264' fill='none' stroke='%23000' stroke-width='6'/><text x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='44' fill='%23000'>PROJECT PHOTO 06</text><text x='50%25' y='68%25' dominant-baseline='middle' text-anchor='middle' font-family='Courier New' font-size='22' fill='%23333'>replace later</text></svg>">
-                    <div class="fileline"><a href="contact.html">p06_contact_signal.bmp</a></div>
-                    <div class="meta">
-                      <span class="pill">聯絡</span><span class="pill gray">合作</span>
-                      版位測試用描述文字。
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
-
-          <div class="bigbar" aria-label="主入口">
-            <a class="bigbtn b1" href="works.html">作品 WORKS</a>
-            <a class="bigbtn b2" href="events.html">活動 EVENTS</a>
-            <a class="bigbtn b3" href="games.html">遊戲 GAMES</a>
-            <a class="bigbtn b4" href="contact.html">聯絡 CONTACT</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="right">
-        <div class="bevel">
-          <div class="panelTitle">ABOUT THIS UNIT</div>
-          <div class="bevel inset">
-            <div class="mono">
-              名稱：GOODFUN TEAM / 孤芳小隊<br>
-              任務：處理無聊、把日常變成可收集的證據<br>
-              工作方式：作品 × 活動 × 遊戲 × 介面<br>
-              狀態：持續運作（偶爾當機）
-            </div>
-          </div>
-
-          <div style="height:10px;"></div>
-
-          <div class="panelTitle">MEMBERS (TEAM-FIRST)</div>
-          <div class="bevel inset">
-            <div class="small">
-              不是「個人作品集合」，而是「團隊解無聊系統」。<br>
-              成員是模組，作品是輸出。
-            </div>
-            <hr>
-            <div class="mono">
-              · ROTION87 — 影像/物件/介面<br>
-              · No.423 — 圖像/角色/系統支援
-            </div>
-            <div class="small" style="margin-top:8px;">
-              <a href="members.html">→ 讀取成員檔案（members.ini）</a>
-            </div>
-          </div>
-
-          <div style="height:10px;"></div>
-
-          <div class="panelTitle">QUICK CONTACT</div>
-          <div class="bevel inset">
-            <div class="small">
-              合作、展售、活動邀約、或只是想回報「我很無聊」。<br>
-              <a href="contact.html">→ 前往聯絡頁</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer">
-      You are <b>HAPPY</b> visitor since <b>01/01/97</b><br>
-      <span class="counter">VISITS: 000423</span><br><br>
-      © <span id="y"></span> GOODFUN TEAM
+  <div class="marqBar">
+    <marquee scrollamount="6">
+      GOODFUN TEAM｜孤芳小隊｜
+      最新更新：參展照片分享 EVENT PHOTO ARCHIVE｜
+      若你正在無聊，請不要關閉此頁面（我們正在處理）
+    </marquee>
+    <div class="counterBox">
+      You are <b>HAPPY</b> visitor since <b>01/01/97</b>
+      <span class="counter">VISITS: <span id="visitCount">000423</span></span>
     </div>
   </div>
 
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
+  <div class="main">
+    <aside class="sidebar">
+      <div class="sideBlock">
+        <div class="sideTitle">ARTICLES</div>
+        <div class="sideBody">
+          <ul>
+            <li>+ 單位介紹</li>
+            <li>+ 作品索引</li>
+            <li><a href="events-gallery.html">+ Event Photo Archive</a></li>
+            <li>+ 可疑實驗室</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sideBlock">
+        <div class="sideTitle">MEMBERS</div>
+        <div class="sideBody">
+          ROTION87<br>
+          No.423
+        </div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <h2>ABOUT GOODFUN TEAM</h2>
+      <p>
+        GOODFUN TEAM 是一個以「無聊」為素材的創作單位。<br>
+        我們透過作品、活動、遊戲與各種入口形式，讓日常被重新觀看。
+      </p>
+      <p>
+        如果你不知道該看什麼，代表你已經來對地方。
+      </p>
+    </section>
+  </div>
+
+  <div class="footer">
+    © <span id="year"></span> GOODFUN TEAM
+  </div>
+
+</div>
+
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  (function(){
+    const base = 423;
+    const key = "goodfun_visit_day";
+    const totalKey = "goodfun_visit_total";
+
+    const today = new Date().toISOString().slice(0,10);
+    let total = Number(localStorage.getItem(totalKey) || 0);
+
+    if(localStorage.getItem(key) !== today){
+      total++;
+      localStorage.setItem(key, today);
+      localStorage.setItem(totalKey, total);
+    }
+    document.getElementById("visitCount").textContent =
+      String(base + total).padStart(6,"0");
+  })();
+</script>
+
 </body>
 </html>
