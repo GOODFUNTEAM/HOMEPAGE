@@ -2,271 +2,510 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <title>GOODFUN TEAM｜孤芳小隊</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GOODFUN TEAM | Free Boredom Fixes & Shows</title>
 
   <style>
     :root{
-      --paper:#c8c3a1;
-      --panel:#d6d1ad;
-      --ink:#111;
-      --accent:#ff2b2b;
-      --blue:#0b61ff;
-      --shadow: rgba(0,0,0,.35);
+      --blue:#2d5c8a;
+      --blue2:#1f456a;
+      --panel:#ffffff;
+      --line:#7aa0c2;
+      --ink:#102030;
+
+      --orange:#f6a21a;
+      --orange2:#ffcc73;
+
+      --steel:#d8e6f3;
+      --steel2:#eef6ff;
+
+      --shadow: rgba(0,0,0,.25);
+      --link:#0b61ff;
     }
 
     *{ box-sizing:border-box; }
-
     body{
       margin:0;
-      font-family:"Times New Roman", Times, serif;
+      font-family: Arial, Helvetica, sans-serif;
       color:var(--ink);
-      background: var(--paper);
-      background-image:
-        radial-gradient(rgba(0,0,0,.08) 1px, transparent 1px),
-        radial-gradient(rgba(255,255,255,.18) 1px, transparent 1px);
-      background-size: 6px 6px, 9px 9px;
-      background-position: 0 0, 2px 3px;
+      background: radial-gradient(circle at 30% 10%, #3f78ad, var(--blue) 55%, var(--blue2) 100%);
     }
-
-    a{ color:var(--blue); text-decoration:none; }
+    a{ color:var(--link); text-decoration:none; }
     a:hover{ text-decoration:underline; }
 
     .wrap{
-      width: 980px;
-      margin: 14px auto 40px;
+      width: 900px;
+      margin: 14px auto 28px;
     }
 
-    /* ===== LOGO ===== */
-    .logo{
-      border: 4px solid #000;
-      background:#000;
-      padding: 14px;
-      box-shadow: 5px 5px 0 var(--shadow);
-    }
-    .logo h1{
-      margin:0;
-      font-size:64px;
-      font-weight:900;
-      letter-spacing:2px;
-      color:#f7f1c7;
-      -webkit-text-stroke: 3px #000;
-      text-shadow: 4px 4px 0 rgba(0,0,0,.4);
-    }
-    .logo p{
-      margin:6px 0 0;
-      font-size:14px;
-      color:#eee;
-      font-weight:700;
+    /* outer white frame */
+    .frame{
+      background: var(--panel);
+      border: 4px solid #fff;
+      outline: 2px solid #0f2c49;
+      box-shadow: 0 8px 0 rgba(0,0,0,.22);
+      padding: 10px;
     }
 
-    /* ===== TABS ===== */
-    .tabs{
-      margin-top:10px;
+    /* top header */
+    .top{
       display:flex;
-      gap:10px;
-      padding:8px;
-      border:3px solid #000;
-      background:var(--panel);
-      box-shadow:4px 4px 0 var(--shadow);
-      flex-wrap:wrap;
-    }
-    .tab{
-      border:2px solid #000;
-      background:#f2edc7;
-      padding:4px 10px;
-      font-family:Arial,sans-serif;
-      font-weight:900;
-      letter-spacing:1px;
-      text-transform:uppercase;
-      box-shadow:2px 2px 0 rgba(0,0,0,.25);
-    }
-    .tab.hot{
-      background:#000;
-      color:#ffe600;
+      gap: 10px;
+      align-items: stretch;
     }
 
-    /* ===== MARQUEE + COUNTER ===== */
+    .brand{
+      width: 220px;
+      padding: 10px 10px 6px;
+      background: linear-gradient(#2b87d6, #1f62a0);
+      border: 2px solid #0f2c49;
+      color:#fff;
+      font-weight: 900;
+      letter-spacing: .6px;
+      position: relative;
+    }
+    .brand .big{
+      font-size: 32px;
+      line-height: 1;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 0 rgba(0,0,0,.25);
+    }
+    .brand .sub{
+      margin-top: 4px;
+      font-size: 11px;
+      opacity: .95;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .brand .tag{
+      position:absolute;
+      right: 8px; top: 8px;
+      background: #fff;
+      color:#0f2c49;
+      border: 2px solid #0f2c49;
+      padding: 2px 6px;
+      font-size: 10px;
+      font-weight: 900;
+      transform: rotate(6deg);
+    }
+
+    .notice{
+      flex: 1 1 auto;
+      border: 2px solid #0f2c49;
+      background: var(--steel2);
+      padding: 10px;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+    .notice b{ color:#c02; }
+    .notice .right{
+      float:right;
+      font-weight: 700;
+    }
+
     .marqBar{
-      margin-top:10px;
-      border:3px solid #000;
-      box-shadow:4px 4px 0 var(--shadow);
+      margin-top: 10px;
+      border: 2px solid #0f2c49;
+      background: #0f2c49;
+      color:#fff;
     }
     .marqBar marquee{
-      background:#111;
-      color:#00ff66;
-      padding:6px 8px;
-      font-family:"Courier New", monospace;
       display:block;
-    }
-    .counterBox{
-      background:#f2edc7;
-      border-top:3px solid #000;
-      padding:6px 10px;
-      font-size:13px;
+      padding: 6px 8px;
+      font-size: 12px;
     }
     .counter{
-      background:#111;
-      color:#fff;
-      border:2px solid #000;
-      padding:4px 8px;
-      font-family:"Courier New", monospace;
-      font-weight:700;
-      margin-left:8px;
-    }
-
-    /* ===== MAIN ===== */
-    .main{
-      margin-top:12px;
+      background: #fff;
+      color:#0f2c49;
+      border-top: 2px solid #0f2c49;
+      padding: 6px 8px;
+      font-size: 12px;
       display:flex;
-      gap:12px;
+      justify-content: space-between;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
     }
-
-    .sidebar{
-      width:260px;
-    }
-
-    .sideBlock{
-      border:3px solid #000;
-      background:var(--panel);
-      box-shadow:4px 4px 0 var(--shadow);
-      margin-bottom:12px;
-    }
-    .sideTitle{
-      background:#222;
+    .counter .num{
+      font-family: "Courier New", monospace;
+      background:#0f2c49;
       color:#fff;
-      padding:6px 8px;
-      font-family:Arial,sans-serif;
-      font-weight:900;
-      letter-spacing:1px;
-      border-bottom:3px solid #000;
+      border: 2px solid #0f2c49;
+      padding: 3px 8px;
+      font-weight: 900;
+      letter-spacing: 1px;
     }
-    .sideBody{
-      padding:8px 10px;
-      font-size:14px;
+
+    /* columns layout */
+    .cols{
+      display:flex;
+      gap: 10px;
+      margin-top: 10px;
     }
-    .sideBody ul{
+    .left{ width: 210px; }
+    .mid{ flex: 1 1 auto; }
+    .right{ width: 210px; }
+
+    /* box style */
+    .box{
+      border: 2px solid #0f2c49;
+      background: #fff;
+      box-shadow: 0 2px 0 var(--shadow);
+      margin-bottom: 10px;
+      overflow:hidden;
+    }
+    .box .title{
+      background: var(--orange);
+      color:#fff;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 12px;
+      padding: 6px 8px;
+      border-bottom: 2px solid #0f2c49;
+      letter-spacing: .6px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .box .title .mini{
+      background: #fff;
+      color:#0f2c49;
+      border: 2px solid #0f2c49;
+      padding: 1px 6px;
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .box .body{
+      padding: 8px;
+      font-size: 12px;
+      line-height: 1.25;
+    }
+
+    .list{
       margin:0;
-      padding-left:18px;
+      padding-left: 18px;
     }
-    .sideBody li{ margin:6px 0; }
+    .list li{ margin: 4px 0; }
 
-    .content{
-      flex:1;
-      border:3px solid #000;
-      background:var(--panel);
-      box-shadow:4px 4px 0 var(--shadow);
-      padding:12px;
-    }
-
-    .content h2{
-      margin:0 0 8px;
-      font-size:22px;
-      font-weight:900;
-      letter-spacing:1px;
-    }
-    .content p{
-      font-size:15px;
-      line-height:1.4;
+    .select{
+      width: 100%;
+      padding: 6px 8px;
+      border: 2px solid #0f2c49;
+      background: #fff;
+      font-size: 12px;
+      margin-top: 6px;
     }
 
-    .footer{
-      margin-top:14px;
-      font-size:12px;
-      opacity:.9;
+    /* central hero */
+    .hero{
+      border: 2px solid #0f2c49;
+      background: linear-gradient(#ffffff, #f1f7ff);
+      padding: 10px;
+      display:flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
     }
+    .hero .art{
+      width: 240px;
+      height: 110px;
+      border: 2px solid #0f2c49;
+      background:#fff;
+      overflow:hidden;
+    }
+    .hero .art img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .hero .copy h2{
+      margin: 0 0 6px;
+      font-size: 18px;
+      color:#0f2c49;
+    }
+    .hero .copy p{
+      margin: 0 0 8px;
+      font-size: 12px;
+    }
+    .btn{
+      display:inline-block;
+      padding: 6px 10px;
+      border: 2px solid #0f2c49;
+      background: var(--orange2);
+      font-weight: 900;
+      text-transform: uppercase;
+      font-size: 12px;
+      box-shadow: 2px 2px 0 var(--shadow);
+    }
+    .btn:active{ transform: translate(1px,1px); box-shadow:none; }
+
+    /* category grid */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .cat .title{
+      background: #2b87d6;
+      border-bottom: 2px solid #0f2c49;
+    }
+
+    .thumbGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .thumb{
+      border: 2px solid #0f2c49;
+      background:#fff;
+    }
+    .thumb img{
+      width:100%;
+      height: 70px;
+      object-fit: cover;
+      display:block;
+      border-bottom: 2px solid #0f2c49;
+    }
+    .thumb .cap{
+      padding: 4px 6px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* footer */
+    .foot{
+      margin-top: 10px;
+      font-size: 11px;
+      color:#d9e9ff;
+      text-align: center;
+    }
+
+    /* inline SVG placeholders */
+    .ph{ image-rendering: pixelated; }
+
   </style>
 </head>
 
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <div class="frame">
 
-  <div class="logo">
-    <h1>GOODFUN TEAM</h1>
-    <p>孤芳小隊｜專門解決無聊問題的單位</p>
-  </div>
+      <!-- TOP -->
+      <div class="top">
+        <div class="brand">
+          <div class="tag">FREE</div>
+          <div class="big">GOODFUN</div>
+          <div class="sub">free boredom fixes & shows</div>
+        </div>
 
-  <div class="tabs">
-    <a class="tab hot" href="#">HOME</a>
-    <a class="tab" href="#">WORKS</a>
-    <a class="tab" href="#">EVENTS</a>
-    <a class="tab" href="events-gallery.html">EVENT PHOTOS</a>
-    <a class="tab" href="#">GAMES</a>
-    <a class="tab" href="#">CONTACT</a>
-  </div>
+        <div class="notice">
+          <span class="right"><a href="events-gallery.html">Click here to view Event Photo Archive →</a></span>
+          <b>…PSST!</b> 我們注意到你今天可能正在無聊。<br>
+          GOODFUN TEAM 建議安裝「好玩感受器 v0.97」以獲得最佳體驗。<br>
+          <span style="opacity:.85">（提示：左側 Top List / 中央分類 / 右側 Latest 都是入口。）</span>
+        </div>
+      </div>
 
-  <div class="marqBar">
-    <marquee scrollamount="6">
-      GOODFUN TEAM｜孤芳小隊｜
-      最新更新：參展照片分享 EVENT PHOTO ARCHIVE｜
-      若你正在無聊，請不要關閉此頁面（我們正在處理）
-    </marquee>
-    <div class="counterBox">
-      You are <b>HAPPY</b> visitor since <b>01/01/97</b>
-      <span class="counter">VISITS: <span id="visitCount">000423</span></span>
+      <!-- MARQUEE + COUNTER -->
+      <div class="marqBar">
+        <marquee behavior="scroll" direction="left" scrollamount="6">
+          GOODFUN TEAM｜孤芳小隊｜專門解決無聊問題的單位｜
+          最新：EVENT PHOTO ARCHIVE 已更新｜
+          若你正在無聊：請不要關閉本頁（我們正在處理）
+        </marquee>
+        <div class="counter">
+          <div>You are <b>HAPPY</b> visitor since <b>01/01/97</b></div>
+          <div class="num">VISITS: <span id="visitCount">000423</span></div>
+        </div>
+      </div>
+
+      <!-- COLUMNS -->
+      <div class="cols">
+        <!-- LEFT -->
+        <div class="left">
+          <div class="box">
+            <div class="title">Top Ten Drops <span class="mini">NEW</span></div>
+            <div class="body">
+              <ol class="list">
+                <li><a href="#">Boredom Fix 01</a></li>
+                <li><a href="#">Boredom Fix 02</a></li>
+                <li><a href="#">Boredom Fix 03</a></li>
+                <li><a href="#">Unit Log 04</a></li>
+                <li><a href="#">Street Collect 05</a></li>
+                <li><a href="#">Object File 06</a></li>
+                <li><a href="#">Zine Stack 07</a></li>
+                <li><a href="#">Lab Test 08</a></li>
+                <li><a href="#">Event Record 09</a></li>
+                <li><a href="#">Unknown 10</a></li>
+              </ol>
+              <select class="select">
+                <option>Full Drops List</option>
+                <option>Works</option>
+                <option>Events</option>
+                <option>Games</option>
+                <option>Contact</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="title">GOODFUN News</div>
+            <div class="body">
+              <b>EVENT PHOTO ARCHIVE</b><br>
+              參展/擺攤照片整理中，已開放瀏覽。<br>
+              <a href="events-gallery.html">→ 前往參展照片分享</a>
+              <div style="margin-top:8px;">
+                <a class="btn" href="events-gallery.html">Check it out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MID -->
+        <div class="mid">
+          <div class="hero">
+            <div class="art">
+              <img class="ph" alt="placeholder hero"
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='420'><rect width='100%25' height='100%25' fill='%23dbe9f7'/><text x='50%25' y='48%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='40' fill='%230f2c49'>FEATURED</text><text x='50%25' y='62%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='18' fill='%230f2c49'>replace later</text></svg>">
+            </div>
+            <div class="copy">
+              <h2>GOODFUN TEAM</h2>
+              <p>
+                一個把無聊當素材的單位。<br>
+                我們輸出：作品 / 活動 / 遊戲 / 入口介面。
+              </p>
+              <a class="btn" href="events-gallery.html">View Event Photos</a>
+              <a class="btn" href="#" style="margin-left:6px;">Enter Works</a>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="box cat">
+              <div class="title">Works <span class="mini">Files</span></div>
+              <div class="body">
+                <ul class="list">
+                  <li><a href="#">Object / Zine / Print</a></li>
+                  <li><a href="#">Street Collect / Archive</a></li>
+                  <li><a href="#">Unit Interface / Posters</a></li>
+                </ul>
+                <a href="#" class="btn">List all works</a>
+              </div>
+            </div>
+
+            <div class="box cat">
+              <div class="title">Events <span class="mini">IRL</span></div>
+              <div class="body">
+                <ul class="list">
+                  <li><a href="events-gallery.html">Event Photo Archive</a></li>
+                  <li><a href="#">Past Booths / Records</a></li>
+                  <li><a href="#">Next Appearance</a></li>
+                </ul>
+                <a href="events-gallery.html" class="btn">Open archive</a>
+              </div>
+            </div>
+
+            <div class="box cat">
+              <div class="title">Games <span class="mini">Lab</span></div>
+              <div class="body">
+                <ul class="list">
+                  <li><a href="#">Suspicious Lab</a></li>
+                  <li><a href="#">Error Message Generator</a></li>
+                  <li><a href="#">Boredom Meter</a></li>
+                </ul>
+                <a href="#" class="btn">Enter games</a>
+              </div>
+            </div>
+
+            <div class="box cat">
+              <div class="title">Contact <span class="mini">Signal</span></div>
+              <div class="body">
+                <ul class="list">
+                  <li><a href="#">Collab / Invite</a></li>
+                  <li><a href="#">Report boredom</a></li>
+                  <li><a href="#">Press kit</a></li>
+                </ul>
+                <a href="#" class="btn">Contact us</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right">
+          <div class="box">
+            <div class="title">Latest Drops</div>
+            <div class="body">
+              <div class="thumbGrid">
+                <div class="thumb">
+                  <img class="ph" alt="ph"
+                    src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%25' height='100%25' fill='%23ffe6a3'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='34'>NEW</text></svg>">
+                  <div class="cap">Drop A</div>
+                </div>
+                <div class="thumb">
+                  <img class="ph" alt="ph"
+                    src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%25' height='100%25' fill='%23c7e9ff'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='34'>NEW</text></svg>">
+                  <div class="cap">Drop B</div>
+                </div>
+                <div class="thumb">
+                  <img class="ph" alt="ph"
+                    src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%25' height='100%25' fill='%23ffd0d0'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='34'>NEW</text></svg>">
+                  <div class="cap">Drop C</div>
+                </div>
+                <div class="thumb">
+                  <img class="ph" alt="ph"
+                    src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='400'><rect width='100%25' height='100%25' fill='%23d9ffd6'/><text x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle' font-family='Arial' font-size='34'>NEW</text></svg>">
+                  <div class="cap">Drop D</div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <a href="events-gallery.html">→ View Event Photos</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="title">Members</div>
+            <div class="body">
+              <b>TEAM MODE</b><br>
+              ROTION87 / No.423<br>
+              <span style="opacity:.85;">（個人不是主角，單位才是。）</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="foot">
+      Terms & Conditions | © <span id="y"></span> GOODFUN TEAM (2003 vibes)
     </div>
   </div>
 
-  <div class="main">
-    <aside class="sidebar">
-      <div class="sideBlock">
-        <div class="sideTitle">ARTICLES</div>
-        <div class="sideBody">
-          <ul>
-            <li>+ 單位介紹</li>
-            <li>+ 作品索引</li>
-            <li><a href="events-gallery.html">+ Event Photo Archive</a></li>
-            <li>+ 可疑實驗室</li>
-          </ul>
-        </div>
-      </div>
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
 
-      <div class="sideBlock">
-        <div class="sideTitle">MEMBERS</div>
-        <div class="sideBody">
-          ROTION87<br>
-          No.423
-        </div>
-      </div>
-    </aside>
+    // localStorage 假訪客數：同一天只加一次（先做氛圍）
+    (function(){
+      const BASE = 423;
+      const KEY_LAST = "goodfun_visit_last_day";
+      const KEY_TOTAL = "goodfun_visit_total";
 
-    <section class="content">
-      <h2>ABOUT GOODFUN TEAM</h2>
-      <p>
-        GOODFUN TEAM 是一個以「無聊」為素材的創作單位。<br>
-        我們透過作品、活動、遊戲與各種入口形式，讓日常被重新觀看。
-      </p>
-      <p>
-        如果你不知道該看什麼，代表你已經來對地方。
-      </p>
-    </section>
-  </div>
+      const today = new Date().toISOString().slice(0,10);
+      const last = localStorage.getItem(KEY_LAST);
+      let total = Number(localStorage.getItem(KEY_TOTAL) || 0);
 
-  <div class="footer">
-    © <span id="year"></span> GOODFUN TEAM
-  </div>
+      if(last !== today){
+        total += 1;
+        localStorage.setItem(KEY_TOTAL, String(total));
+        localStorage.setItem(KEY_LAST, today);
+      }
 
-</div>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  (function(){
-    const base = 423;
-    const key = "goodfun_visit_day";
-    const totalKey = "goodfun_visit_total";
-
-    const today = new Date().toISOString().slice(0,10);
-    let total = Number(localStorage.getItem(totalKey) || 0);
-
-    if(localStorage.getItem(key) !== today){
-      total++;
-      localStorage.setItem(key, today);
-      localStorage.setItem(totalKey, total);
-    }
-    document.getElementById("visitCount").textContent =
-      String(base + total).padStart(6,"0");
-  })();
-</script>
-
+      document.getElementById("visitCount").textContent =
+        String(BASE + total).padStart(6,"0");
+    })();
+  </script>
 </body>
 </html>
