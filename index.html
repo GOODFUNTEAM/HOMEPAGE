@@ -2,86 +2,89 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GOODFUN TEAM | 1997 Edition</title>
+  <title>GOODFUN TEAM | From boredom to creation</title>
   <style>
-    /* 核心 90 年代風格定義 */
+    /* 復古設定：灰底、襯線字、立體邊框 */
     body {
-      background-color: #c0c0c0; /* 經典灰色 */
-      /* 下方背景圖案模擬你圖片中的剪影效果，重複平鋪 */
-      background-image: url('https://www.transparenttextures.com/patterns/pinstripe.png'); 
+      background-color: #c0c0c0;
+      /* 建議找一張灰色的重複背景圖 */
+      background-image: url('sys_bg_pattern.gif'); 
       color: #000;
-      font-family: "Times New Roman", Times, serif; /* 強制使用老式襯線體 */
-      margin: 0;
-      padding: 20px;
+      font-family: "Times New Roman", "新細明體", serif;
+      margin: 0; padding: 20px;
     }
 
-    /* 頂部大紅標題 */
+    /* 大標題：正紅色、粗體、底線 */
     h1 {
       color: #ff0000;
       text-align: center;
-      font-size: 52px;
-      font-weight: 900;
+      font-size: 48px;
       text-decoration: underline;
       margin: 10px 0;
-      letter-spacing: -1px;
     }
 
-    /* 模擬 Netscape 導覽列 */
-    .netscape-nav {
-      background: #000080; /* 深藍色 */
-      color: #ffffff;
-      padding: 4px 15px;
+    .subtitle {
+      text-align: center;
+      font-weight: bold;
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    /* 模擬 Netscape 選單列 */
+    .menu-bar {
+      background: #000080;
+      color: #fff;
       display: inline-block;
-      font-size: 14px;
+      padding: 2px 12px;
       border: 2px outset #fff;
+      font-size: 13px;
     }
-    .netscape-nav u { cursor: pointer; margin: 0 5px; }
 
-    /* 經典立體外框 */
-    .main-table {
-      width: 850px;
+    /* 主展示區：立體外框 */
+    .main-container {
+      width: 800px;
       margin: 20px auto;
-      border: 4px outset #ffffff;
-      background-color: #d3d3d3;
-      padding: 15px;
-      box-shadow: 5px 5px 0px rgba(0,0,0,0.5);
-    }
-
-    /* 圖片網格系統 */
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      border: 2px inset #ffffff;
-      padding: 10px;
-      background: #b0b0b0;
-    }
-
-    .grid-item {
-      border: 2px outset #ffffff;
+      border: 4px outset #fff;
       background: #d3d3d3;
-      padding: 5px;
+      padding: 10px;
+    }
+
+    /* 作品網格 */
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      border: 2px inset #fff;
+      padding: 15px;
+      background: #a0a0a0;
+    }
+
+    .work-item {
+      border: 2px outset #fff;
+      background: #d3d3d3;
+      padding: 8px;
       text-align: center;
     }
 
-    .grid-item img {
+    .work-item img {
       width: 100%;
-      height: 120px;
+      height: 150px;
       object-fit: cover;
       border: 2px inset #888;
       background: #fff;
     }
 
-    .grid-item .caption {
-      margin-top: 5px;
-      font-size: 16px;
+    .work-item .caption {
+      margin-top: 8px;
+      padding: 2px;
       background: #fff;
       border: 1px solid #000;
+      font-size: 14px;
+      font-weight: bold;
     }
 
-    /* 底部彩色區塊按鈕 */
-    .footer-buttons {
+    /* 底部導覽按鈕 */
+    .footer-btns {
       display: flex;
       justify-content: center;
       gap: 10px;
@@ -89,91 +92,77 @@
     }
 
     .btn-retro {
-      padding: 15px 25px;
+      width: 120px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
       font-weight: bold;
       text-decoration: none;
-      font-size: 18px;
       border: 4px outset #fff;
     }
 
-    /* 各種色彩風格 */
-    .btn-blue { background: #0000ff; color: #fff; }
-    .btn-yellow { background: #ffff00; color: #000; }
-    .btn-rainbow { background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet); color: #fff; text-shadow: 1px 1px #000; }
-    .btn-red { background: #ff0000; color: #fff; }
+    .btn-main { background: #0000ff; color: #fff; }
+    .btn-secret { background: #ffff00; color: #000; }
+    .btn-search { background: linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #0000ff); color: #fff; text-shadow: 1px 1px #000; }
+    .btn-mail { background: #fff; color: #ff0000; border: 4px outset #ff0000; }
 
-    .counter-text {
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      margin-top: 30px;
-    }
-    
     marquee {
-        background: #000;
-        color: #0f0;
-        padding: 5px;
-        font-family: monospace;
+      background: #000;
+      color: #0f0;
+      padding: 5px;
+      font-family: monospace;
+      margin-top: 20px;
     }
   </style>
 </head>
-
 <body>
 
-  <center>
-    <h1>GOODFUN'S PROJECT PAGE</h1>
-    
-    <div class="netscape-nav">
-      <u>B</u>ookmarks &nbsp; <u>O</u>ptions &nbsp; <u>D</u>irectory<br>
-      <b>Add Bookmark</b> &nbsp;&nbsp;&nbsp; <b>Ctrl+D</b>
-    </div>
-    
-    <p><input type="checkbox" checked> Enable Tooltips</p>
-    <p><i>Uncheck Tooltips if you are running a slow PC...</i></p>
+<center>
+  <h1>GOODFUN TEAM</h1>
+  <div class="subtitle">"From boredom to creation" [cite: 8]</div>
 
-    <div class="main-table">
-      <div class="grid-container">
-        <div class="grid-item">
-          <img src="https://via.placeholder.com/150/ff0000/ffffff?text=WORK+01" alt="work">
-          <div class="caption">boredom-fix-01</div>
-        </div>
-        <div class="grid-item">
-          <img src="https://via.placeholder.com/150/00ff00/000000?text=WORK+02" alt="work">
-          <div class="caption">unit-log-02</div>
-        </div>
-        <div class="grid-item">
-          <img src="https://via.placeholder.com/150/0000ff/ffffff?text=WORK+03" alt="work">
-          <div class="caption">street-col-03</div>
-        </div>
-        <div class="grid-item">
-          <img src="https://via.placeholder.com/150/ffff00/000000?text=WORK+04" alt="work">
-          <div class="caption">object-file-04</div>
-        </div>
-        <div class="grid-item"><img src="https://via.placeholder.com/150" alt="ph"><div class="caption">zine-stack</div></div>
-        <div class="grid-item"><img src="https://via.placeholder.com/150" alt="ph"><div class="caption">lab-test</div></div>
-        <div class="grid-item"><img src="https://via.placeholder.com/150" alt="ph"><div class="caption">event-rec</div></div>
-        <div class="grid-item"><img src="https://via.placeholder.com/150" alt="ph"><div class="caption">unknown-src</div></div>
-        <div class="grid-item"><img src="https://via.placeholder.com/150" alt="ph"><div class="caption">error-msg</div></div>
-        <div class="grid-item"><img src="https://via.placeholder.com/150" alt="ph"><div class="caption">signal-log</div></div>
-        <div class="grid-item"><img src="https://via.placeholder.com/150" alt="ph"><div class="caption">archive-01</div></div>
-        <div class="grid-item"><img src="https://via.placeholder.com/150" alt="ph"><div class="caption">reserve</div></div>
+  <div class="menu-bar">
+    <u>B</u>ookmarks &nbsp; <u>O</u>ptions &nbsp; <u>D</u>irectory
+  </div>
+
+  <div class="main-container">
+    <div class="work-grid">
+      <div class="work-item">
+        <img src="images/work_hand_it.jpg" alt="Hand-it">
+        <div class="caption">Hand-it </div>
+        <small>便利貼 [cite: 11]</small>
       </div>
-    </div>
 
-    <div class="footer-buttons">
-      <a href="#" class="btn-retro btn-blue">Main<br>Page</a>
-      <a href="#" class="btn-retro btn-yellow">TOP<br>SECRET!</a>
-      <a href="#" class="btn-retro btn-rainbow">SEARCH</a>
-      <a href="#" class="btn-retro btn-red">Sign My<br>Guestbook</a>
-    </div>
+      <div class="work-item">
+        <img src="images/work_paste_port.jpg" alt="Paste Port">
+        <div class="caption">PASTE PORT </div>
+        <small>街頭貼紙簿 [cite: 18]</small>
+      </div>
 
-    <div class="counter-text">
-      You are HAPPY visitor <img src="https://counter.quozl.net/counter.png?id=goodfun" alt="counter"> since 1/1/97
-    </div>
+      <div class="work-item">
+        <img src="images/work_cement.jpg" alt="In Place">
+        <div class="caption">IN PLACE [cite: 25]</div>
+        <small>水泥空心磚 [cite: 24]</small>
+      </div>
 
-    <br>
-    <marquee>+++ GOODFUN TEAM IS WATCHING YOU +++ DON'T CLOSE THIS PAGE +++ SYSTEM ONLINE +++</marquee>
-  </center>
+      </div>
+  </div>
+
+  <div class="footer-btns">
+    <a href="#" class="btn-retro btn-main">Main<br>Page</a>
+    <a href="#" class="btn-retro btn-secret">TOP<br>SECRET</a>
+    <a href="#" class="btn-retro btn-search">SEARCH</a>
+    <a href="#" class="btn-retro btn-mail">Contact<br>Us [cite: 3]</a>
+  </div>
+
+  <div style="margin-top: 20px; font-weight: bold;">
+    You are HAPPY visitor <img src="https://counter.quozl.net/counter.png?id=goodfun" align="absmiddle"> since 2026
+  </div>
+
+  <marquee>We fix your boring problem... [cite: 19, 20] Contact: @goodfun.team [cite: 4] ... Member: @rotion87...</marquee>
+</center>
 
 </body>
 </html>
