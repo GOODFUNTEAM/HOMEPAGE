@@ -1,168 +1,136 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <title>GOODFUN TEAM | From boredom to creation</title>
+  <meta charset="utf-8">
+  <title>GOODFUN TEAM | Digital Lab</title>
   <style>
-    /* 復古設定：灰底、襯線字、立體邊框 */
-    body {
-      background-color: #c0c0c0;
-      /* 建議找一張灰色的重複背景圖 */
-      background-image: url('sys_bg_pattern.gif'); 
-      color: #000;
-      font-family: "Times New Roman", "新細明體", serif;
-      margin: 0; padding: 20px;
+    /* 螢幕背景：經典 Windows 95 綠藍色 */
+    body { background-color: #008080; font-family: "MS Sans Serif", "新細明體", sans-serif; margin: 0; overflow: hidden; }
+
+    /* 模擬系統視窗外框 */
+    .os-window {
+      width: 900px; height: 650px;
+      margin: 30px auto;
+      background: #c0c0c0;
+      border: 3px outset #fff;
+      display: flex; flex-direction: column;
+      box-shadow: 15px 15px 0 rgba(0,0,0,0.3);
     }
 
-    /* 大標題：正紅色、粗體、底線 */
-    h1 {
-      color: #ff0000;
-      text-align: center;
-      font-size: 48px;
-      text-decoration: underline;
-      margin: 10px 0;
+    .title-bar {
+      background: linear-gradient(90deg, #000080, #1084d0);
+      color: white; padding: 4px 10px; font-weight: bold;
+      display: flex; justify-content: space-between; align-items: center;
     }
 
-    .subtitle {
-      text-align: center;
-      font-weight: bold;
-      font-style: italic;
-      margin-bottom: 20px;
-    }
-
-    /* 模擬 Netscape 選單列 */
-    .menu-bar {
-      background: #000080;
-      color: #fff;
-      display: inline-block;
-      padding: 2px 12px;
-      border: 2px outset #fff;
-      font-size: 13px;
-    }
-
-    /* 主展示區：立體外框 */
-    .main-container {
-      width: 800px;
-      margin: 20px auto;
-      border: 4px outset #fff;
-      background: #d3d3d3;
-      padding: 10px;
-    }
-
-    /* 作品網格 */
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+    /* 核心操作區域：你的房間背景圖放這裡 */
+    .viewport {
+      position: relative;
+      flex-grow: 1;
+      background: url('images/room_main.png') no-repeat center center;
+      background-size: cover;
       border: 2px inset #fff;
-      padding: 15px;
-      background: #a0a0a0;
+      margin: 5px;
+      overflow: hidden;
     }
 
-    .work-item {
-      border: 2px outset #fff;
-      background: #d3d3d3;
-      padding: 8px;
-      text-align: center;
+    /* 點擊熱區 (Hotspots) */
+    .hotspot {
+      position: absolute;
+      cursor: pointer;
+      /* 開發期間可以開啟邊框來對準位置，發布前改為 border: none */
+      border: 1px dashed lime; 
     }
 
-    .work-item img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border: 2px inset #888;
-      background: #fff;
+    /* 彈出介紹視窗 */
+    #info-window {
+      display: none;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 350px; background: #c0c0c0;
+      border: 3px outset #fff; padding: 0;
+      z-index: 1000;
+      box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
     }
 
-    .work-item .caption {
-      margin-top: 8px;
-      padding: 2px;
-      background: #fff;
-      border: 1px solid #000;
-      font-size: 14px;
-      font-weight: bold;
-    }
+    .info-header { background: #808080; color: white; padding: 3px 8px; font-size: 12px; }
+    .info-body { padding: 15px; background: #fff; margin: 5px; border: 2px inset #fff; }
+    .info-body img { width: 100%; border: 1px solid #000; margin-bottom: 10px; }
 
-    /* 底部導覽按鈕 */
-    .footer-btns {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 30px;
-    }
+    .btn-close { background: #c0c0c0; border: 2px outset #fff; font-size: 10px; cursor: pointer; }
+    .btn-ok { display: block; margin: 10px auto 0; padding: 5px 20px; border: 2px outset #fff; background: #c0c0c0; cursor: pointer; }
 
-    .btn-retro {
-      width: 120px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-weight: bold;
-      text-decoration: none;
-      border: 4px outset #fff;
+    /* 側邊欄工具圖示 */
+    .sidebar {
+      width: 60px; background: #c0c0c0; border-right: 2px solid #888;
+      display: flex; flex-direction: column; align-items: center; padding-top: 10px; gap: 15px;
     }
-
-    .btn-main { background: #0000ff; color: #fff; }
-    .btn-secret { background: #ffff00; color: #000; }
-    .btn-search { background: linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #0000ff); color: #fff; text-shadow: 1px 1px #000; }
-    .btn-mail { background: #fff; color: #ff0000; border: 4px outset #ff0000; }
-
-    marquee {
-      background: #000;
-      color: #0f0;
-      padding: 5px;
-      font-family: monospace;
-      margin-top: 20px;
-    }
+    .icon { width: 40px; height: 40px; border: 2px outset #fff; background: #eee; cursor: help; }
   </style>
 </head>
 <body>
 
-<center>
-  <h1>GOODFUN TEAM</h1>
-  <div class="subtitle">"From boredom to creation" [cite: 8]</div>
-
-  <div class="menu-bar">
-    <u>B</u>ookmarks &nbsp; <u>O</u>ptions &nbsp; <u>D</u>irectory
+<div class="os-window">
+  <div class="title-bar">
+    <span>[ GOODFUN_OS ] - (Amunzen's Room Mode)</span>
+    <button class="btn-close" onclick="alert('Boredom cannot be closed.')">X</button>
   </div>
 
-  <div class="main-container">
-    <div class="work-grid">
-      <div class="work-item">
-        <img src="images/work_hand_it.jpg" alt="Hand-it">
-        <div class="caption">Hand-it </div>
-        <small>便利貼 [cite: 11]</small>
-      </div>
+  <div style="display: flex; flex-grow: 1;">
+    <div class="sidebar">
+      <div class="icon" title="Mail" onclick="location.href='mailto:goodfun.team@gmail.com'">✉️</div>
+      <div class="icon" title="News">📰</div>
+      <div class="icon" title="Draw">🎨</div>
+    </div>
 
-      <div class="work-item">
-        <img src="images/work_paste_port.jpg" alt="Paste Port">
-        <div class="caption">PASTE PORT </div>
-        <small>街頭貼紙簿 [cite: 18]</small>
-      </div>
+    <div class="viewport" id="room">
+      
+      <div class="hotspot" style="top: 250px; left: 150px; width: 100px; height: 200px;" 
+           title="Member: @rotion87" onclick="window.open('https://instagram.com/rotion87')"></div>
 
-      <div class="work-item">
-        <img src="images/work_cement.jpg" alt="In Place">
-        <div class="caption">IN PLACE [cite: 25]</div>
-        <small>水泥空心磚 [cite: 24]</small>
-      </div>
+      <div class="hotspot" style="top: 250px; left: 600px; width: 100px; height: 200px;" 
+           title="Member: @172uo_" onclick="window.open('https://instagram.com/172uo_')"></div>
 
-      </div>
+      <div class="hotspot" style="top: 400px; left: 350px; width: 80px; height: 80px;" 
+           [cite_start]onclick="showWork('Hand-it', '因為怕忘記就寫在手上，於是就做出可貼的手掌便利貼。到處貼、想貼就貼。[cite: 11]', 'images/work_hand_it.jpg')"></div>
+
+      <div class="hotspot" style="top: 150px; left: 300px; width: 100px; height: 100px;" 
+           [cite_start]onclick="showWork('PASTE PORT', '取自台灣街頭，帶著走的街頭貼紙簿，以「護照」為概念，將你所愛的貼紙無畏懼的貼上牆面吧！[cite: 17, 18]', 'images/work_pasteport.jpg')"></div>
+
+      <div class="hotspot" style="top: 450px; left: 500px; width: 120px; height: 80px;" 
+           [cite_start]onclick="showWork('IN PLACE', '空心磚。手工灌製水泥磚作為記錄城市裡被安放的堆疊意象。[cite: 23, 24]', 'images/work_cement.jpg')"></div>
+
+    </div>
   </div>
 
-  <div class="footer-btns">
-    <a href="#" class="btn-retro btn-main">Main<br>Page</a>
-    <a href="#" class="btn-retro btn-secret">TOP<br>SECRET</a>
-    <a href="#" class="btn-retro btn-search">SEARCH</a>
-    <a href="#" class="btn-retro btn-mail">Contact<br>Us [cite: 3]</a>
+  <div style="background: #c0c0c0; padding: 3px; font-size: 11px; border-top: 2px groove #fff; color: #444;">
+    User: GUEST_MODE | Objects: 3 Loaded | Boredom Status: FIXED.
   </div>
+</div>
 
-  <div style="margin-top: 20px; font-weight: bold;">
-    You are HAPPY visitor <img src="https://counter.quozl.net/counter.png?id=goodfun" align="absmiddle"> since 2026
+<div id="info-window">
+  <div class="info-header">OBJECT_DESCRIPTION.EXE</div>
+  <div class="info-body">
+    <img id="info-img" src="" alt="Work Image">
+    <h3 id="info-title" style="margin: 0; font-size: 18px; color: #000080;"></h3>
+    <p id="info-content" style="font-size: 13px; line-height: 1.4; color: #333;"></p>
+    <button class="btn-ok" onclick="closeWork()">OK</button>
   </div>
+</div>
 
-  <marquee>We fix your boring problem... [cite: 19, 20] Contact: @goodfun.team [cite: 4] ... Member: @rotion87...</marquee>
-</center>
+<script>
+  function showWork(title, content, imgPath) {
+    document.getElementById('info-title').innerText = title;
+    document.getElementById('info-content').innerText = content;
+    document.getElementById('info-img').src = imgPath;
+    document.getElementById('info-window').style.display = 'block';
+  }
+
+  function closeWork() {
+    document.getElementById('info-window').style.display = 'none';
+  }
+</script>
 
 </body>
 </html>
