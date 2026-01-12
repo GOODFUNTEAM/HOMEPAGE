@@ -6,45 +6,43 @@
     <title>孤芳小隊 Lonely Fragrance | 2026 Portfolio</title>
     <style>
         :root { --win-blue: #000080; --win-gray: #C0C0C0; }
-        body { background-color: #3d7a7b; font-family: "Microsoft JhengHei", "Arial", sans-serif; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+        body { background-color: #3d7a7b; font-family: "Microsoft JhengHei", sans-serif; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
 
-        /* 頂部控制列 */
+        /* Windows 復古標題列 */
         .top-bar { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 1000px; padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; }
-        .win-btn { background: var(--win-gray); border: 2px outset #fff; padding: 4px 12px; cursor: pointer; font-weight: bold; font-size: 0.85em; }
+        .win-btn { background: var(--win-gray); border: 2px outset #fff; padding: 3px 10px; cursor: pointer; font-size: 0.85em; font-weight: bold; }
         .win-btn:active { border-style: inset; }
 
-        /* 倒數計時與跑馬燈 */
+        /* 動態區域 */
         .countdown-box { background: #000; color: #0f0; border: 2px inset #fff; width: 100%; max-width: 1000px; padding: 8px; text-align: center; font-family: monospace; font-size: 0.85em; margin: 10px 0; }
-        .marquee-zone { background: #000; color: #ffff00; padding: 6px; width: 100%; max-width: 1000px; border: 2px inset #fff; margin-bottom: 20px; box-sizing: border-box; font-weight: bold; }
+        .marquee-zone { background: #000; color: #ffff00; padding: 6px; width: 100%; max-width: 1000px; border: 2px inset #fff; margin-bottom: 20px; font-weight: bold; overflow: hidden; }
 
-        /* 區塊標題 */
-        .section-header { width: 100%; max-width: 1000px; background: #ffff00; color: #000; padding: 5px 15px; font-weight: bold; border: 2px solid #000; margin: 20px 0 15px 0; box-sizing: border-box; font-size: 1.1em; }
-
-        /* 作品網格 */
+        /* 分類與網格 */
+        .section-label { width: 100%; max-width: 1000px; background: #ffff00; color: #000; padding: 5px 15px; font-weight: bold; border: 2px solid #000; margin: 20px 0 10px 0; box-sizing: border-box; }
         .main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
-        .work-card { background: #fff; border: 2px solid #000; cursor: pointer; box-shadow: 4px 4px 0px rgba(0,0,0,0.3); display: flex; flex-direction: column; }
+        
+        .work-card { background: #fff; border: 2px solid #000; cursor: pointer; box-shadow: 4px 4px 0px rgba(0,0,0,0.3); transition: 0.1s; }
         .work-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px rgba(0,0,0,0.4); }
-        .card-header { background: var(--win-blue); color: #fff; padding: 4px 10px; font-size: 0.75em; display: flex; justify-content: space-between; align-items: center; }
+        .card-header { background: var(--win-blue); color: #fff; padding: 4px 10px; font-size: 0.75em; display: flex; justify-content: space-between; }
         .card-img-wrap { width: 100%; aspect-ratio: 1/1; background: #eee; overflow: hidden; border-bottom: 2px solid #000; }
         .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         .card-title { padding: 12px; font-weight: bold; text-align: center; font-size: 0.95em; }
 
-        /* 彈出視窗 Modal */
-        #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; padding: 15px; box-sizing: border-box; }
+        /* 彈出視窗 (Modal) */
+        #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 9999; justify-content: center; align-items: center; padding: 15px; }
         .modal-content { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 950px; height: 85vh; display: flex; position: relative; box-shadow: 10px 10px 0px #000; }
-        .modal-left { flex: 1.3; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .modal-left { flex: 1.2; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .modal-left img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .modal-right { flex: 1; background: #fff; padding: 30px; overflow-y: auto; display: flex; flex-direction: column; }
+        .modal-right { flex: 1; background: #fff; padding: 30px; overflow-y: auto; }
         .modal-title { font-size: 1.4em; font-weight: bold; color: var(--win-blue); border-bottom: 2px solid var(--win-blue); padding-bottom: 8px; margin-bottom: 10px; }
-        .modal-type { color: #800080; font-weight: bold; font-size: 0.85em; margin-bottom: 20px; line-height: 1.4; }
-        .modal-desc { font-size: 0.95em; line-height: 1.8; color: #222; white-space: pre-line; margin-bottom: 30px; }
-        .close-btn { position: absolute; top: 0px; right: 12px; font-size: 35px; cursor: pointer; color: #000; z-index: 100; font-weight: bold; }
+        .modal-type { color: #800080; font-weight: bold; font-size: 0.85em; margin-bottom: 20px; line-height: 1.5; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+        .modal-desc { font-size: 0.95em; line-height: 1.8; color: #222; white-space: pre-line; }
+        .close-btn { position: absolute; top: 0; right: 10px; font-size: 35px; cursor: pointer; color: #000; z-index: 100; font-weight: bold; }
 
         /* 頁尾聯絡資訊 */
-        .footer { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 1000px; margin-top: 50px; padding: 25px; box-sizing: border-box; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
-        .footer-box-title { background: var(--win-blue); color: white; padding: 4px 10px; font-size: 0.8em; font-weight: bold; margin-bottom: 12px; }
-        .contact-list { list-style: none; padding: 0; margin: 0; font-size: 0.9em; line-height: 2; }
-        .contact-list a { color: #0000ee; text-decoration: underline; font-weight: bold; }
+        .footer { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 1000px; margin: 50px 0 20px 0; padding: 25px; box-sizing: border-box; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
+        .footer-title { background: var(--win-blue); color: white; padding: 4px 10px; font-size: 0.8em; font-weight: bold; margin-bottom: 12px; }
+        .contact-link { display: block; color: #0000ee; text-decoration: underline; margin-bottom: 8px; font-size: 0.9em; font-weight: bold; }
 
         @media (max-width: 800px) {
             .modal-content { flex-direction: column; height: 95vh; }
@@ -55,35 +53,34 @@
 <body>
 
     <div class="top-bar">
-        <div style="font-weight:bold; letter-spacing: 1px;">LONELY FRAGRANCE v2.6</div>
-        <button class="win-btn" onclick="openTeamModal()">關於小隊 ABOUT</button>
+        <div style="font-weight:bold;">LONELY FRAGRANCE v2.6</div>
+        <button class="win-btn" onclick="openTeamModal()">團隊介紹 / ABOUT</button>
     </div>
 
     <div class="countdown-box" id="timer">LOADING COUNTDOWN...</div>
+    
     <div class="marquee-zone">
-        <marquee>【活動預告】2026 草率季十週年 3/6 - 3/8 @ 台北表演藝術中心 (TPAC) 超級大劇院！孤芳小隊現場見！</marquee>
+        <marquee>【2026 活動】草率季十週年 3/6 - 3/8 @ 台北表演藝術中心 超級大劇院！現場備有少量新作，期待見面！</marquee>
     </div>
 
-    <div class="section-header">● 作品總覽 – 販售 Works for Sale</div>
-    <div class="main-grid" id="sale-gallery"></div>
+    <div class="section-label">● 作品總覽 – 販售 Works for Sale</div>
+    <div class="main-grid" id="sale-grid"></div>
 
-    <div class="section-header">● 作品總覽 – 展示 Works for Exhibition</div>
-    <div class="main-grid" id="exhibit-gallery"></div>
+    <div class="section-label">● 作品總覽 – 展示 Works for Exhibition</div>
+    <div class="main-grid" id="exhibit-grid"></div>
 
     <div class="footer">
         <div>
-            <div class="footer-box-title">聯絡資料 CONTACT (IG)</div>
-            <ul class="contact-list">
-                <li><b>GOODFUN TEAM (團隊):</b> <a href="https://www.instagram.com/goodfun.team/" target="_blank">@goodfun.team</a></li>
-                <li><b>ROTION87 (團隊成員):</b> <a href="https://www.instagram.com/rotion87/" target="_blank">@rotion87</a></li>
-                <li><b>No.423 (團隊成員):</b> <a href="https://www.instagram.com/l72uo_/" target="_blank">@l72uo_</a></li>
-                <li><b>信箱 Email:</b> <a href="mailto:goodfun.team@gmail.com">goodfun.team@gmail.com</a></li>
-            </ul>
+            <div class="footer-title">聯絡方式 CONTACT (IG)</div>
+            <a class="contact-link" href="https://www.instagram.com/goodfun.team/" target="_blank">GOODFUN TEAM (團隊)</a>
+            <a class="contact-link" href="https://www.instagram.com/rotion87/" target="_blank">ROTION87 (團隊成員)</a>
+            <a class="contact-link" href="https://www.instagram.com/l72uo_/" target="_blank">No.423 (團隊成員)</a>
+            <div style="margin-top:15px; font-size: 0.9em;"><b>Email:</b> goodfun.team@gmail.com</div>
         </div>
         <div>
-            <div class="footer-box-title">關於我們 MISSION</div>
+            <div class="footer-title">團隊簡介 MISSION</div>
             <p style="font-size: 0.85em; line-height: 1.6; margin: 0;">
-                獨立藝術與出版創作單位，基地於台灣。關注日常環境中的結構、使用痕跡與暫停狀態。作品多以攝影與印刷物為核心，延伸至物件與小型立體形式。
+                以台灣為基地的獨立藝術創作單位。創作核心圍繞攝影與印刷物，關注日常環境中的結構、使用痕跡與暫停狀態，透過翻閱、開啟或取出的結構，讓觀看成為一段時空歷程。
             </p>
         </div>
     </div>
@@ -91,7 +88,7 @@
     <div id="modal-overlay" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-left"><img id="modal-img" src="" alt="Work Detail"></div>
+            <div class="modal-left"><img id="modal-img" src=""></div>
             <div class="modal-right">
                 <div id="modal-title" class="modal-title"></div>
                 <div id="modal-type" class="modal-type"></div>
@@ -101,47 +98,54 @@
     </div>
 
     <script>
-        // 作品資料庫
         const saleWorks = [
             {
                 title: "孤芳小隊 2026 馬年賀卡",
                 type: "類型｜Type：明信片／孔版印刷 (Postcard / Risograph Print)",
-                desc: "以馬年為主題，先以黏土手作並上色完成角色原型，再進行拍攝與分色製版，轉化為孔版印刷明信片。孤芳小隊的角色「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進，卻可能仍停留原地。\n\nInspired by the Year of the Horse, this series begins with hand-sculpted clay figures. The mouse and ferret characters ride rocking horses, reflecting on progress, pause, and slowing down."
+                img: "horse_card.jpg",
+                desc: "以馬年為主題，先以黏土手作角色原型再進行拍攝與分色製版。畫面中「鼠」與「雪貂」坐上賽馬造型搖搖馬，隱喻在追逐目標時，看似前進卻可能仍停留原地的矛盾。以童趣回應「前進、停留與放慢腳步」的思考。"
             },
             {
                 title: "空心 IN PLACE",
                 type: "類型｜Type：攝影折頁小誌 × 水泥物件 (Photo Zine × Concrete)",
-                desc: "觀察街頭被反覆使用的空心磚。作品以手工灌製的水泥空心磚作為書衣，讓「空心」不再是缺席，而是一種被安放、被承接的存在狀態。\n\nIN PLACE reframes “hollowness” not as absence, but as a condition of being placed, held, and existing."
+                img: "inplace.jpg", // 建議將你上傳的那張照片命名為 inplace.jpg
+                desc: "持續觀察街頭被反覆使用的空心磚。透過攝影與折頁小誌，想像磚塊在位置中履行任務。以手工灌製水泥空心磚作為書衣，讓「空心」不再是缺席，而是一種被安放、被承接的存在狀態。"
             },
             {
                 title: "Soft Drinks",
                 type: "類型｜Type：攝影 × 包裝設計 (Photography × Packaging)",
-                desc: "將酒罐影像轉化為絲巾並封裝於鋁罐中。唯有「開罐」才能取出，對應飲酒行為的不可逆性。Soft Drinks 同時指向「不含酒精」與「柔軟材質」。\n\nThe scarf can only be accessed by opening the can, echoing the irreversible nature of drinking."
+                img: "softdrinks.jpg",
+                desc: "將酒罐影像轉化為絲巾並封裝於鋁罐中。唯有「開罐」才能取出，對應飲酒行為的不可逆性。作品名同時指向「不含酒精」與「柔軟材質」，以溫和方式回應飲酒文化。"
             },
             {
                 title: "30時間 2nd Edition",
-                type: "類型｜Type：攝影小誌 (Photography Zine / A5)",
-                desc: "以「30 小時制」概念用底片記錄新宿與涉谷。2025 年重新編排推出再販版，延續對時間錯位與城市感知的觀察。\n\nDocuments the rhythms of Shinjuku and Shibuya through film photography, exploring temporal distortion."
+                type: "類型｜Type：攝影小誌 / A5 (Photography Zine)",
+                img: "30hours.jpg",
+                desc: "以「30 小時制」為概念，底片記錄新宿與涉谷的城市節奏。2025 年重新編排影像與 Logo推出再販版，延續對時間錯位與城市感知的觀察。"
             },
             {
                 title: "Hand-it 手心貼",
                 type: "類型｜Type：文具設計 (Stationery Design)",
-                desc: "將「手心」轉化為便利貼。作品邀請人們彼此「手心貼手心」，在日常中留下輕巧的互動痕跡。\n\nTurns reminders into a playful gesture, encouraging light-hearted interactions by “palm to palm” exchanges."
+                img: "handit.jpg",
+                desc: "靈感來自將重要事寫在手上的經驗。將「手心」轉化為便利貼造型。作品邀請人們彼此「手心貼手心」，在日常中留下輕巧幽默的互動痕跡。"
             },
             {
-                title: "PASTE BOOK 系列（台灣篇）",
+                title: "PASTE BOOK 系列",
                 type: "類型｜Type：貼紙冊 / Zine (Sticker Book)",
-                desc: "收集台灣街頭可能出現的貼紙場景。透過後加工，書本成為可反覆張貼的載體，記錄移動的個人痕跡。\n\nThe book itself becomes a reusable surface for stickers, recording traces of movement and presence."
+                img: "pastebook.jpg",
+                desc: "收集台灣街頭可能出現的貼紙場景。透過後加工使書本成為可反覆張貼的載體，記錄貼上、留下與移動的個人痕跡。"
             },
             {
                 title: "PASSTER",
                 type: "類型｜Type：貼紙 (Sticker Series)",
-                desc: "《PASTE BOOK》延伸系列。使用者在城市中經過、停留並貼上，成為留下痕跡的「PASSTER」。\n\nBy walking, stopping, and pasting, users become “passters” who leave subtle traces behind."
+                img: "passter.jpg",
+                desc: "《PASTE BOOK》延伸系列。將街頭物件轉化為可自由張貼的貼紙。使用者在城市中經過、停留並貼上，成為留下痕跡的「PASSTER」。"
             },
             {
                 title: "問號蠟燭籤",
                 type: "材質｜Material：樹脂、紙張 (Resin, Paper)",
-                desc: "以台灣經典生日蠟燭為靈感。蠟燭內可抽出三張籤：兩張祝福，一張留白。蠟燭無法點燃，象徵願望與現實的溫柔矛盾。\n\nContains three fortune slips. The candle cannot be lit, creating a gentle tension between hope and reality."
+                img: "candle.jpg",
+                desc: "以台灣生日「問號蠟燭」為靈感。內含三張籤：兩張祝福，一張留白，象徵最後一個願望留給自己。蠟燭無法點燃，在祈願與現實間形成溫柔矛盾。"
             }
         ];
 
@@ -149,46 +153,35 @@
             {
                 title: "PIPO 君 張子",
                 type: "類型｜Type：立體角色張子 (Papier-mâché Figure / 20cm)",
-                desc: "以張子形式重製東京警視廳吉祥物，將公共角色轉化為介於官方與個人收藏之間的物件。\n\nA hand-crafted papier-mâché reinterpretation of the police mascot, transforming a public symbol into a personal collectible."
+                img: "pipo.jpg",
+                desc: "以張子形式重製東京警視廳吉祥物，透過手作轉譯，將公共角色轉化為介於官方與個人收藏之間的物件。"
             },
             {
                 title: "孤芳收音機",
                 type: "類型｜Type：立體裝置 (Sculptural Installation / 25cm)",
-                desc: "以聲音作為訊號隱喻。收音機成為角色間的媒介，也象徵人在環境中尋找共鳴的過程。\n\nThe radio functions as a medium of communication, symbolizing the act of seeking resonance."
+                img: "radio.jpg",
+                desc: "以聲音作為「訊號」隱喻，描繪角色在噪音中彼此接收與回應。收音機成為媒介，象徵人在環境中尋找共鳴的過程。"
             }
         ];
 
-        // 渲染作品卡片
-        function renderGallery(data, containerId) {
-            const container = document.getElementById(containerId);
-            data.forEach((work, index) => {
+        function createGallery(data, gridId) {
+            const grid = document.getElementById(gridId);
+            data.forEach(w => {
                 const card = document.createElement('div');
                 card.className = 'work-card';
-                card.onclick = () => openModal(work, `img_${containerId}_${index}.jpg`);
-                card.innerHTML = `
-                    <div class="card-header">FILE: 00${index+1} <span>[X]</span></div>
-                    <div class="card-img-wrap"><img src="thumb_${containerId}_${index}.jpg" alt="${work.title}"></div>
-                    <div class="card-title">${work.title}</div>
-                `;
-                container.appendChild(card);
+                card.onclick = () => openModal(w);
+                card.innerHTML = `<div class="card-header">FILE: 00${data.indexOf(w)+1}<span>[X]</span></div><div class="card-img-wrap"><img src="${w.img}"></div><div class="card-title">${w.title}</div>`;
+                grid.appendChild(card);
             });
         }
 
-        function openModal(work, imgPath) {
-            document.getElementById('modal-img').src = imgPath;
-            document.getElementById('modal-title').innerText = work.title;
-            document.getElementById('modal-type').innerText = work.type;
-            document.getElementById('modal-desc').innerText = work.desc;
+        function openModal(w) {
+            document.getElementById('modal-img').src = w.img;
+            document.getElementById('modal-title').innerText = w.title;
+            document.getElementById('modal-type').innerText = w.type;
+            document.getElementById('modal-desc').innerText = w.desc;
             document.getElementById('modal-overlay').style.display = 'flex';
             document.body.style.overflow = 'hidden';
-        }
-
-        function openTeamModal() {
-            openModal({
-                title: "團隊介紹 TEAM INFO",
-                type: "孤芳小隊 Lonely Fragrance",
-                desc: "我們是一個以台灣為基地的獨立藝術與出版創作單位，創作核心圍繞攝影與印刷物。我們不以固定敘事為目的，而是關注日常環境中的結構、使用痕跡與暫停狀態。\n\n【團隊聯繫】\nGOODFUN TEAM (團隊): @goodfun.team\nROTION87 (團隊成員): @rotion87\nNo.423 (團隊成員): @l72uo_\n\nEmail: goodfun.team@gmail.com"
-            }, "team_photo.jpg");
         }
 
         function closeModal() {
@@ -196,17 +189,24 @@
             document.body.style.overflow = 'auto';
         }
 
-        // 倒數計時器邏輯
+        function openTeamModal() {
+            openModal({
+                title: "關於我們 ABOUT US",
+                type: "孤芳小隊 Lonely Fragrance",
+                img: "team_photo.jpg",
+                desc: "我們是一個以台灣為基地的獨立藝術與出版創作單位。\n\n【聯絡資料】\nGOODFUN TEAM (團隊)\nROTION87 (成員)\nNo.423 (成員)\n\nEmail: goodfun.team@gmail.com"
+            });
+        }
+
         function updateTimer() {
             const target = new Date("March 6, 2026 12:00:00").getTime();
             const now = new Date().getTime();
-            const diff = target - now;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const days = Math.floor((target - now) / (1000 * 60 * 60 * 24));
             document.getElementById('timer').innerText = `DISTANCE TO TPAC (2026.03.06): ${days} DAYS LEFT`;
         }
 
-        renderGallery(saleWorks, 'sale-gallery');
-        renderGallery(exhibitWorks, 'exhibit-gallery');
+        createGallery(saleWorks, 'sale-grid');
+        createGallery(exhibitWorks, 'exhibit-grid');
         setInterval(updateTimer, 1000); updateTimer();
     </script>
 </body>
