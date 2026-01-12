@@ -7,59 +7,74 @@
     <style>
         :root { --win-blue: #000080; --win-gray: #C0C0C0; --highlight-yellow: #ffff00; }
         
-        /* 鎖定背景不捲動 */
+        /* 鎖定全域背景 */
         html, body { 
             height: 100%; margin: 0; padding: 0; 
             background-color: #3d7a7b; font-family: "Microsoft JhengHei", sans-serif;
-            overflow: hidden; /* 禁止全頁捲動 */
+            overflow: hidden; 
         }
 
-        /* 主容器：固定在畫面上 */
+        /* 主容器 */
         .app-container {
             display: flex; flex-direction: column;
             height: 100vh; max-width: 1000px; margin: 0 auto; padding: 10px; box-sizing: border-box;
         }
 
-        /* 固定不動的頂部區域 */
-        .fixed-header { flex-shrink: 0; }
+        /* 固定頂部區域 */
+        .fixed-header { flex-shrink: 0; z-index: 10; }
         .top-bar { background: var(--win-gray); border: 3px outset #fff; padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; }
-        .win-btn { background: var(--win-gray); border: 2px outset #fff; padding: 3px 12px; cursor: pointer; font-size: 0.85em; font-weight: bold; }
+        .win-btn { background: var(--win-gray); border: 2px outset #fff; padding: 3px 12px; cursor: pointer; font-size: 0.85em; font-weight: bold; margin-left: 5px; }
         .win-btn:active { border-style: inset; }
+        
         .countdown-box { background: #000; color: #0f0; border: 2px inset #fff; padding: 8px; text-align: center; font-family: monospace; font-size: 0.85em; margin: 10px 0; }
         .marquee-zone { background: #000; color: var(--highlight-yellow); padding: 6px; border: 2px inset #fff; font-weight: bold; margin-bottom: 10px; }
 
-        /* 白色捲動區塊：只有這裡會動 */
+        /* 白色捲動視窗 */
         .scroll-window {
-            flex-grow: 1; /* 佔滿剩餘空間 */
+            flex-grow: 1;
             background: #fff; border: 3px inset #fff;
-            overflow-y: auto; /* 開啟垂直捲動 */
+            overflow-y: auto;
             padding: 20px; box-sizing: border-box;
             box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* 內容網格樣式 */
-        .section-label { background: var(--highlight-yellow); color: #000; padding: 5px 15px; font-weight: bold; border: 2px solid #000; margin: 20px 0 10px 0; }
-        .main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .item-card { background: #fff; border: 2px solid #000; cursor: pointer; }
-        .card-header { background: var(--win-blue); color: #fff; padding: 4px 10px; font-size: 0.75em; display: flex; justify-content: space-between; }
-        .card-img-wrap { width: 100%; aspect-ratio: 1/1; overflow: hidden; border-bottom: 2px solid #000; }
+        /* 內容元件樣式 */
+        .section-label { background: var(--highlight-yellow); color: #000; padding: 5px 15px; font-weight: bold; border: 2px solid #000; margin: 25px 0 12px 0; }
+        .section-label:first-child { margin-top: 0; }
+        
+        .main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .item-card { background: #fff; border: 2px solid #000; cursor: pointer; box-shadow: 4px 4px 0px rgba(0,0,0,0.2); transition: 0.1s; }
+        .item-card:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0px rgba(0,0,0,0.3); }
+        .card-header { background: var(--win-blue); color: #fff; padding: 4px 10px; font-size: 0.7em; display: flex; justify-content: space-between; }
+        .card-img-wrap { width: 100%; aspect-ratio: 1/1; overflow: hidden; border-bottom: 2px solid #000; background: #eee; }
         .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-        .card-title { padding: 10px; font-weight: bold; text-align: center; font-size: 0.9em; }
+        .card-title { padding: 12px; font-weight: bold; text-align: center; font-size: 0.9em; }
 
-        /* 彈出視窗 (Modal) 邏輯保持不變 */
+        /* 頁尾聯絡區 */
+        .footer-content { background: var(--win-gray); border: 3px outset #fff; padding: 25px; margin-top: 20px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; color: #000; }
+        .footer-title { background: var(--win-blue); color: white; padding: 4px 10px; font-size: 0.8em; font-weight: bold; margin-bottom: 10px; }
+        .contact-link { display: block; color: #0000ee; text-decoration: underline; margin-bottom: 6px; font-weight: bold; font-size: 0.9em; }
+
+        /* 彈出視窗 */
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); cursor: pointer; }
-        .modal-content { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 900px; height: 80vh; display: flex; position: relative; cursor: default; animation: winOpen 0.2s; }
+        .modal-content { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 950px; height: 85vh; display: flex; position: relative; cursor: default; animation: winOpen 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes winOpen { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .modal-left { flex: 1.2; background: #000; overflow-y: auto; display: flex; flex-direction: column; }
-        .modal-left img { width: 100%; }
-        .modal-right { flex: 1; background: #fff; padding: 25px; overflow-y: auto; cursor: pointer; }
-        .modal-title { font-size: 1.3em; font-weight: bold; color: var(--win-blue); border-bottom: 2px solid var(--win-blue); margin-bottom: 10px; }
-        .modal-desc { font-size: 0.9em; line-height: 1.6; white-space: pre-line; }
+        
+        .modal-left { flex: 1.3; background: #000; overflow-y: auto; scroll-snap-type: y mandatory; }
+        .modal-left img { width: 100%; flex-shrink: 0; scroll-snap-align: start; object-fit: contain; background: #000; }
+        .modal-right { flex: 1; background: #fff; padding: 30px; overflow-y: auto; cursor: pointer; }
+        .modal-title { font-size: 1.4em; font-weight: bold; color: var(--win-blue); border-bottom: 2px solid var(--win-blue); padding-bottom: 8px; margin-bottom: 15px; }
+        .modal-desc { font-size: 0.95em; line-height: 1.8; color: #222; white-space: pre-line; }
 
-        /* 自定義捲動條 (更具復古感) */
-        .scroll-window::-webkit-scrollbar { width: 16px; }
-        .scroll-window::-webkit-scrollbar-track { background: var(--win-gray); border-left: 1px solid #888; }
-        .scroll-window::-webkit-scrollbar-thumb { background: var(--win-gray); border: 2px outset #fff; }
+        /* 復古捲動條 */
+        .scroll-window::-webkit-scrollbar, .modal-left::-webkit-scrollbar { width: 16px; }
+        .scroll-window::-webkit-scrollbar-track, .modal-left::-webkit-scrollbar-track { background: #dfdfdf; border-left: 1px solid #888; }
+        .scroll-window::-webkit-scrollbar-thumb, .modal-left::-webkit-scrollbar-thumb { background: var(--win-gray); border: 2px outset #fff; }
+
+        @media (max-width: 800px) {
+            .modal-content { flex-direction: column; height: 95vh; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -69,8 +84,8 @@
             <div class="top-bar">
                 <div style="font-weight:bold;">LONELY FRAGRANCE v2.6</div>
                 <div>
-                    <button class="win-btn" onclick="toggleLang()">Lang: EN/ZH</button>
-                    <button class="win-btn" onclick="openTeamModal()">ABOUT</button>
+                    <button class="win-btn" onclick="toggleLang()">EN / 中文</button>
+                    <button class="win-btn" onclick="openTeamModal()" id="btn-about">關於 ABOUT</button>
                 </div>
             </div>
             <div class="countdown-box" id="timer">TPAC COUNTDOWN: LOADING...</div>
@@ -87,36 +102,74 @@
             <div class="modal-right">
                 <div id="modal-title" class="modal-title"></div>
                 <div id="modal-desc" class="modal-desc"></div>
-                <div style="font-size: 0.7em; color: #888; margin-top: 20px;">[ Click anywhere to close ]</div>
+                <div style="font-size: 0.7em; color: #888; margin-top: 20px;">[ 點擊任何處關閉 / Click anywhere to close ]</div>
             </div>
         </div>
     </div>
 
     <script>
         let currentLang = 'zh';
+
         const data = {
             zh: {
-                marquee: "【2026】草率季十週年 3/6 - 3/8 @ 台北表演藝術中心 (TPAC) 相見！",
-                sections: ["● 過往活動 Past Events", "● 作品總覽 – 販售 Sale", "● 作品總覽 – 展示 Exhibit"],
-                about: { title: "關於我們", desc: "獨立藝術創作單位。關注日常環境中的結構、使用痕跡與暫停狀態。\n\nEmail: goodfun.team@gmail.com" },
-                events: [{ title: "2024 草率季現場", cover: "event_cover_01.jpg", images: ["event_01_1.jpg", "event_01_2.jpg"], desc: "展場側拍紀錄。" }],
-                sale: [
-                    { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。回應前進與停留的思考。" },
-                    { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影小誌 × 水泥物件。關注被安放的存在狀態。" }
-                    // ... 其餘作品比照前一份資料填入
+                aboutBtn: "關於小隊",
+                marquee: "【2026】草率季十週年 3/6 - 3/8 @ 台北表演藝術中心 (TPAC) 相見！期待現場共鳴。",
+                sections: ["● 過往活動 Past Events", "● 作品總覽 – 販售 Works for Sale", "● 作品總覽 – 展示 Exhibition"],
+                about: { title: "關於 孤芳小隊", desc: "獨立藝術創作單位。關注日常環境中的結構、使用痕跡與暫停狀態。\n\nEmail: goodfun.team@gmail.com" },
+                footerContactTitle: "聯絡資料 CONTACT",
+                footerMissionTitle: "團隊簡介 MISSION",
+                footerMissionDesc: "以台北為基地，透過攝影與印刷結構，讓觀看成為一段時空歷程。",
+                events: [
+                    { 
+                        title: "2024 草率季現場紀錄", cover: "event_cover_01.jpg", 
+                        images: ["event_01_1.jpg", "event_01_2.jpg", "event_01_3.jpg", "event_01_4.jpg", "event_01_5.jpg"],
+                        desc: "回顧 2024 年草率季現場。以水泥與紙張為主題，透過攝影呈現展場氛圍。"
+                    }
                 ],
-                exhibit: [{ title: "PIPO 君 張子", img: "pipo.jpg", desc: "立體角色張子。公共符號的工藝轉化。" }]
+                sale: [
+                    { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。\n以鼠與雪貂騎乘搖搖馬，隱喻前進與停留的矛盾。" },
+                    { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影折頁小誌 × 水泥物件。\n讓「空心」不再是缺席，而是一種被安放的存在狀態。" },
+                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "攝影 × 包裝設計。\n絲巾封裝於鋁罐中。對應飲酒行為的不可逆性。" },
+                    { title: "30時間 2nd Ed.", img: "30hours.jpg", desc: "攝影小誌 (A5)。\n以「30 小時制」底片記錄新宿與涉谷的城市節奏。" },
+                    { title: "Hand-it 手心貼", img: "handit.jpg", desc: "文具設計。\n手心造型便利貼，在日常留下輕巧幽默的互動痕跡。" },
+                    { title: "PASTE BOOK 系列", img: "pastebook.jpg", desc: "貼紙冊 / Zine。\n可反覆張貼的載體，記錄個人移動的街頭痕跡。" },
+                    { title: "PASSTER", img: "passter.jpg", desc: "貼紙系列。\n將街頭物件轉化為標語貼紙，在城市中留下痕跡。" },
+                    { title: "問號蠟燭籤", img: "candle.jpg", desc: "樹脂、紙張。\n無法點燃的問號蠟燭，象徵願望與現實的溫柔矛盾。" }
+                ],
+                exhibit: [
+                    { title: "PIPO 君 張子", img: "pipo.jpg", desc: "立體角色張子。\n重製公共吉祥物，轉譯為介於官方與私人間的收藏。" },
+                    { title: "孤芳收音機", img: "radio.jpg", desc: "立體裝置。\n收音機作為媒介，象徵人在環境中尋找共鳴的過程。" }
+                ]
             },
             en: {
-                marquee: "[2026] Taipei Art Book Fair @ TPAC, Mar 6-8. See you there!",
+                aboutBtn: "ABOUT",
+                marquee: "[2026] Taipei Art Book Fair @ TPAC, Mar 6-8. Limited new works available!",
                 sections: ["● Past Events", "● Works for Sale", "● Exhibition"],
-                about: { title: "ABOUT US", desc: "Independent art unit based in Taiwan. Focusing on structures and traces.\n\nEmail: goodfun.team@gmail.com" },
-                events: [{ title: "2024 Archive", cover: "event_cover_01.jpg", images: ["event_01_1.jpg", "event_01_2.jpg"], desc: "Installation record." }],
-                sale: [
-                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Riso Print." },
-                    { title: "IN PLACE", img: "inplace.jpg", desc: "Photo Zine × Concrete." }
+                about: { title: "About Us", desc: "Art unit focusing on structures and traces in daily life.\n\nEmail: goodfun.team@gmail.com" },
+                footerContactTitle: "CONTACT",
+                footerMissionTitle: "MISSION",
+                footerMissionDesc: "Based in Taipei. Using photography and print to create spatial journeys.",
+                events: [
+                    { 
+                        title: "2024 Art Book Fair Archive", cover: "event_cover_01.jpg", 
+                        images: ["event_01_1.jpg", "event_01_2.jpg", "event_01_3.jpg", "event_01_4.jpg", "event_01_5.jpg"],
+                        desc: "Recording our 2024 installation 'Concrete and Paper'."
+                    }
                 ],
-                exhibit: [{ title: "PIPO-KUN", img: "pipo.jpg", desc: "Papier-mâché mascot." }]
+                sale: [
+                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Risograph.\nExploring the paradox of motion through sculpted characters." },
+                    { title: "IN PLACE", img: "inplace.jpg", desc: "Photo Zine × Concrete.\nReframing hollowness as a state of being held." },
+                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "Photography × Packaging.\nScarf in a can, symbolizing the irreversible act of consumption." },
+                    { title: "30 Hours 2nd Ed.", img: "30hours.jpg", desc: "Photography Zine (A5).\nUrban rhythms of Tokyo under a 30-hour system." },
+                    { title: "Hand-it", img: "handit.jpg", desc: "Stationery Design.\nPalm-shaped notes for playful daily interactions." },
+                    { title: "PASTE BOOK Series", img: "pastebook.jpg", desc: "Sticker Book / Zine.\nA carrier for recording urban movement traces." },
+                    { title: "PASSTER", img: "passter.jpg", desc: "Sticker Series.\nTransforming street objects into personal slogans." },
+                    { title: "Question Candle", img: "candle.jpg", desc: "Resin, Paper.\nA candle that cannot be lit, reflecting gentle contradictions." }
+                ],
+                exhibit: [
+                    { title: "PIPO-KUN Papier-mâché", img: "pipo.jpg", desc: "3D Figure.\nTransforming public mascots into private collectibles." },
+                    { title: "LF Radio", img: "radio.jpg", desc: "Installation Object.\nRadio as a medium for seeking resonance in environment." }
+                ]
             }
         };
 
@@ -125,20 +178,39 @@
             container.innerHTML = "";
             const l = data[currentLang];
             document.getElementById('ui-marquee').innerText = l.marquee;
+            document.getElementById('btn-about').innerText = l.aboutBtn;
 
             const sections = ['events', 'sale', 'exhibit'];
             l.sections.forEach((sTitle, idx) => {
                 const label = document.createElement('div'); label.className = 'section-label'; label.innerText = sTitle;
                 container.appendChild(label);
+                
                 const grid = document.createElement('div'); grid.className = 'main-grid';
-                l[sections[idx]].forEach(item => {
+                l[sections[idx]].forEach((item, i) => {
                     const card = document.createElement('div'); card.className = 'item-card';
                     card.onclick = () => openModal(item, sections[idx] === 'events');
-                    card.innerHTML = `<div class="card-header">FILE<span>[X]</span></div><div class="card-img-wrap"><img src="${item.cover || item.img}"></div><div class="card-title">${item.title}</div>`;
+                    card.innerHTML = `<div class="card-header">FILE: 00${i+1} <span>[X]</span></div><div class="card-img-wrap"><img src="${item.cover || item.img}"></div><div class="card-title">${item.title}</div>`;
                     grid.appendChild(card);
                 });
                 container.appendChild(grid);
             });
+
+            // 渲染頁尾聯絡資訊
+            const footer = document.createElement('div');
+            footer.className = 'footer-content';
+            footer.innerHTML = `
+                <div>
+                    <div class="footer-title">${l.footerContactTitle}</div>
+                    <a class="contact-link" href="https://www.instagram.com/goodfun.team/">GOODFUN TEAM</a>
+                    <a class="contact-link" href="https://www.instagram.com/rotion87/">ROTION87</a>
+                    <a class="contact-link" href="https://www.instagram.com/l72uo_/">No.423</a>
+                </div>
+                <div>
+                    <div class="footer-title">${l.footerMissionTitle}</div>
+                    <p style="font-size: 0.8em; line-height: 1.6;">${l.footerMissionDesc}</p>
+                </div>
+            `;
+            container.appendChild(footer);
         }
 
         function openModal(item, isMulti) {
@@ -152,17 +224,21 @@
             document.getElementById('modal-title').innerText = item.title;
             document.getElementById('modal-desc').innerText = item.desc;
             document.getElementById('modal-overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            c.scrollTop = 0;
         }
 
-        function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
+        function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
         function toggleLang() { currentLang = currentLang === 'zh' ? 'en' : 'zh'; render(); }
         function openTeamModal() { openModal(data[currentLang].about, false); }
+        
         function updateTimer() {
             const target = new Date("March 6, 2026 12:00:00").getTime();
             const now = new Date().getTime();
             const days = Math.floor((target - now) / (1000 * 60 * 60 * 24));
-            document.getElementById('timer').innerText = `DISTANCE TO TPAC: ${days} DAYS`;
+            document.getElementById('timer').innerText = `DISTANCE TO TPAC: ${days} DAYS LEFT`;
         }
+
         render(); setInterval(updateTimer, 1000); updateTimer();
     </script>
 </body>
