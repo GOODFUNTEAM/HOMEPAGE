@@ -1,134 +1,131 @@
-<!doctype html>
-<html lang="zh-Hant">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>GOODFUN TEAM | Digital Lab</title>
-  <style>
-    /* 螢幕背景：經典 Windows 95 綠藍色 */
-    body { background-color: #008080; font-family: "MS Sans Serif", "新細明體", sans-serif; margin: 0; overflow: hidden; }
+<style>
+  /* 基礎版面設定 */
+  body { background-color: #008080; font-family: sans-serif; } /* 經典 Win98 藍綠底 */
 
-    /* 模擬系統視窗外框 */
-    .os-window {
-      width: 900px; height: 650px;
-      margin: 30px auto;
-      background: #c0c0c0;
-      border: 3px outset #fff;
-      display: flex; flex-direction: column;
-      box-shadow: 15px 15px 0 rgba(0,0,0,0.3);
-    }
+  /* Win98 視窗樣式 */
+  .win98-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: 2px 2px 0px #000;
+    z-index: 1000;
+    display: none; /* 初始隱藏 */
+  }
 
-    .title-bar {
-      background: linear-gradient(90deg, #000080, #1084d0);
-      color: white; padding: 4px 10px; font-weight: bold;
-      display: flex; justify-content: space-between; align-items: center;
-    }
+  /* 視窗標題列 */
+  .window-header {
+    background: linear-gradient(90deg, #000080, #1084d0);
+    color: white;
+    padding: 3px 5px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+  }
 
-    /* 核心操作區域：你的房間背景圖放這裡 */
-    .viewport {
-      position: relative;
-      flex-grow: 1;
-      background: url('images/room_main.png') no-repeat center center;
-      background-size: cover;
-      border: 2px inset #fff;
-      margin: 5px;
-      overflow: hidden;
-    }
+  /* 關閉按鈕 */
+  .close-btn {
+    background-color: #c0c0c0;
+    border: 1px solid;
+    border-color: #fff #555 #555 #fff;
+    width: 16px;
+    height: 14px;
+    font-size: 10px;
+    text-align: center;
+    line-height: 12px;
+    cursor: pointer;
+    color: black;
+  }
 
-    /* 點擊熱區 (Hotspots) */
-    .hotspot {
-      position: absolute;
-      cursor: pointer;
-      /* 開發期間可以開啟邊框來對準位置，發布前改為 border: none */
-      border: 1px dashed lime; 
-    }
+  /* 視窗內容區 */
+  .window-content {
+    padding: 15px;
+    font-size: 13px;
+    line-height: 1.5;
+    max-height: 300px;
+    overflow-y: auto;
+  }
 
-    /* 彈出介紹視窗 */
-    #info-window {
-      display: none;
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 350px; background: #c0c0c0;
-      border: 3px outset #fff; padding: 0;
-      z-index: 1000;
-      box-shadow: 8px 8px 0 rgba(0,0,0,0.5);
-    }
+  /* 連結按鈕 */
+  .go-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    padding: 5px;
+    background: #c0c0c0;
+    border: 2px solid;
+    border-color: #fff #555 #555 #fff;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .go-link:active { border-color: #555 #fff #fff #555; }
 
-    .info-header { background: #808080; color: white; padding: 3px 8px; font-size: 12px; }
-    .info-body { padding: 15px; background: #fff; margin: 5px; border: 2px inset #fff; }
-    .info-body img { width: 100%; border: 1px solid #000; margin-bottom: 10px; }
-
-    .btn-close { background: #c0c0c0; border: 2px outset #fff; font-size: 10px; cursor: pointer; }
-    .btn-ok { display: block; margin: 10px auto 0; padding: 5px 20px; border: 2px outset #fff; background: #c0c0c0; cursor: pointer; }
-
-    /* 側邊欄工具圖示 */
-    .sidebar {
-      width: 60px; background: #c0c0c0; border-right: 2px solid #888;
-      display: flex; flex-direction: column; align-items: center; padding-top: 10px; gap: 15px;
-    }
-    .icon { width: 40px; height: 40px; border: 2px outset #fff; background: #eee; cursor: help; }
-  </style>
+  /* 遮罩層 */
+  #overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.3); display: none; z-index: 999;
+  }
+</style>
 </head>
 <body>
 
-<div class="os-window">
-  <div class="title-bar">
-    <span>[ GOODFUN_OS ] - (Amunzen's Room Mode)</span>
-    <button class="btn-close" onclick="alert('Boredom cannot be closed.')">X</button>
-  </div>
-
-  <div style="display: flex; flex-grow: 1;">
-    <div class="sidebar">
-      <div class="icon" title="Mail" onclick="location.href='mailto:goodfun.team@gmail.com'">✉️</div>
-      <div class="icon" title="News">📰</div>
-      <div class="icon" title="Draw">🎨</div>
-    </div>
-
-    <div class="viewport" id="room">
-      
-      <div class="hotspot" style="top: 250px; left: 150px; width: 100px; height: 200px;" 
-           title="Member: @rotion87" onclick="window.open('https://instagram.com/rotion87')"></div>
-
-      <div class="hotspot" style="top: 250px; left: 600px; width: 100px; height: 200px;" 
-           title="Member: @172uo_" onclick="window.open('https://instagram.com/172uo_')"></div>
-
-      <div class="hotspot" style="top: 400px; left: 350px; width: 80px; height: 80px;" 
-           [cite_start]onclick="showWork('Hand-it', '因為怕忘記就寫在手上，於是就做出可貼的手掌便利貼。到處貼、想貼就貼。[cite: 11]', 'images/work_hand_it.jpg')"></div>
-
-      <div class="hotspot" style="top: 150px; left: 300px; width: 100px; height: 100px;" 
-           [cite_start]onclick="showWork('PASTE PORT', '取自台灣街頭，帶著走的街頭貼紙簿，以「護照」為概念，將你所愛的貼紙無畏懼的貼上牆面吧！[cite: 17, 18]', 'images/work_pasteport.jpg')"></div>
-
-      <div class="hotspot" style="top: 450px; left: 500px; width: 120px; height: 80px;" 
-           [cite_start]onclick="showWork('IN PLACE', '空心磚。手工灌製水泥磚作為記錄城市裡被安放的堆疊意象。[cite: 23, 24]', 'images/work_cement.jpg')"></div>
-
-    </div>
-  </div>
-
-  <div style="background: #c0c0c0; padding: 3px; font-size: 11px; border-top: 2px groove #fff; color: #444;">
-    User: GUEST_MODE | Objects: 3 Loaded | Boredom Status: FIXED.
-  </div>
+<div onclick="openWindow('horse')" style="cursor:pointer; color:white; text-decoration:underline;">
+  [點擊模擬物件：2026 馬年賀卡]
 </div>
 
-<div id="info-window">
-  <div class="info-header">OBJECT_DESCRIPTION.EXE</div>
-  <div class="info-body">
-    <img id="info-img" src="" alt="Work Image">
-    <h3 id="info-title" style="margin: 0; font-size: 18px; color: #000080;"></h3>
-    <p id="info-content" style="font-size: 13px; line-height: 1.4; color: #333;"></p>
-    <button class="btn-ok" onclick="closeWork()">OK</button>
+<div id="overlay" onclick="closeWindow()"></div>
+
+<div id="info-window" class="win98-window">
+  <div class="window-header">
+    <span id="win-title">作品詳情</span>
+    <div class="close-btn" onclick="closeWindow()">x</div>
+  </div>
+  <div class="window-content">
+    <p id="win-desc"></p>
+    <a href="#" id="win-url" target="_blank" class="go-link">前往完整作品 ➔</a>
   </div>
 </div>
 
 <script>
-  function showWork(title, content, imgPath) {
-    document.getElementById('info-title').innerText = title;
-    document.getElementById('info-content').innerText = content;
-    document.getElementById('info-img').src = imgPath;
+  // 作品資料庫
+  const worksData = {
+    horse: {
+      title: "孤芳小隊 2026 馬年賀卡",
+      desc: "以馬年為主題，先以黏土手作並上色完成角色原型... 畫面中「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻看似前進，卻可能仍停留原地的思考。",
+      url: "https://your-link-here.com/horse"
+    },
+    hollow: {
+      title: "空心 IN PLACE",
+      desc: "觀察街頭被反覆使用的空心磚。透過攝影與折頁小誌，讓「空心」不再是缺席，而是一種被安放的存在狀態。",
+      url: "https://your-link-here.com/hollow"
+    }
+    // 可以繼續增加...
+  };
+
+  function openWindow(workId) {
+    const data = worksData[workId];
+    document.getElementById('win-title').innerText = data.title;
+    document.getElementById('win-desc').innerText = data.desc;
+    document.getElementById('win-url').href = data.url;
+    
     document.getElementById('info-window').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
   }
 
-  function closeWork() {
+  function closeWindow() {
     document.getElementById('info-window').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
   }
 </script>
 
