@@ -1,133 +1,169 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-<style>
-  /* 基礎版面設定 */
-  body { background-color: #008080; font-family: sans-serif; } /* 經典 Win98 藍綠底 */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孤芳小隊 Lonely Fragrance - 2026 Works</title>
+    <style>
+        :root {
+            --win-blue: #000080;
+            --win-gray: #C0C0C0;
+            --retro-yellow: #FFFF00;
+            --retro-pink: #FF00FF;
+            --text-color: #000;
+        }
 
-  /* Win98 視窗樣式 */
-  .win98-window {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 350px;
-    background-color: #c0c0c0;
-    border: 2px solid;
-    border-color: #ffffff #808080 #808080 #ffffff;
-    box-shadow: 2px 2px 0px #000;
-    z-index: 1000;
-    display: none; /* 初始隱藏 */
-  }
+        body {
+            background-color: #3d7a7b; /* 經典 Windows 桌面綠 */
+            font-family: "Fixedsys", "Microsoft JhengHei", sans-serif;
+            margin: 0; padding: 10px;
+            display: flex; flex-direction: column; align-items: center;
+        }
 
-  /* 視窗標題列 */
-  .window-header {
-    background: linear-gradient(90deg, #000080, #1084d0);
-    color: white;
-    padding: 3px 5px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-  }
+        /* 頂部固定控制列 */
+        .top-bar {
+            background: var(--win-gray);
+            border: 2px outset #fff;
+            width: 100%; max-width: 900px;
+            padding: 10px; margin-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
 
-  /* 關閉按鈕 */
-  .close-btn {
-    background-color: #c0c0c0;
-    border: 1px solid;
-    border-color: #fff #555 #555 #fff;
-    width: 16px;
-    height: 14px;
-    font-size: 10px;
-    text-align: center;
-    line-height: 12px;
-    cursor: pointer;
-    color: black;
-  }
+        .lang-btn {
+            background: #eee; border: 2px outset #fff;
+            padding: 5px 15px; cursor: pointer; font-weight: bold;
+        }
+        .lang-btn:active { border-style: inset; }
 
-  /* 視窗內容區 */
-  .window-content {
-    padding: 15px;
-    font-size: 13px;
-    line-height: 1.5;
-    max-height: 300px;
-    overflow-y: auto;
-  }
+        /* 跑馬燈 */
+        .marquee-zone {
+            background: #000; color: #0f0; padding: 5px;
+            width: 100%; max-width: 900px; border: 2px inset #fff; margin-bottom: 15px;
+        }
 
-  /* 連結按鈕 */
-  .go-link {
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    padding: 5px;
-    background: #c0c0c0;
-    border: 2px solid;
-    border-color: #fff #555 #555 #fff;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-  }
-  
-  .go-link:active { border-color: #555 #fff #fff #555; }
+        /* 主容器 */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 15px; width: 100%; max-width: 1000px;
+        }
 
-  /* 遮罩層 */
-  #overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.3); display: none; z-index: 999;
-  }
-</style>
+        /* 側邊欄：團隊介紹 */
+        .sidebar {
+            background: var(--win-gray);
+            border: 2px outset #fff; padding: 15px;
+            height: fit-content;
+        }
+
+        /* 作品卡片 */
+        .work-card {
+            background: #fff;
+            border: 2px solid #000;
+            margin-bottom: 20px;
+            padding: 0;
+            box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+        }
+
+        .work-header {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white; padding: 5px 10px;
+            font-weight: bold; display: flex; justify-content: space-between;
+        }
+
+        .work-body { padding: 15px; line-height: 1.6; }
+        .work-type { color: #800080; font-weight: bold; margin-bottom: 5px; }
+        
+        .img-box {
+            background: #eee; border: 1px dashed #666;
+            width: 100%; aspect-ratio: 16/9;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 10px; color: #999;
+        }
+
+        /* RWD 斷點 */
+        @media (max-width: 800px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .sidebar { order: 2; }
+            .content-area { order: 1; }
+        }
+
+        .blink { animation: blinker 1s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+    </style>
 </head>
 <body>
 
-<div onclick="openWindow('horse')" style="cursor:pointer; color:white; text-decoration:underline;">
-  [點擊模擬物件：2026 馬年賀卡]
-</div>
+    <div class="top-bar">
+        <div style="font-weight:bold; font-size: 1.2em;">LONELY FRAGRANCE v2.6</div>
+        <div>
+            <button class="lang-btn" onclick="setLang('zh')">中文</button>
+            <button class="lang-btn" onclick="setLang('en')">EN</button>
+        </div>
+    </div>
 
-<div id="overlay" onclick="closeWindow()"></div>
+    <div class="marquee-zone">
+        <marquee id="m-text">歡迎光臨孤芳小隊！2026 馬年新作《賀卡》、《空心》現正販售中...</marquee>
+    </div>
 
-<div id="info-window" class="win98-window">
-  <div class="window-header">
-    <span id="win-title">作品詳情</span>
-    <div class="close-btn" onclick="closeWindow()">x</div>
-  </div>
-  <div class="window-content">
-    <p id="win-desc"></p>
-    <a href="#" id="win-url" target="_blank" class="go-link">前往完整作品 ➔</a>
-  </div>
-</div>
+    <div class="main-grid">
+        <div class="sidebar">
+            <h3 class="lang-content" data-zh="關於我們" data-en="About Us">關於我們</h3>
+            <p style="font-size: 0.9em;" class="lang-content" 
+               data-zh="我們是以台灣為基地的獨立藝術單位，關注日常環境中的結構與使用痕跡。" 
+               data-en="Taiwan-based independent art practice focusing on everyday structures and traces.">
+               我們是以台灣為基地的獨立藝術單位，關注日常環境中的結構與使用痕跡。
+            </p>
+            <hr>
+            <div class="blink" style="color:red; font-weight:bold;">HOT LINKS:</div>
+            <a href="#" style="display:block; margin:5px 0;">Instagram</a>
+            <a href="#" style="display:block; margin:5px 0;">Portfolio Hub</a>
+        </div>
 
-<script>
-  // 作品資料庫
-  const worksData = {
-    horse: {
-      title: "孤芳小隊 2026 馬年賀卡",
-      desc: "以馬年為主題，先以黏土手作並上色完成角色原型... 畫面中「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻看似前進，卻可能仍停留原地的思考。",
-      url: "https://your-link-here.com/horse"
-    },
-    hollow: {
-      title: "空心 IN PLACE",
-      desc: "觀察街頭被反覆使用的空心磚。透過攝影與折頁小誌，讓「空心」不再是缺席，而是一種被安放的存在狀態。",
-      url: "https://your-link-here.com/hollow"
-    }
-    // 可以繼續增加...
-  };
+        <div class="content-area">
+            
+            <div class="work-card">
+                <div class="work-header">
+                    <span class="lang-content" data-zh="馬年賀卡" data-en="Year of Horse Card">馬年賀卡</span>
+                    <span>[X]</span>
+                </div>
+                <div class="work-body">
+                    <div class="img-box">IMAGE: HORSE_2026</div>
+                    <div class="work-type lang-content" data-zh="類型｜明信片／孔版印刷" data-en="Type | Postcard / Risograph">類型｜明信片／孔版印刷</div>
+                    <p class="lang-content" 
+                       data-zh="以馬年為主題，鼠與雪貂坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進卻停留原地。" 
+                       data-en="Mouse and ferret ride rocking horses, suggesting the paradox of appearing to move forward while remaining in place.">
+                       以馬年為主題，鼠與雪貂坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進卻停留原地。
+                    </p>
+                </div>
+            </div>
 
-  function openWindow(workId) {
-    const data = worksData[workId];
-    document.getElementById('win-title').innerText = data.title;
-    document.getElementById('win-desc').innerText = data.desc;
-    document.getElementById('win-url').href = data.url;
-    
-    document.getElementById('info-window').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-  }
+            <div class="work-card">
+                <div class="work-header">
+                    <span class="lang-content" data-zh="空心 IN PLACE" data-en="IN PLACE">空心 IN PLACE</span>
+                    <span>[X]</span>
+                </div>
+                <div class="work-body">
+                    <div class="img-box">IMAGE: IN_PLACE</div>
+                    <div class="work-type lang-content" data-zh="類型｜攝影折頁小誌 × 水泥物件" data-en="Type | Photo Zine × Concrete Object">類型｜攝影折頁小誌 × 水泥物件</div>
+                    <p class="lang-content" 
+                       data-zh="觀察街頭的空心磚。手工灌製的水泥空心磚書衣，讓「空心」不再是缺席，而是一種被安放的狀態。" 
+                       data-en="Explores hollow bricks in Taipei. A hand-cast concrete cover reframes 'hollowness' as a state of being placed.">
+                       觀察街頭的空心磚。手工灌製的水泥空心磚書衣，讓「空心」不再是缺席，而是一種被安放的狀態。
+                    </p>
+                </div>
+            </div>
 
-  function closeWindow() {
-    document.getElementById('info-window').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-  }
-</script>
+            </div>
+    </div>
 
+    <script>
+        function setLang(lang) {
+            document.querySelectorAll('.lang-content').forEach(el => {
+                el.innerText = el.getAttribute('data-' + lang);
+            });
+            const m = document.getElementById('m-text');
+            m.innerText = (lang === 'zh') ? "歡迎光臨孤芳小隊！2026 馬年新作《賀卡》、《空心》現正販售中..." : "Welcome! 2026 New Works 'Horse Card' & 'IN PLACE' are now for sale...";
+        }
+    </script>
 </body>
 </html>
