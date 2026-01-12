@@ -18,7 +18,6 @@
             height: 100vh; max-width: 1000px; margin: 0 auto; padding: 10px; box-sizing: border-box;
         }
 
-        /* 頂部導覽列：包含 LOGO */
         .fixed-header { flex-shrink: 0; z-index: 10; }
         .top-bar { 
             background: var(--win-gray); border: 3px outset #fff; 
@@ -33,7 +32,6 @@
         .countdown-box { background: #000; color: #0f0; border: 2px inset #fff; padding: 8px; text-align: center; font-family: monospace; font-size: 0.85em; margin: 10px 0; }
         .marquee-zone { background: #000; color: var(--highlight-yellow); padding: 6px; border: 2px inset #fff; font-weight: bold; margin-bottom: 10px; }
 
-        /* 白色捲動視窗 */
         .scroll-window {
             flex-grow: 1;
             background: #fff; border: 3px inset #fff;
@@ -49,7 +47,6 @@
         .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         .card-title { padding: 12px; font-weight: bold; text-align: center; font-size: 0.9em; }
 
-        /* 頁尾：成員頭貼 */
         .footer-content { background: var(--win-gray); border: 3px outset #fff; padding: 25px; margin-top: 20px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
         .footer-title { background: var(--win-blue); color: white; padding: 4px 10px; font-size: 0.8em; font-weight: bold; margin-bottom: 15px; }
         
@@ -60,7 +57,6 @@
         
         .contact-link { display: block; color: #0000ee; text-decoration: underline; margin-bottom: 6px; font-weight: bold; font-size: 0.9em; }
 
-        /* 彈出視窗 */
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); cursor: pointer; }
         .modal-content { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 950px; height: 85vh; display: flex; position: relative; animation: winOpen 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes winOpen { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -98,8 +94,7 @@
             <div class="marquee-zone"><marquee id="ui-marquee"></marquee></div>
         </div>
 
-        <div class="scroll-window" id="gallery-container">
-            </div>
+        <div class="scroll-window" id="gallery-container"></div>
     </div>
 
     <div id="modal-overlay" onclick="closeModal()">
@@ -127,14 +122,14 @@
                 footerMissionDesc: "以台北為基地，透過攝影與印刷結構，讓觀看成為一段時空歷程。",
                 events: [{ title: "2025 草率季現場紀錄", cover: "event_cover_01.jpg", images: ["event_01_1.jpg", "event_01_2.jpg", "event_01_3.jpg", "event_01_4.jpg", "event_01_5.jpg"], desc: "回顧 2024 年草率季現場細節。" }],
                 sale: [
-                    { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。以馬年為主題，先以黏土手作並上色完成角色原型，再進行拍攝與分色製版，轉化為孔版印刷明信片。畫面中，孤芳小隊的角色「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進，卻可能仍停留原地。以童趣形式回應「前進、停留與放慢腳步」的思考。。" },
-                    { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影折頁小誌 × 水泥物件。創作始於 2024 年底移居台北後，於適應新城市的過程中，持續觀察街頭被反覆使用的空心磚。透過攝影與折頁小誌形式，想像每一塊磚都在其位置中履行任務。作品以手工灌製的水泥空心磚作為書衣，讓「空心」不再是缺席，而是一種被安放、被承接的存在狀態。" },
+                    { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。以馬年為主題，先以黏土手作並上色完成角色原型，再進行拍攝與分色製版，轉化為孔版印刷明信片。畫面中，孤芳小隊的角色「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進，卻可能仍停留原地。以童趣形式回應「前進、停留與放慢腳步」的思考。" },
+                    { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影折頁小誌 × 水泥物件。創作始於 2024 年底移居台北後，於適應新城市的過程中，持續觀察街頭被反覆使用的空心磚。透過攝影與折頁小誌形式，想像每一塊磚都在其位置中履行任務。作品以手工灌製的水泥空心磚作為書衣，讓「空心」不再是缺席，而一種被安放、被承接的存在狀態。" },
                     { title: "Soft Drinks", img: "softdrinks.jpg", desc: "攝影 × 包裝設計。將 2023–2025 年間收集的酒罐影像轉化為絲巾圖像，並封裝於鋁罐中，以易開罐形式呈現。唯有「開罐」才能取出絲巾，對應飲酒行為的不可逆性。作品名 Soft Drinks 同時指向「不含酒精」與「柔軟材質」，以溫和方式回應飲酒文化與日常選擇。" },
                     { title: "30時間 2nd Ed.", img: "30hours.jpg", desc: "攝影小誌 (A5)。以「30 小時制」為概念，透過實際行走與感受，用底片記錄新宿與涉谷的城市節奏。初版完成於 2024 年，2025 年重新編排影像與 Logo 設計後推出再販版，延續對時間錯位與城市感知的觀察。" },
                     { title: "Hand-it 手心貼", img: "handit.jpg", desc: "文具設計。靈感來自把重要事情寫在手上，卻難以洗掉的生活經驗。將「手心」轉化為可張貼的便利貼造型，讓提醒變得直接又幽默。作品也邀請人們彼此「手心貼手心」，在日常中留下輕巧的互動痕跡。" },
                     { title: "PASTE BOOK 系列", img: "pastebook.jpg", desc: "貼紙冊。以街頭貼紙文化為起點，收集台灣街頭可能出現的貼紙場景，整理成 ZINE。透過後加工設計，使書本本身成為可反覆張貼的載體，如同一本護照，記錄貼上、留下與移動的個人痕跡。" },
                     { title: "PASSTER", img: "passter.jpg", desc: "貼紙。作為《PASTE BOOK》的延伸貼紙系列，將街頭物件與標語轉化為可自由張貼的貼紙。使用者在城市中經過、停留並貼上，成為留下痕跡的「PASSTER」。" },
-                    { title: "問號蠟燭籤", img: "candle.jpg", desc: "樹脂、紙張。以台灣經典生日「問號蠟燭」為靈感，設計成幸運小物。蠟燭內可抽出三張籤：兩張祝福，一張留白，象徵「最後一個願望，留給自己」。蠟燭無法點燃，在祈願與現實之間形成溫柔的矛盾。。" }
+                    { title: "問號蠟燭籤", img: "candle.jpg", desc: "樹脂、紙張。以台灣經典生日「問號蠟燭」為靈感，設計成幸運小物。蠟燭內可抽出三張籤：兩張祝福，一張留白，象徵「最後一個願望，留給自己」。蠟燭無法點燃，在祈願與現實之間形成溫柔的矛盾。" }
                 ],
                 exhibit: [
                     { title: "PIPO 君 張子", img: "pipo.jpg", desc: "立體角色張子。以張子形式重製東京警視廳吉祥物「ピーポくん」，透過手作轉譯，將公共角色轉化為介於官方與個人收藏之間的物件。" },
@@ -145,30 +140,24 @@
                 aboutBtn: "ABOUT",
                 marquee: "[2026] Taipei Art Book Fair @ TPAC, Mar 6-8. See you there!",
                 sections: ["● Past Events", "● Works for Sale", "● Exhibition"],
-                about: { title: "About Us", desc: "Art unit focusing on structures and traces in daily life." },
+                about: { title: "About Us", desc: "Art unit focusing on structures and traces in daily life.\n\nEmail: goodfun.team@gmail.com" },
                 footerContactTitle: "CONTACT & MEMBERS",
                 footerMissionTitle: "MISSION",
                 footerMissionDesc: "Based in Taipei. Using photography and print to create journeys.",
                 events: [{ title: "2024 Archive", cover: "event_cover_01.jpg", images: ["event_01_1.jpg", "event_01_2.jpg", "event_01_3.jpg", "event_01_4.jpg", "event_01_5.jpg"], desc: "Installation record." }],
                 sale: [
-                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Risograph.Inspired by the Year of the Horse, this postcard series begins with hand-sculpted and hand-painted clay figures, later photographed and separated into layers for risograph printing.
- The mouse and ferret characters ride race-horse versions of rocking horses, suggesting the paradox of motion—appearing to move forward while remaining in place. Through a playful visual language, the work reflects on progress, pause, and slowing down." },
-                    { title: "IN PLACE", img: "inplace.jpg", desc: "Photo Zine × Concrete.This project began in late 2024 after relocating to Taipei. Through photographing hollow concrete bricks found throughout the city, the work reflects on how each brick holds its place and function within the urban environment.
- Presented as a fold-out photography zine encased in a hand-cast concrete hollow brick, IN PLACE reframes “hollowness” not as absence, but as a condition of being placed, held, and existing." },
-                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "Photography × Packaging.Beer can images collected between 2023 and 2025 are transformed into scarf graphics and sealed inside aluminum cans with pull-tabs. The scarf can only be accessed by opening the can, echoing the irreversible nature of drinking.
- The title Soft Drinks refers both to non-alcoholic beverages and soft materials, offering a gentle reflection on drinking culture and everyday choices." },
-                    { title: "30 Hours 2nd Ed.", img: "30hours.jpg", desc: "Photography Zine (A5).Based on the concept of a “30-hour day,” this photography zine documents the rhythms of Shinjuku and Shibuya through walking and film photography.
- Originally published in 2024, the second edition revisits the content with a redesigned layout and logo, continuing an exploration of temporal distortion and urban perception." },
-                    { title: "Hand-it", img: "handit.jpg", desc: "Stationery Design.Inspired by the habit of writing reminders on one’s palm, this sticky note design transforms the hand into a writable surface.
- Hand-it turns reminders into a playful gesture, encouraging light-hearted interactions by “palm to palm” exchanges." },
-                    { title: "PASTE BOOK Series", img: "pastebook.jpg", desc: "Sticker Book / Zine.Starting from street sticker culture, this zine collects sticker-covered scenes found across Taiwan.Through post-processing, the book itself becomes a reusable surface for stickers, functioning like a passport that records traces of movement, placement, and presence." },
-                    { title: "PASSTER", img: "passter.jpg", desc: "Sticker Series.An extension of PASTE BOOK, PASSTER transforms street objects and phrases into stickers.By walking, stopping, and pasting within the city, users become “passters” who leave subtle traces behind." },
-                    { title: "Question Candle", img: "candle.jpg", desc: "Resin, Paper.Inspired by the iconic Taiwanese question-mark birthday candle, this object contains three fortune slips—two with blessings, one left blank for a personal wish.The candle cannot be lit, creating a gentle tension between hope and reality." }
+                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Risograph. Inspired by the Year of the Horse, this postcard series begins with hand-sculpted clay figures, photographed and separated into layers for risograph printing.\n\nThe mouse and ferret characters ride rocking horses, suggesting the paradox of motion—appearing to move forward while remaining in place." },
+                    { title: "IN PLACE", img: "inplace.jpg", desc: "Photo Zine × Concrete. This project began in late 2024 after relocating to Taipei. Presented as a fold-out photography zine encased in a hand-cast concrete hollow brick.\n\nIN PLACE reframes 'hollowness' not as absence, but as a condition of being placed and held." },
+                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "Photography × Packaging. Images collected between 2023 and 2025 are sealed inside aluminum cans. The scarf can only be accessed by opening the can, echoing the irreversible nature of drinking." },
+                    { title: "30 Hours 2nd Ed.", img: "30hours.jpg", desc: "Photography Zine (A5). Documents the rhythms of Shinjuku and Shibuya through film photography. The second edition revisits the content with a redesigned layout." },
+                    { title: "Hand-it", img: "handit.jpg", desc: "Stationery Design. Inspired by reminders on one's palm, this sticky note design turns reminders into a playful gesture." },
+                    { title: "PASTE BOOK Series", img: "pastebook.jpg", desc: "Sticker Book / Zine. Collects sticker-covered scenes found across Taiwan. The book itself becomes a reusable surface for stickers, recording traces of movement." },
+                    { title: "PASSTER", img: "passter.jpg", desc: "Sticker Series. Transforms street objects and phrases into stickers. Users become 'passters' who leave subtle traces behind." },
+                    { title: "Question Candle", img: "candle.jpg", desc: "Resin, Paper. Inspired by the iconic Taiwanese question-mark candle. It contains fortune slips and creates a gentle tension between hope and reality." }
                 ],
                 exhibit: [
-                    { title: "PIPO-KUN Papier-mâché", img: "pipo.jpg", desc: "3D Figure.A hand-crafted papier-mâché reinterpretation of the Tokyo Metropolitan Police mascot “Pipo-kun,” transforming a familiar public symbol into a personal collectible." },
-                    { title: "LF Radio", img: "radio.jpg", desc: "Installation Object.Using sound as a metaphor for signal and connection, this installation depicts two characters linked through urban noise.
- The radio functions as a medium of communication, symbolizing the act of seeking resonance within an environment." }
+                    { title: "PIPO-KUN Papier-mâché", img: "pipo.jpg", desc: "A hand-crafted reinterpretation of the Tokyo Metropolitan Police mascot 'Pipo-kun'." },
+                    { title: "LF Radio", img: "radio.jpg", desc: "Using sound as a metaphor for signal and connection, depicting two characters linked through urban noise." }
                 ]
             }
         };
@@ -194,7 +183,6 @@
                 container.appendChild(grid);
             });
 
-            // 頁尾渲染：包含成員頭貼
             const footer = document.createElement('div');
             footer.className = 'footer-content';
             footer.innerHTML = `
@@ -219,8 +207,7 @@
                 <div>
                     <div class="footer-title">${l.footerMissionTitle}</div>
                     <p style="font-size: 0.8em; line-height: 1.6;">${l.footerMissionDesc}</p>
-                </div>
-            `;
+                </div>`;
             container.appendChild(footer);
         }
 
@@ -245,11 +232,14 @@
         function updateTimer() {
             const target = new Date("March 6, 2026 12:00:00").getTime();
             const now = new Date().getTime();
-            const days = Math.floor((target - now) / (1000 * 60 * 60 * 24));
-            document.getElementById('timer').innerText = `DISTANCE TO TPAC: ${days} DAYS LEFT`;
+            const diff = target - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById('timer').innerText = `DISTANCE TO TPAC: ${days > 0 ? days : 0} DAYS LEFT`;
         }
 
-        render(); setInterval(updateTimer, 1000); updateTimer();
+        render(); 
+        setInterval(updateTimer, 1000); 
+        updateTimer();
     </script>
 </body>
 </html>
