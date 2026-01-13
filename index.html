@@ -60,8 +60,12 @@
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(3px); cursor: pointer; }
         .modal-content { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 950px; height: 85vh; display: flex; position: relative; animation: winOpen 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         @keyframes winOpen { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .modal-left { flex: 1.3; background: #000; overflow-y: auto; }
+        
+        /* 修改左側容器，讓 iframe 可以正確顯示 */
+        .modal-left { flex: 1.3; background: #000; overflow-y: auto; display: flex; align-items: center; justify-content: center; }
         .modal-left img { width: 100%; display: block; }
+        .modal-left iframe { width: 100%; height: 100%; border: none; }
+
         .modal-right { flex: 1; background: #fff; padding: 30px; overflow-y: auto; }
         .modal-title { font-size: 1.4em; font-weight: bold; color: var(--win-blue); border-bottom: 2px solid var(--win-blue); padding-bottom: 8px; margin-bottom: 15px; }
         .modal-desc { font-size: 0.95em; line-height: 1.8; color: #222; white-space: pre-line; }
@@ -120,7 +124,15 @@
                 footerContactTitle: "聯絡與成員 CONTACT",
                 footerMissionTitle: "團隊簡介 MISSION",
                 footerMissionDesc: "以台北為基地，透過攝影與印刷結構，讓觀看成為一段時空歷程。",
-                events: [{ title: "2025 草率季現場紀錄", cover: "event_cover_01.jpg", images: ["event_01_1.jpg", "event_01_2.jpg", "event_01_3.jpg", "event_01_4.jpg", "event_01_5.jpg"], desc: "回顧 2025 年草率季現場細節。" }],
+                events: [
+                    { 
+                        title: "2025 草率季現場紀錄", 
+                        cover: "event_cover_01.jpg", 
+                        // 這裡加入了 IG 連結
+                        igEmbed: "https://www.instagram.com/goodfun.team/p/DSCwMTHD34O/",
+                        desc: "回顧 2025 年草率季現場細節。點擊左側貼文可直接翻閱多張紀錄照片。" 
+                    }
+                ],
                 sale: [
                     { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。以馬年為主題，先以黏土手作並上色完成角色原型，再進行拍攝與分色製版，轉化為孔版印刷明信片。畫面中，孤芳小隊的角色「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進，卻可能仍停留原地。以童趣形式回應「前進、停留與放慢腳步」的思考。" },
                     { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影折頁小誌 × 水泥物件。創作始於 2024 年底移居台北後，於適應新城市的過程中，持續觀察街頭被反覆使用的空心磚。透過攝影與折頁小誌形式，想像每一塊磚都在其位置中履行任務。作品以手工灌製的水泥空心磚作為書衣，讓「空心」不再是缺席，而一種被安放、被承接的存在狀態。" },
@@ -144,7 +156,14 @@
                 footerContactTitle: "CONTACT & MEMBERS",
                 footerMissionTitle: "MISSION",
                 footerMissionDesc: "Based in Taipei. Using photography and print to create journeys.",
-                events: [{ title: "2024 Archive", cover: "event_cover_01.jpg", images: ["event_01_1.jpg", "event_01_2.jpg", "event_01_3.jpg", "event_01_4.jpg", "event_01_5.jpg"], desc: "Installation record." }],
+                events: [
+                    { 
+                        title: "2025 Archive", 
+                        cover: "event_cover_01.jpg", 
+                        igEmbed: "https://www.instagram.com/goodfun.team/p/DSCwMTHD34O/",
+                        desc: "Installation record of Art Book Fair. View the carousel post on the left." 
+                    }
+                ],
                 sale: [
                     { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Risograph. Inspired by the Year of the Horse, this postcard series begins with hand-sculpted clay figures, photographed and separated into layers for risograph printing.\n\nThe mouse and ferret characters ride rocking horses, suggesting the paradox of motion—appearing to move forward while remaining in place." },
                     { title: "IN PLACE", img: "inplace.jpg", desc: "Photo Zine × Concrete. This project began in late 2024 after relocating to Taipei. Presented as a fold-out photography zine encased in a hand-cast concrete hollow brick.\n\nIN PLACE reframes 'hollowness' not as absence, but as a condition of being placed and held." },
@@ -176,6 +195,7 @@
                 const grid = document.createElement('div'); grid.className = 'main-grid';
                 l[sections[idx]].forEach((item, i) => {
                     const card = document.createElement('div'); card.className = 'item-card';
+                    // 點擊時傳入資料
                     card.onclick = () => openModal(item, sections[idx] === 'events');
                     card.innerHTML = `<div class="card-header">FILE: 00${i+1} <span>[X]</span></div><div class="card-img-wrap"><img src="${item.cover || item.img}"></div><div class="card-title">${item.title}</div>`;
                     grid.appendChild(card);
@@ -199,9 +219,9 @@
                         </div>
                     </div>
                     <div style="margin-top:15px;">
-                        <a class="contact-link" href="https://www.instagram.com/goodfun.team/">@goodfun.team</a>
-                        <a class="contact-link" href="https://www.instagram.com/rotion87/">@rotion87</a>
-                        <a class="contact-link" href="https://www.instagram.com/l72uo_/">@l72uo_</a>
+                        <a class="contact-link" href="https://www.instagram.com/goodfun.team/" target="_blank">@goodfun.team</a>
+                        <a class="contact-link" href="https://www.instagram.com/rotion87/" target="_blank">@rotion87</a>
+                        <a class="contact-link" href="https://www.instagram.com/l72uo_/" target="_blank">@l72uo_</a>
                     </div>
                 </div>
                 <div>
@@ -211,14 +231,29 @@
             container.appendChild(footer);
         }
 
+        // 修改後的彈窗函式：增加 IG 內嵌判斷
         function openModal(item, isMulti) {
             const c = document.getElementById('modal-images-container');
             c.innerHTML = "";
-            if (isMulti && item.images) {
+
+            if (item.igEmbed) {
+                // 如果有 IG 連結，生成 iframe
+                const iframe = document.createElement('iframe');
+                let embedUrl = item.igEmbed;
+                if (!embedUrl.endsWith('/')) embedUrl += '/';
+                iframe.src = embedUrl + "embed/";
+                iframe.setAttribute("scrolling", "no");
+                iframe.setAttribute("allowtransparency", "true");
+                c.appendChild(iframe);
+            } 
+            else if (isMulti && item.images) {
+                // 原本的多圖邏輯
                 item.images.forEach(src => { const img = document.createElement('img'); img.src = src; c.appendChild(img); });
             } else {
+                // 單圖邏輯
                 const img = document.createElement('img'); img.src = item.img || item.cover; c.appendChild(img);
             }
+
             document.getElementById('modal-title').innerText = item.title;
             document.getElementById('modal-desc').innerText = item.desc;
             document.getElementById('modal-overlay').style.display = 'flex';
