@@ -15,7 +15,7 @@
         html, body { height: 100%; margin: 0; padding: 0; background-color: #3d7a7b; font-family: "Microsoft JhengHei", sans-serif; overflow: hidden; }
         .app-container { display: flex; flex-direction: column; height: 100vh; max-width: 1100px; margin: 0 auto; padding: 10px; box-sizing: border-box; }
         
-        /* 頁面頂部導覽 */
+        /* 頂部導覽 */
         .fixed-header { flex-shrink: 0; z-index: 10; }
         .top-bar { background: var(--win-gray); border: 3px outset #fff; padding: 5px 15px; display: flex; justify-content: space-between; align-items: center; }
         .logo-box { display: flex; align-items: center; gap: 10px; font-weight: bold; }
@@ -27,7 +27,7 @@
         .marquee-zone { background: #000; color: var(--highlight-yellow); padding: 6px; border: 2px inset #fff; font-weight: bold; margin-bottom: 10px; }
         .scroll-window { flex-grow: 1; background: #fff; border: 3px inset #fff; overflow-y: auto; padding: 20px; box-sizing: border-box; }
         
-        /* 網格系統 */
+        /* 網格與標籤 */
         .section-label { background: var(--highlight-yellow); color: #000; padding: 5px 15px; font-weight: bold; border: 2px solid #000; margin: 25px 0 12px 0; display: inline-block; }
         .main-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; margin-bottom: 40px; }
         .item-card { background: #fff; border: 2px solid #000; cursor: pointer; box-shadow: 4px 4px 0px rgba(0,0,0,0.2); }
@@ -36,32 +36,14 @@
         .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         .card-title { padding: 12px; font-weight: bold; text-align: center; font-size: 0.9em; }
 
-        /* 彈窗系統優化 */
-        #modal-overlay { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; 
-            padding: 10px; backdrop-filter: blur(5px); cursor: pointer; 
-        }
+        /* 彈窗優化 */
+        #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 10px; backdrop-filter: blur(5px); cursor: pointer; }
+        .modal-content { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 1050px; height: 85vh; display: flex; flex-direction: column; position: relative; cursor: default; animation: winOpen 0.15s ease-out; overflow: hidden; }
+        @keyframes winOpen { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        .modal-content { 
-            background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 1050px; 
-            height: 85vh; display: flex; flex-direction: column; position: relative; cursor: default; 
-            animation: winOpen 0.15s ease-out; overflow: hidden; 
-        }
+        .modal-win-header { background: var(--win-blue); color: #fff; padding: 4px 10px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .modal-close-btn { background: var(--win-gray); border: 2px outset #fff; color: #000; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; cursor: pointer; }
 
-        /* 視窗頂部標題列 (關閉直覺化核心) */
-        .modal-win-header { 
-            background: var(--win-blue); color: #fff; padding: 4px 10px; 
-            display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
-        }
-        .modal-close-btn { 
-            background: var(--win-gray); border: 2px outset #fff; color: #000; 
-            width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; 
-            font-size: 14px; font-weight: bold; cursor: pointer; 
-        }
-        .modal-close-btn:active { border-style: inset; }
-
-        /* 內容容器：左右(電腦) / 上下(手機) */
         .modal-body { display: flex; flex: 1; overflow: hidden; width: 100%; }
         .modal-left { flex: 1.4; background: #000; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 20px; }
         .modal-left img { width: 100%; height: auto; }
@@ -71,27 +53,23 @@
         .modal-title { font-size: 1.4em; font-weight: bold; color: var(--win-blue); border-bottom: 2px solid var(--win-blue); padding-bottom: 8px; margin-bottom: 20px; }
         .modal-desc { font-size: 0.95em; line-height: 1.8; color: #222; white-space: pre-line; }
 
-        /* 特殊：隱藏右側 (IG 模式) */
+        /* IG 全螢幕模式 */
         .full-width .modal-right { display: none !important; }
         .full-width .modal-left { flex: 1; width: 100%; }
 
-        /* 手機適配修正 */
         @media (max-width: 800px) {
-            .modal-content { height: 90vh; width: 95vw; }
+            .modal-content { height: 92vh; width: 95vw; }
             .modal-body { flex-direction: column; }
             .modal-left { flex: 0 0 50%; border-bottom: 2px solid #000; padding: 10px; }
             .modal-right { flex: 1; border-left: none; padding: 25px 20px; }
             .full-width .modal-left { flex: 1; border-bottom: none; }
         }
 
-        /* 懸浮關閉球 (手機端額外保險) */
-        .mobile-floating-close {
-            display: none; position: absolute; top: -15px; right: -15px; 
-            width: 40px; height: 40px; background: #ff4444; color: white;
-            border-radius: 50%; border: 3px solid #fff; justify-content: center; align-items: center;
-            font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 10001; cursor: pointer;
-        }
-        @media (max-width: 800px) { .mobile-floating-close { display: flex; } }
+        /* 頁尾 */
+        .footer-content { background: var(--win-gray); border: 3px outset #fff; padding: 25px; margin-top: 20px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
+        .footer-title { background: var(--win-blue); color: white; padding: 4px 10px; font-size: 0.8em; font-weight: bold; margin-bottom: 15px; }
+        .member-zone { display: flex; gap: 20px; align-items: center; }
+        .member-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #000; object-fit: cover; background: #fff; }
     </style>
 </head>
 <body>
@@ -99,10 +77,7 @@
     <div class="app-container">
         <div class="fixed-header">
             <div class="top-bar">
-                <div class="logo-box">
-                    <img src="logo.png" alt="LF" class="logo-img">
-                    <span>● GOODFUN TEAM</span>
-                </div>
+                <div class="logo-box"><img src="logo.png" alt="LF" class="logo-img"><span>● GOODFUN TEAM</span></div>
                 <div>
                     <button class="win-btn" onclick="toggleLang()">EN / 中文</button>
                     <button class="win-btn" onclick="openAboutModal()" id="btn-about">關於 ABOUT</button>
@@ -115,14 +90,11 @@
     </div>
 
     <div id="modal-overlay" onclick="closeModal()">
-        <div class="mobile-floating-close" onclick="closeModal()">✕</div>
-        
         <div id="modal-content" class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-win-header">
-                <span style="font-size: 12px;">PREVIEW.EXE</span>
+                <span id="win-filename" style="font-size: 12px;">PREVIEW.EXE</span>
                 <div class="modal-close-btn" onclick="closeModal()">×</div>
             </div>
-            
             <div class="modal-body">
                 <div class="modal-left" id="modal-images-container"></div>
                 <div class="modal-right">
@@ -135,29 +107,55 @@
 
     <script>
         let currentLang = 'zh';
-        // (Data 資料部分同前，保持完整)
+
         const data = {
             zh: {
-                aboutBtn: "關於", marquee: "【2026】草率季十週年 3/6 - 3/8 @ 台北表演藝術中心 (TPAC) 相見！",
+                aboutBtn: "關於",
+                marquee: "【2026】草率季十週年 3/6 - 3/8 @ 台北表演藝術中心 (TPAC) 相見！",
                 sections: ["● 過往活動 Past Events", "● 作品總覽 – 販售 Works for Sale", "● 作品總覽 – 展示 Exhibition"],
                 about: { title: "關於 孤芳小隊", desc: "獨立藝術創作單位。關注日常環境中的結構、使用痕跡與暫停狀態。\n\nEmail: goodfun.team@gmail.com" },
+                footerContactTitle: "聯絡與成員 CONTACT",
+                footerMissionTitle: "團隊簡介 MISSION",
+                footerMissionDesc: "以台北為基地，透過攝影與印刷結構，讓觀看成為一段時空歷程。",
                 events: [{ title: "2025 草率季現場紀錄", cover: "event_cover_01.jpg", useIg: true, desc: "" }],
                 sale: [
-                    { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。以馬年為主題，先以黏土手作並上色完成角色原型..." },
-                    { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影折頁小誌 × 水泥物件。觀察街頭被反覆使用的空心磚..." }
+                    { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。以馬年為主題，先以黏土手作並上色完成角色原型，再進行拍攝與分色製版，轉化為孔版印刷明信片。畫面中，孤芳小隊的角色「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進，卻可能仍停留原地。以童趣形式回應「前進、停留與放慢腳步」的思考。" },
+                    { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影折頁小誌 × 水泥物件。創作始於 2024 年底移居台北後，於適應新城市的過程中，持續觀察街頭被反覆使用的空心磚。透過攝影與折頁小誌形式，想像每一塊磚都在其位置中履行任務。作品以手工灌製的水泥空心磚作為書衣，讓「空心」不再是缺席，而一種被安放、被承接的存在狀態。" },
+                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "攝影 × 包裝設計。將 2023–2025 年間收集的酒罐影像轉化為絲巾圖像，並封裝於鋁罐中，以易開罐形式呈現。唯有「開罐」才能取出絲巾，對應飲酒行為的不可逆性。作品名 Soft Drinks 同時指向「不含酒精」與「柔軟材質」，以溫和方式回應飲酒文化與日常選擇。" },
+                    { title: "30時間 2nd Ed.", img: "30hours.jpg", desc: "攝影小誌 (A5)。以「30 小時制」為概念，透過實際行走與感受，用底片記錄新宿與涉谷的城市節奏。初版完成於 2024 年，2025 年重新編排影像與 Logo 設計後推出再販版，延續對時間錯位與城市感知的觀察。" },
+                    { title: "Hand-it 手心貼", img: "handit.jpg", desc: "文具設計。靈感來自把重要事情寫在手上，卻難以洗掉的生活經驗。將「手心」轉化為可張貼的便利貼造型，讓提醒變得直接又幽默。作品也邀請人們彼此「手心貼手心」，在日常中留下輕巧的互動痕跡。" },
+                    { title: "PASTE BOOK 系列", img: "pastebook.jpg", desc: "貼紙冊。以街頭貼紙文化為起點，收集台灣街頭可能出現的貼紙場景，整理成 ZINE。透過後加工設計，使書本本身成為可反覆張貼的載體，如同一本護照，記錄貼上、留下與移動的個人痕跡。" },
+                    { title: "PASSTER", img: "passter.jpg", desc: "貼紙。作為《PASTE BOOK》的延伸貼紙系列，將街頭物件與標語轉化為可自由張貼的貼紙。使用者在城市中經過、停留並貼上，成為留下痕跡的「PASSTER」。" },
+                    { title: "問號蠟燭籤", img: "candle.jpg", desc: "樹脂、紙張。以台灣經典生日「問號蠟燭」為靈感，設計成幸運小物。蠟燭內可抽出三張籤：兩張祝福，一張留白，象徵「最後一個願望，留給自己」。蠟燭無法點燃，在祈願與現實之間形成溫柔的矛盾。" }
                 ],
-                exhibit: [{ title: "PIPO 君 張子", img: "pipo.jpg", desc: "立體角色張子。" }]
+                exhibit: [
+                    { title: "PIPO 君 張子", img: "pipo.jpg", desc: "立體角色張子。以張子形式重製東京警視廳吉祥物「ピーポくん」，透過手作轉譯，將公共角色轉化為介於官方與個人收藏之間的物件。" },
+                    { title: "孤芳收音機", img: "radio.jpg", desc: "立體裝置。以聲音作為「訊號」與「連線」的隱喻，描繪角色在城市噪音中彼此接收與回應的狀態。收音機成為角色之間的媒介，也象徵人在環境中尋找共鳴的過程。" }
+                ]
             },
             en: {
-                aboutBtn: "ABOUT", marquee: "[2026] Taipei Art Book Fair @ TPAC, Mar 6-8!",
+                aboutBtn: "ABOUT",
+                marquee: "[2026] Taipei Art Book Fair @ TPAC, Mar 6-8. See you there!",
                 sections: ["● Past Events", "● Works for Sale", "● Exhibition"],
-                about: { title: "About Us", desc: "Independent art unit." },
+                about: { title: "About Us", desc: "Independent art unit. Focusing on urban structures and daily life traces.\n\nEmail: goodfun.team@gmail.com" },
+                footerContactTitle: "CONTACT",
+                footerMissionTitle: "MISSION",
+                footerMissionDesc: "Based in Taipei. Using photography and print to create journeys.",
                 events: [{ title: "2025 Archive", cover: "event_cover_01.jpg", useIg: true, desc: "" }],
                 sale: [
-                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Risograph..." },
-                    { title: "IN PLACE", img: "inplace.jpg", desc: "Photo Zine × Concrete." }
+                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Risograph. Characters ride rocking horses, suggesting the paradox of motion—appearing to move forward while remaining in place." },
+                    { title: "IN PLACE", img: "inplace.jpg", desc: "Photo Zine × Concrete. Observation of hollow bricks in Taipei. Reframing 'hollowness' as a condition of being placed and held." },
+                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "Photography × Packaging. Images of cans transformed into silk scarf patterns. One must 'open the can' to reach the scarf." },
+                    { title: "30 Hours 2nd Ed.", img: "30hours.jpg", desc: "Photography Zine (A5). Recording the urban rhythms of Tokyo on film." },
+                    { title: "Hand-it", img: "handit.jpg", desc: "Stationery Design. Inspired by reminders written on palms. A humorous way to leave traces." },
+                    { title: "PASTE BOOK Series", img: "pastebook.jpg", desc: "Sticker Book. Collecting street scenes and turning the book into a reusable surface." },
+                    { title: "PASSTER", img: "passter.jpg", desc: "Sticker series. Leaving traces in the city as a 'passter'." },
+                    { title: "Question Candle", img: "candle.jpg", desc: "Resin, Paper. Inspired by birthday candles. Contains fortune slips for the last wish." }
                 ],
-                exhibit: [{ title: "PIPO-KUN", img: "pipo.jpg", desc: "A hand-crafted reinterpretation." }]
+                exhibit: [
+                    { title: "PIPO-KUN Papier-mâché", img: "pipo.jpg", desc: "A hand-crafted reinterpretation of the Tokyo Metropolitan Police mascot." },
+                    { title: "LF Radio", img: "radio.jpg", desc: "Using sound as a metaphor for signal and connection in urban noise." }
+                ]
             }
         };
 
@@ -169,6 +167,7 @@
             const l = data[currentLang];
             document.getElementById('ui-marquee').innerText = l.marquee;
             document.getElementById('btn-about').innerText = l.aboutBtn;
+
             ['events', 'sale', 'exhibit'].forEach((cat, idx) => {
                 const label = document.createElement('div'); label.className = 'section-label'; label.innerText = l.sections[idx];
                 container.appendChild(label);
@@ -181,12 +180,19 @@
                 });
                 container.appendChild(grid);
             });
+
+            const footer = document.createElement('div');
+            footer.className = 'footer-content';
+            footer.innerHTML = `<div><div class="footer-title">${l.footerContactTitle}</div><div class="member-zone"><div class="member-item"><img src="avatar_rotion.jpg" class="member-avatar"><span style="font-size:0.7em;font-weight:bold;display:block;text-align:center;">ROTION87</span></div><div class="member-item"><img src="avatar_423.jpg" class="member-avatar"><span style="font-size:0.7em;font-weight:bold;display:block;text-align:center;">No.423</span></div></div><p style="font-size:0.8em;margin-top:10px;"><a href="https://www.instagram.com/goodfun.team/">@goodfun.team</a></p></div><div><div class="footer-title">${l.footerMissionTitle}</div><p style="font-size: 0.8em;line-height:1.6;">${l.footerMissionDesc}</p></div>`;
+            container.appendChild(footer);
         }
 
         function openModal(item) {
             const modalWrap = document.getElementById('modal-content');
             const c = document.getElementById('modal-images-container');
+            document.getElementById('win-filename').innerText = item.title.toUpperCase() + ".EXE";
             c.innerHTML = ""; c.scrollTop = 0;
+            
             if (item.useIg) {
                 modalWrap.classList.add('full-width');
                 c.innerHTML = igCode;
@@ -201,7 +207,7 @@
                 document.getElementById('modal-desc').innerText = item.desc;
             }
             document.getElementById('modal-overlay').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // 防止背景捲動
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() { 
