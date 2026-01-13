@@ -36,7 +36,7 @@
         .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
         .card-title { padding: 12px; font-weight: bold; text-align: center; font-size: 0.9em; }
 
-        /* 彈窗優化 */
+        /* 彈窗系統 */
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 10px; backdrop-filter: blur(5px); cursor: pointer; }
         .modal-content { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 1050px; height: 85vh; display: flex; flex-direction: column; position: relative; cursor: default; animation: winOpen 0.15s ease-out; overflow: hidden; }
         @keyframes winOpen { from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -53,7 +53,6 @@
         .modal-title { font-size: 1.4em; font-weight: bold; color: var(--win-blue); border-bottom: 2px solid var(--win-blue); padding-bottom: 8px; margin-bottom: 20px; }
         .modal-desc { font-size: 0.95em; line-height: 1.8; color: #222; white-space: pre-line; }
 
-        /* IG 全螢幕模式 */
         .full-width .modal-right { display: none !important; }
         .full-width .modal-left { flex: 1; width: 100%; }
 
@@ -63,10 +62,10 @@
             .modal-left { flex: 0 0 50%; border-bottom: 2px solid #000; padding: 10px; }
             .modal-right { flex: 1; border-left: none; padding: 25px 20px; }
             .full-width .modal-left { flex: 1; border-bottom: none; }
+            .footer-content { grid-template-columns: 1fr; }
         }
 
-        /* 頁尾 */
-        .footer-content { background: var(--win-gray); border: 3px outset #fff; padding: 25px; margin-top: 20px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
+        .footer-content { background: var(--win-gray); border: 3px outset #fff; padding: 25px; margin-top: 20px; display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 30px; }
         .footer-title { background: var(--win-blue); color: white; padding: 4px 10px; font-size: 0.8em; font-weight: bold; margin-bottom: 15px; }
         .member-zone { display: flex; gap: 20px; align-items: center; }
         .member-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #000; object-fit: cover; background: #fff; }
@@ -78,10 +77,7 @@
         <div class="fixed-header">
             <div class="top-bar">
                 <div class="logo-box"><img src="logo.png" alt="LF" class="logo-img"><span>● GOODFUN TEAM</span></div>
-                <div>
-                    <button class="win-btn" onclick="toggleLang()">EN / 中文</button>
-                    <button class="win-btn" onclick="openAboutModal()" id="btn-about">關於 ABOUT</button>
-                </div>
+                <div><button class="win-btn" onclick="toggleLang()">EN / 中文</button></div>
             </div>
             <div class="countdown-box" id="timer">TPAC COUNTDOWN...</div>
             <div class="marquee-zone"><marquee id="ui-marquee"></marquee></div>
@@ -110,14 +106,11 @@
 
         const data = {
             zh: {
-                aboutBtn: "關於",
                 marquee: "【2026】草率季十週年 3/6 - 3/8 @ 台北表演藝術中心 (TPAC) 相見！",
-                sections: ["● 過往活動 Past Events", "● 作品總覽 – 販售 Works for Sale", "● 作品總覽 – 展示 Exhibition"],
-                about: { title: "關於 孤芳小隊", desc: "獨立藝術創作單位。關注日常環境中的結構、使用痕跡與暫停狀態。\n\nEmail: goodfun.team@gmail.com" },
+                sections: ["● 作品總覽 – 販售 Works for Sale", "● 作品總覽 – 展示 Exhibition", "● 過往活動 Past Events"],
                 footerContactTitle: "聯絡與成員 CONTACT",
-                footerMissionTitle: "團隊簡介 MISSION",
-                footerMissionDesc: "以台北為基地，透過攝影與印刷結構，讓觀看成為一段時空歷程。",
-                events: [{ title: "2025 草率季現場紀錄", cover: "event_cover_01.jpg", useIg: true, desc: "" }],
+                footerAboutTitle: "關於 孤芳小隊 ABOUT",
+                footerAboutDesc: "獨立藝術創作單位。關注日常環境中的結構、使用痕跡與暫停狀態。\n\n我們透過攝影、印刷物件與立體裝置，試圖捕捉那些在快速流動的城市中被遺忘的「微小連線」。\n\nEmail: goodfun.team@gmail.com",
                 sale: [
                     { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。以馬年為主題，先以黏土手作並上色完成角色原型，再進行拍攝與分色製版，轉化為孔版印刷明信片。畫面中，孤芳小隊的角色「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進，卻可能仍停留原地。以童趣形式回應「前進、停留與放慢腳步」的思考。" },
                     { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影折頁小誌 × 水泥物件。創作始於 2024 年底移居台北後，於適應新城市的過程中，持續觀察街頭被反覆使用的空心磚。透過攝影與折頁小誌形式，想像每一塊磚都在其位置中履行任務。作品以手工灌製的水泥空心磚作為書衣，讓「空心」不再是缺席，而一種被安放、被承接的存在狀態。" },
@@ -131,31 +124,30 @@
                 exhibit: [
                     { title: "PIPO 君 張子", img: "pipo.jpg", desc: "立體角色張子。以張子形式重製東京警視廳吉祥物「ピーポくん」，透過手作轉譯，將公共角色轉化為介於官方與個人收藏之間的物件。" },
                     { title: "孤芳收音機", img: "radio.jpg", desc: "立體裝置。以聲音作為「訊號」與「連線」的隱喻，描繪角色在城市噪音中彼此接收與回應的狀態。收音機成為角色之間的媒介，也象徵人在環境中尋找共鳴的過程。" }
-                ]
+                ],
+                events: [{ title: "2025 草率季現場紀錄", cover: "event_cover_01.jpg", useIg: true, desc: "" }]
             },
             en: {
-                aboutBtn: "ABOUT",
                 marquee: "[2026] Taipei Art Book Fair @ TPAC, Mar 6-8. See you there!",
-                sections: ["● Past Events", "● Works for Sale", "● Exhibition"],
-                about: { title: "About Us", desc: "Independent art unit. Focusing on urban structures and daily life traces.\n\nEmail: goodfun.team@gmail.com" },
+                sections: ["● Works for Sale", "● Exhibition", "● Past Events"],
                 footerContactTitle: "CONTACT",
-                footerMissionTitle: "MISSION",
-                footerMissionDesc: "Based in Taipei. Using photography and print to create journeys.",
-                events: [{ title: "2025 Archive", cover: "event_cover_01.jpg", useIg: true, desc: "" }],
+                footerAboutTitle: "ABOUT",
+                footerAboutDesc: "Independent art unit focusing on urban structures and daily life traces.\n\nWe capture the 'minor connections' forgotten in the fast-moving city through photography, printed objects, and installations.\n\nEmail: goodfun.team@gmail.com",
                 sale: [
-                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Risograph. Characters ride rocking horses, suggesting the paradox of motion—appearing to move forward while remaining in place." },
-                    { title: "IN PLACE", img: "inplace.jpg", desc: "Photo Zine × Concrete. Observation of hollow bricks in Taipei. Reframing 'hollowness' as a condition of being placed and held." },
-                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "Photography × Packaging. Images of cans transformed into silk scarf patterns. One must 'open the can' to reach the scarf." },
-                    { title: "30 Hours 2nd Ed.", img: "30hours.jpg", desc: "Photography Zine (A5). Recording the urban rhythms of Tokyo on film." },
-                    { title: "Hand-it", img: "handit.jpg", desc: "Stationery Design. Inspired by reminders written on palms. A humorous way to leave traces." },
-                    { title: "PASTE BOOK Series", img: "pastebook.jpg", desc: "Sticker Book. Collecting street scenes and turning the book into a reusable surface." },
-                    { title: "PASSTER", img: "passter.jpg", desc: "Sticker series. Leaving traces in the city as a 'passter'." },
-                    { title: "Question Candle", img: "candle.jpg", desc: "Resin, Paper. Inspired by birthday candles. Contains fortune slips for the last wish." }
+                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Risograph. Characters ride rocking horses, suggesting the paradox of motion." },
+                    { title: "IN PLACE", img: "inplace.jpg", desc: "Photo Zine × Concrete. Reframing 'hollowness' as a condition of being placed and held." },
+                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "Photography × Packaging. Scarf sealed in aluminum cans." },
+                    { title: "30 Hours 2nd Ed.", img: "30hours.jpg", desc: "Photography Zine (A5). Recording urban rhythms." },
+                    { title: "Hand-it", img: "handit.jpg", desc: "Stationery Design inspired by palm reminders." },
+                    { title: "PASTE BOOK Series", img: "pastebook.jpg", desc: "Sticker Book. Recording traces of movement." },
+                    { title: "PASSTER", img: "passter.jpg", desc: "Sticker series about urban traces." },
+                    { title: "Question Candle", img: "candle.jpg", desc: "Contains fortune slips. A gentle contradiction." }
                 ],
                 exhibit: [
-                    { title: "PIPO-KUN Papier-mâché", img: "pipo.jpg", desc: "A hand-crafted reinterpretation of the Tokyo Metropolitan Police mascot." },
-                    { title: "LF Radio", img: "radio.jpg", desc: "Using sound as a metaphor for signal and connection in urban noise." }
-                ]
+                    { title: "PIPO-KUN Papier-mâché", img: "pipo.jpg", desc: "A hand-crafted reinterpretation." },
+                    { title: "LF Radio", img: "radio.jpg", desc: "Using sound as a metaphor for signal." }
+                ],
+                events: [{ title: "2025 Archive", cover: "event_cover_01.jpg", useIg: true, desc: "" }]
             }
         };
 
@@ -166,14 +158,21 @@
             container.innerHTML = "";
             const l = data[currentLang];
             document.getElementById('ui-marquee').innerText = l.marquee;
-            document.getElementById('btn-about').innerText = l.aboutBtn;
 
-            ['events', 'sale', 'exhibit'].forEach((cat, idx) => {
-                const label = document.createElement('div'); label.className = 'section-label'; label.innerText = l.sections[idx];
+            // 調整後的渲染順序：sale -> exhibit -> events
+            const order = ['sale', 'exhibit', 'events'];
+            
+            order.forEach((cat, idx) => {
+                const label = document.createElement('div'); 
+                label.className = 'section-label'; 
+                label.innerText = l.sections[idx];
                 container.appendChild(label);
-                const grid = document.createElement('div'); grid.className = 'main-grid';
+                
+                const grid = document.createElement('div'); 
+                grid.className = 'main-grid';
                 l[cat].forEach((item, i) => {
-                    const card = document.createElement('div'); card.className = 'item-card';
+                    const card = document.createElement('div'); 
+                    card.className = 'item-card';
                     card.onclick = () => openModal(item);
                     card.innerHTML = `<div class="card-header">FILE: 00${i+1} <span>[X]</span></div><div class="card-img-wrap"><img src="${item.cover || item.img}"></div><div class="card-title">${item.title}</div>`;
                     grid.appendChild(card);
@@ -183,7 +182,19 @@
 
             const footer = document.createElement('div');
             footer.className = 'footer-content';
-            footer.innerHTML = `<div><div class="footer-title">${l.footerContactTitle}</div><div class="member-zone"><div class="member-item"><img src="avatar_rotion.jpg" class="member-avatar"><span style="font-size:0.7em;font-weight:bold;display:block;text-align:center;">ROTION87</span></div><div class="member-item"><img src="avatar_423.jpg" class="member-avatar"><span style="font-size:0.7em;font-weight:bold;display:block;text-align:center;">No.423</span></div></div><p style="font-size:0.8em;margin-top:10px;"><a href="https://www.instagram.com/goodfun.team/">@goodfun.team</a></p></div><div><div class="footer-title">${l.footerMissionTitle}</div><p style="font-size: 0.8em;line-height:1.6;">${l.footerMissionDesc}</p></div>`;
+            footer.innerHTML = `
+                <div>
+                    <div class="footer-title">${l.footerContactTitle}</div>
+                    <div class="member-zone">
+                        <div class="member-item"><img src="avatar_rotion.jpg" class="member-avatar"><span style="font-size:0.7em;font-weight:bold;display:block;text-align:center;">ROTION87</span></div>
+                        <div class="member-item"><img src="avatar_423.jpg" class="member-avatar"><span style="font-size:0.7em;font-weight:bold;display:block;text-align:center;">No.423</span></div>
+                    </div>
+                    <p style="font-size:0.8em;margin-top:10px;"><a href="https://www.instagram.com/goodfun.team/" target="_blank">@goodfun.team</a></p>
+                </div>
+                <div>
+                    <div class="footer-title">${l.footerAboutTitle}</div>
+                    <p style="font-size: 0.85em; line-height:1.7; white-space: pre-line;">${l.footerAboutDesc}</p>
+                </div>`;
             container.appendChild(footer);
         }
 
@@ -192,7 +203,6 @@
             const c = document.getElementById('modal-images-container');
             document.getElementById('win-filename').innerText = item.title.toUpperCase() + ".EXE";
             c.innerHTML = ""; c.scrollTop = 0;
-            
             if (item.useIg) {
                 modalWrap.classList.add('full-width');
                 c.innerHTML = igCode;
@@ -210,13 +220,8 @@
             document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() { 
-            document.getElementById('modal-overlay').style.display = 'none'; 
-            document.body.style.overflow = 'auto';
-        }
-
+        function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; document.body.style.overflow = 'auto'; }
         function toggleLang() { currentLang = currentLang === 'zh' ? 'en' : 'zh'; render(); }
-        function openAboutModal() { openModal(data[currentLang].about); }
         function updateTimer() {
             const diff = new Date("March 6, 2026").getTime() - new Date().getTime();
             document.getElementById('timer').innerText = `TPAC COUNTDOWN: ${Math.floor(diff/86400000)} DAYS LEFT`;
