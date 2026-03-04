@@ -8,6 +8,7 @@
     <style>
         :root { 
             --win-blue: #000080; 
+            --win-red: #a80000;
             --win-gray: #C0C0C0; 
             --highlight-yellow: #ffff00; 
         }
@@ -29,17 +30,14 @@
         .fixed-header { flex-shrink: 0; z-index: 10; width: 100%; }
         .top-bar { background: var(--win-gray); border: 3px outset #fff; padding: 5px 15px; display: flex; justify-content: space-between; align-items: center; }
         
-        /* Logo 點擊區域優化 */
         .logo-box { 
             display: flex; align-items: center; gap: 10px; font-weight: bold; 
             cursor: pointer; transition: opacity 0.2s;
         }
         .logo-box:hover { opacity: 0.8; }
-        .logo-box:active { transform: translateY(1px); }
         
         .logo-img { width: 30px; height: 30px; object-fit: contain; }
         .win-btn { background: var(--win-gray); border: 2px outset #fff; padding: 3px 12px; cursor: pointer; font-size: 0.85em; font-weight: bold; }
-        .win-btn:active { border-style: inset; }
 
         .countdown-box { background: #000; color: #0f0; border: 2px inset #fff; padding: 8px; text-align: center; font-family: monospace; font-size: 0.85em; margin: 10px 0; }
         .marquee-zone { background: #000; color: var(--highlight-yellow); padding: 6px; border: 2px inset #fff; font-weight: bold; margin-bottom: 10px; height: 1.2em; overflow: hidden; }
@@ -49,7 +47,7 @@
             overflow-y: auto; overflow-x: hidden; 
             padding: 20px; box-sizing: border-box; 
             -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth; /* 讓回到頂端有平滑動畫 */
+            scroll-behavior: smooth;
         }
         
         .section-label { background: var(--highlight-yellow); color: #000; padding: 5px 15px; font-weight: bold; border: 2px solid #000; margin: 25px 0 12px 0; display: inline-block; }
@@ -62,7 +60,6 @@
 
         #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(5px); cursor: pointer; }
         .modal-content { background: var(--win-gray); border: 3px outset #fff; width: 100%; max-width: 1050px; height: 85vh; display: flex; flex-direction: column; position: relative; cursor: default; animation: winOpen 0.1s ease-out; overflow: hidden; }
-        @keyframes winOpen { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
         .modal-win-header { background: var(--win-blue); color: #fff; padding: 6px 10px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
         .modal-close-btn { background: var(--win-gray); border: 2px outset #fff; color: #000; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; cursor: pointer; }
@@ -70,11 +67,26 @@
         .modal-body { display: flex; flex: 1; overflow: hidden; width: 100%; }
         .modal-left { flex: 1.4; background: #000; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding: 20px; }
         .modal-left img { width: 100%; height: auto; }
-        .modal-left .instagram-media { margin: 0 auto !important; width: 100% !important; }
-
         .modal-right { flex: 1; background: #fff; padding: 40px 30px; overflow-y: auto; border-left: 2px solid #000; display: flex; flex-direction: column; }
         .modal-title { font-size: 1.4em; font-weight: bold; color: var(--win-blue); border-bottom: 2px solid var(--win-blue); padding-bottom: 8px; margin-bottom: 20px; }
         .modal-desc { font-size: 0.95em; line-height: 1.8; color: #222; white-space: pre-line; }
+
+        /* 浮動視窗堆疊 (右下角垂直排列) */
+        .floating-stack {
+            position: fixed; right: 25px; bottom: 30px; 
+            display: flex; flex-direction: column; gap: 15px; z-index: 999;
+        }
+
+        .floating-widget {
+            width: 90px; background: var(--win-gray); border: 3px outset #fff; 
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.4); cursor: pointer; transition: transform 0.1s;
+        }
+        .floating-widget:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px rgba(0,0,0,0.4); }
+        .widget-header { color: white; font-size: 10px; padding: 2px 4px; text-align: center; font-weight: bold; }
+        .header-blue { background: var(--win-blue); }
+        .header-red { background: var(--win-red); }
+        .widget-img-wrap { width: 100%; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; padding: 5px; box-sizing: border-box; background: #fff; }
+        .widget-img-wrap img { width: 100%; height: 100%; object-fit: contain; } /* 改成 contain 讓蠟燭不被切掉 */
 
         .footer-content { background: var(--win-gray); border: 3px outset #fff; padding: 20px; margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
         .footer-title { background: var(--win-blue); color: white; padding: 4px 10px; font-size: 0.8em; font-weight: bold; margin-bottom: 12px; width: fit-content; }
@@ -89,24 +101,14 @@
             cursor: pointer; font-weight: bold; font-size: 18px;
         }
 
-        .floating-widget {
-            position: fixed; right: 25px; bottom: 40px; width: 90px; z-index: 999;
-            background: var(--win-gray); border: 3px outset #fff; box-shadow: 6px 6px 0px rgba(0,0,0,0.4);
-            cursor: pointer; transition: transform 0.1s;
-        }
-        .floating-widget:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px rgba(0,0,0,0.4); }
-        .widget-header { background: var(--win-blue); color: white; font-size: 10px; padding: 2px 4px; text-align: center; font-weight: bold; }
-        .widget-img-wrap { width: 100%; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; padding: 5px; box-sizing: border-box; background: #fff; }
-        .widget-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-
         @media (max-width: 800px) {
             .modal-content { height: 90vh; width: 95vw; }
             .modal-body { flex-direction: column; }
             .modal-left { flex: 0 0 45%; border-bottom: 2px solid #000; padding: 10px; }
             .modal-right { flex: 1; border-left: none; padding: 25px 20px; }
             .footer-content { grid-template-columns: 1fr; gap: 20px; }
-            .copyright-bar { grid-column: span 1; }
-            .floating-widget { width: 75px; right: 15px; bottom: 30px; }
+            .floating-widget { width: 75px; }
+            .floating-stack { right: 15px; bottom: 20px; }
         }
 
         .full-width .modal-right { display: none !important; }
@@ -130,10 +132,18 @@
         <div class="scroll-window" id="gallery-container"></div>
     </div>
 
-    <div class="floating-widget" onclick="window.open('https://goodfunteam.github.io/goodfun_grocery', '_blank')">
-        <div class="widget-header">GROCERY.EXE</div>
-        <div class="widget-img-wrap">
-            <img src="grocery_icon.png" alt="Grocery Store">
+    <div class="floating-stack">
+        <div class="floating-widget" onclick="window.open('https://goodfunteam.github.io/Lucky-Candle/', '_blank')">
+            <div class="widget-header header-red">LUCKY.EXE</div>
+            <div class="widget-img-wrap">
+                <img src="candle_off.png" alt="Lucky Candle Game">
+            </div>
+        </div>
+        <div class="floating-widget" onclick="window.open('https://goodfunteam.github.io/goodfun_grocery', '_blank')">
+            <div class="widget-header header-blue">GROCERY.EXE</div>
+            <div class="widget-img-wrap">
+                <img src="grocery_icon.png" alt="Grocery Store">
+            </div>
         </div>
     </div>
 
@@ -165,49 +175,48 @@
                 footerAboutDesc: "獨立藝術創作單位。關注日常環境中的結構、使用痕跡與暫停狀態。\n\n我們透過攝影、印刷物件與立體裝置，試圖捕捉那些在快速流動的城市中被遺忘的「微小連線」。\n\nEmail: goodfun.team@gmail.com",
                 copyright: "© 2026 GOODFUN TEAM. ALL RIGHTS RESERVED.",
                 sale: [
-                    { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。以馬年為主題，先以黏土手作並上色完成角色原型，再進行拍攝與分色製版，轉化為孔版印刷明信片。\n畫面中，孤芳小隊的角色「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進，卻可能仍停留原地。以童趣形式回應「前進、停留與放慢腳步」的思考。" },
-                    { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影折頁小誌 × 水泥物件。創作始於 2024 年底移居台北後，於適應新城市的過程中，持續觀察街頭被反覆使用的空心磚。\n透過攝影與折頁小誌形式，想像每一塊磚都在其位置中履行任務。作品以手工灌製的水泥空心磚作為書衣，讓「空心」不再是缺席，而一種被安放、被承接的存在狀態。" },
-                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "攝影 × 包裝設計。將 2023–2025 年間收集的酒罐影像轉化為絲巾圖像，並封裝於鋁罐中，以易開罐形式呈現。\n唯有「開罐」才能取出絲巾，對應飲酒行為的不可逆性。作品名 Soft Drinks 同時指向「不含酒精」與「柔軟材質」，以溫和方式回應飲酒文化與日常選擇。" },
-                    { title: "30時間 2nd Ed.", img: "30hours.jpg", desc: "攝影小誌 (A5)。以「30 小時制」為概念，透過實際行走與感受，用底片記錄新宿與涉谷的城市節奏。初版完成於 2024 年，2025 年重新編排影像與 Logo 設計後推出再販版，延續對時間錯位與城市感知的觀察。" },
-                    { title: "Hand-it 手心貼", img: "handit.jpg", desc: "文具設計。靈感來自把重要事情寫在手上，卻難以洗掉的生活經驗。將「手心」轉化為可張貼的便利貼造型，讓提醒變得直接又幽默。\n作品也邀請人們彼此「手心貼手心」，在日常中留下輕巧的互動痕跡。" },
-                    { title: "PastePort 貼紙簿", img: "pastebook.jpg", desc: "貼紙冊。以街頭貼紙文化為起點，收集台灣街頭可能出現的貼紙場景，整理成 ZINE。透過後加工設計，使書本本身成為可反覆張貼的載體，如同一本護照，記錄貼上、留下與移動的個人痕跡。" },
-                    { title: "PASSTER 貼紙組", img: "passter.jpg", desc: "貼紙。作為《PASTE BOOK》的延伸貼紙系列，將街頭物件與標語轉化為可自由張貼的貼紙。使用者在城市中經過、停留並貼上，成為留下痕跡的「PASSTER」。" },
-                    { title: "燭籤 Lucky Candle", img: "candle.jpg", desc: "樹脂、紙張。以台灣經典生日「問號蠟燭」為靈感，設計成幸運小物。蠟燭內可抽出三張籤：兩張祝福，一張留白，象徵「最後一個願望，留給自己」。\n蠟燭無法點燃，在祈願與現實之間形成溫柔的矛盾。" }
+                    { title: "馬年賀卡", img: "horse_card.jpg", desc: "明信片／孔版印刷。以馬年為主題，先以黏土手作並上色完成角色原型，再進行拍攝與分色製版。\n畫面中，孤芳小隊的角色「鼠」與「雪貂」坐上賽馬造型的搖搖馬，隱喻在追逐目標的過程中，看似前進，卻可能仍停留原地。" },
+                    { title: "空心 IN PLACE", img: "inplace.jpg", desc: "攝影折頁小誌 × 水泥物件。創作始於 2024 年底移居台北後，持續觀察街頭被反覆使用的空心磚。\n透過攝影與折頁小誌形式，想像每一塊磚都在其位置中履行任務。" },
+                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "攝影 × 包裝設計。將 2023–2025 年間收集的酒罐影像轉化為絲巾圖像，並封裝於鋁罐中。唯有「開罐」才能取出絲巾，對應飲酒行為的不可逆性。" },
+                    { title: "30時間 2nd Ed.", img: "30hours.jpg", desc: "攝影小誌 (A5)。以「30 小時制」為概念，透過實際行走與感受，用底片記錄新宿與涉谷的城市節奏。" },
+                    { title: "Hand-it 手心貼", img: "handit.jpg", desc: "文具設計。靈感來自把重要事情寫在手上，卻難以洗掉的生活經驗。將「手心」轉化為可張貼的便利貼造型。" },
+                    { title: "PastePort 貼紙簿", img: "pastebook.jpg", desc: "貼紙冊。以街頭貼紙文化為起點，收集台灣街頭可能出現的貼紙場景，整理成 ZINE。" },
+                    { title: "PASSTER 貼紙組", img: "passter.jpg", desc: "貼紙。將街頭物件與標語轉化為可自由張貼的貼紙。使用者在城市中經過、停留並貼上，成為留下痕跡的「PASSTER」。" },
+                    { title: "燭籤 Lucky Candle", img: "candle.jpg", desc: "樹脂、紙張。以台灣經典生日「問號蠟燭」為靈感，設計成幸運小物。象徵「最後一個願望，留給自己」。" },
+                    { title: "PIPO君 張子", img: "pipo.jpg", desc: "立體角色張子。以張子形式重製東京警視廳吉祥物「ピーポくん」，透過手作轉譯，將公共角色轉化為個人收藏物件。" },
+                    { title: "孤芳收音機", img: "radio.jpg", desc: "立體裝置。以聲音作為「訊號」與「連線」的隱喻，描繪角色在城市噪音中彼此接收與回應的狀態。" }
                 ],
-                exhibit: [
-                    { title: "PIPO君 張子", img: "pipo.jpg", desc: "立體角色張子。以張子形式重製東京警視廳吉祥物「ピーポくん」，透過手作轉譯，將公共角色轉化為介於官方與個人收藏之間的物件。" },
-                    { title: "孤芳收音機", img: "radio.jpg", desc: "立體裝置。以聲音作為「訊號」與「連線」的隱喻，描繪角色在城市噪音中彼此接收與回應的狀態。收音機成為角色之間的媒介，也象徵人在環境中尋找共鳴的過程。" }
-                ],
-                events: [{ title: "2025 草率季現場紀錄", cover: "event_cover_01.jpg", useIg: true, desc: "" }]
+                events: [
+                    { title: "2025 草率季現場紀錄", cover: "event_cover_01.jpg", useIg: true, desc: "" }
+                ]
             },
             en: {
-                marquee: "Booth no.L523   [2026] Taipei Art Book Fair @ TPAC, Mar 6-8!",
+                marquee: "Booth no.L523 [2026] Taipei Art Book Fair @ TPAC, Mar 6-8!",
                 sections: ["● Works", "● Past Events"],
                 footerContactTitle: "CONTACT",
                 footerAboutTitle: "ABOUT US",
                 footerAboutDesc: "Independent art unit focusing on urban structures and daily life traces.",
                 copyright: "© 2026 GOODFUN TEAM. ALL RIGHTS RESERVED.",
                 sale: [
-                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: `Inspired by the Year of the Horse, this postcard series begins with hand-sculpted and hand-painted clay figures, later photographed and separated into layers for risograph printing.\n\nThe mouse and ferret characters ride race-horse versions of rocking horses, suggesting the paradox of motion—appearing to move forward while remaining in place. Through a playful visual language, the work reflects on progress, pause, and slowing down.` },
-                    { title: "IN PLACE", img: "inplace.jpg", desc: `This project began in late 2024 after relocating to Taipei, during a period of adjusting to a new city. Presented as a 48-page photography fold-out zine, the work is based on ongoing observation of hollow concrete bricks repeatedly used in the streets, imagining each brick as fulfilling its role within its given place.\n\nThe zine is encased in a hand-cast concrete hollow brick, requiring the reader to hold and turn the pages with both hands. Through weight, texture, and physical movement, the act of reading becomes part of the work, reframing “hollowness” not as absence, but as a condition of being placed, supported, and existing.` },
-                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: `I have collected many photographs of beer cans. At first, they were just casual snapshots taken while drinking. Over time, they slowly became a habit and eventually began to hold the emotions of those moments.\n\n“Soft” comes from the idea of a soft drink, because it no longer contains alcohol. But “soft” also refers to the texture of the silk scarf—and to the emotions left behind by time.` },
-                    { title: "30 Hours 2nd Ed.", img: "30hours.jpg", desc: `Based on the concept of a “30-hour day,” this 30-page A5 photography zine documents the rhythms of Shinjuku and Shibuya through walking and film photography. Originally published in 2024, the second edition was released in 2025 with a redesigned layout and logo, continuing an exploration of temporal distortion and urban perception.` },
-                    { title: "Hand-it", img: "handit.jpg", desc: `Inspired by the habit of writing reminders on one’s palm, this sticky note design transforms the hand into a writable surface.\n\nHand-it turns reminders into a playful gesture, encouraging light-hearted interactions by “palm to palm” exchanges.` },
-                    { title: "PastePort", img: "pastebook.jpg", desc: `Starting from street sticker culture, this 30-page A5 sticker book collects sticker-covered scenes found across Taiwan. Through post-processing, the book itself becomes a reusable surface for stickers, functioning like a passport that records traces of movement, placement, and presence.` },
-                    { title: "PASSTER", img: "passter.jpg", desc: `An extension of PASTE BOOK, PASSTER transforms street objects and phrases into stickers. By walking, stopping, and pasting within the city, users become “passters” who leave subtle traces behind.` },
-                    { title: "Lucky Candle", img: "candle.jpg", desc: `Inspired by the iconic Taiwanese question-mark birthday candle, this object contains three fortune slips—two with blessings, one left blank for a personal wish. The candle cannot be lit, creating a gentle tension between hope and reality.` }
+                    { title: "Year of Horse Card", img: "horse_card.jpg", desc: "Postcard / Risograph. Characters ride rocking horses as a metaphor for moving while staying in place." },
+                    { title: "IN PLACE", img: "inplace.jpg", desc: "Photography fold-out zine with concrete object, observing hollow bricks in the streets of Taipei." },
+                    { title: "Soft Drinks", img: "softdrinks.jpg", desc: "Scarves featuring beer can imagery, packaged in aluminum cans that must be 'opened' to access." },
+                    { title: "30 Hours 2nd Ed.", img: "30hours.jpg", desc: "A photography zine documenting the rhythms of Shinjuku and Shibuya through a 30-hour temporal lens." },
+                    { title: "Hand-it", img: "handit.jpg", desc: "Sticky notes that transform the palm into a writable surface." },
+                    { title: "PastePort", img: "pastebook.jpg", desc: "A sticker book recording street scenes in Taiwan." },
+                    { title: "PASSTER", img: "passter.jpg", desc: "A sticker set derived from PASTE BOOK, allowing users to leave their own traces." },
+                    { title: "Lucky Candle", img: "candle.jpg", desc: "A lucky object inspired by classic birthday candles." },
+                    { title: "PIPO-KUN Papier-mâché", img: "pipo.jpg", desc: "A hand-crafted papier-mâché reinterpretation of 'Pipo-kun'." },
+                    { title: "GOODFUN Radio", img: "radio.jpg", desc: "An installation using sound as a metaphor for signal and connection." }
                 ],
-                exhibit: [
-                    { title: "PIPO-KUN Papier-mâché", img: "pipo.jpg", desc: `A hand-crafted papier-mâché reinterpretation of the Tokyo Metropolitan Police mascot “Pipo-kun,” transforming a familiar public symbol into a personal collectible.` },
-                    { title: "GOODFUN Radio", img: "radio.jpg", desc: `Using sound as a metaphor for signal and connection, this installation depicts two characters linked through urban noise.\n\nThe radio functions as a medium of communication, symbolizing the act of seeking resonance within an environment.` }
-                ],
-                events: [{ title: "2025 Archive", cover: "event_cover_01.jpg", useIg: true, desc: "" }]
+                events: [
+                    { title: "2025 Archive", cover: "event_cover_01.jpg", useIg: true, desc: "" }
+                ]
             }
         };
 
         const igCode = `<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DSCwMTHD34O/" data-instgrm-version="14"></blockquote>`;
 
-        // 核心渲染功能
         function render() {
             const container = document.getElementById('gallery-container');
             if (!container) return;
@@ -215,7 +224,7 @@
             const l = data[currentLang];
             document.getElementById('ui-marquee').innerText = l.marquee;
 
-            const order = ['sale', 'exhibit', 'events'];
+            const order = ['sale', 'events'];
             order.forEach((cat, idx) => {
                 const label = document.createElement('div'); label.className = 'section-label'; label.innerText = l.sections[idx] || "Untitled";
                 container.appendChild(label);
@@ -259,7 +268,6 @@
             container.appendChild(footer);
         }
 
-        // 回到頂端功能
         function scrollToTop() {
             const container = document.getElementById('gallery-container');
             if (container) {
