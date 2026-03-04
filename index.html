@@ -28,7 +28,15 @@
         
         .fixed-header { flex-shrink: 0; z-index: 10; width: 100%; }
         .top-bar { background: var(--win-gray); border: 3px outset #fff; padding: 5px 15px; display: flex; justify-content: space-between; align-items: center; }
-        .logo-box { display: flex; align-items: center; gap: 10px; font-weight: bold; }
+        
+        /* Logo 點擊區域優化 */
+        .logo-box { 
+            display: flex; align-items: center; gap: 10px; font-weight: bold; 
+            cursor: pointer; transition: opacity 0.2s;
+        }
+        .logo-box:hover { opacity: 0.8; }
+        .logo-box:active { transform: translateY(1px); }
+        
         .logo-img { width: 30px; height: 30px; object-fit: contain; }
         .win-btn { background: var(--win-gray); border: 2px outset #fff; padding: 3px 12px; cursor: pointer; font-size: 0.85em; font-weight: bold; }
         .win-btn:active { border-style: inset; }
@@ -41,6 +49,7 @@
             overflow-y: auto; overflow-x: hidden; 
             padding: 20px; box-sizing: border-box; 
             -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth; /* 讓回到頂端有平滑動畫 */
         }
         
         .section-label { background: var(--highlight-yellow); color: #000; padding: 5px 15px; font-weight: bold; border: 2px solid #000; margin: 25px 0 12px 0; display: inline-block; }
@@ -70,7 +79,8 @@
         .footer-content { background: var(--win-gray); border: 3px outset #fff; padding: 20px; margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
         .footer-title { background: var(--win-blue); color: white; padding: 4px 10px; font-size: 0.8em; font-weight: bold; margin-bottom: 12px; width: fit-content; }
         .member-zone { display: flex; gap: 15px; align-items: center; margin-bottom: 8px; }
-        .member-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #000; object-fit: cover; background: #fff; }
+        .member-avatar { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #000; object-fit: cover; background: #fff; transition: transform 0.2s; }
+        .member-avatar:hover { transform: scale(1.1); }
         .copyright-bar { text-align: center; padding: 15px 0 5px 0; font-size: 0.7em; color: #666; width: 100%; grid-column: span 2; }
         
         .info-icon-btn { 
@@ -108,7 +118,10 @@
     <div class="app-container">
         <div class="fixed-header">
             <div class="top-bar">
-                <div class="logo-box"><img src="logo.png" alt="LF" class="logo-img"><span>● GOODFUN TEAM</span></div>
+                <div class="logo-box" onclick="scrollToTop()">
+                    <img src="logo.png" alt="LF" class="logo-img">
+                    <span>● GOODFUN TEAM</span>
+                </div>
                 <div><button class="win-btn" onclick="toggleLang()">EN / 中文</button></div>
             </div>
             <div class="countdown-box" id="timer">TPABF COUNTDOWN...</div>
@@ -146,7 +159,7 @@
         const data = {
             zh: {
                 marquee: "攤位 L523 【2026】草率季TPABF十週年 3/6 - 3/8 @ 台北表演藝術中心(TPAC)與你相見！",
-                sections: ["● 作品總覽Works", "● 過往活動 Past Events"],
+                sections: ["● 作品總覽 Works", "● 過往活動 Past Events"],
                 footerContactTitle: "聯絡我們 CONTACT",
                 footerAboutTitle: "關於 孤芳小隊 ABOUT",
                 footerAboutDesc: "獨立藝術創作單位。關注日常環境中的結構、使用痕跡與暫停狀態。\n\n我們透過攝影、印刷物件與立體裝置，試圖捕捉那些在快速流動的城市中被遺忘的「微小連線」。\n\nEmail: goodfun.team@gmail.com",
@@ -169,7 +182,7 @@
             },
             en: {
                 marquee: "Booth no.L523   [2026] Taipei Art Book Fair @ TPAC, Mar 6-8!",
-                sections: ["● Works, "● Past Events"],
+                sections: ["● Works", "● Past Events"],
                 footerContactTitle: "CONTACT",
                 footerAboutTitle: "ABOUT US",
                 footerAboutDesc: "Independent art unit focusing on urban structures and daily life traces.",
@@ -194,6 +207,7 @@
 
         const igCode = `<blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DSCwMTHD34O/" data-instgrm-version="14"></blockquote>`;
 
+        // 核心渲染功能
         function render() {
             const container = document.getElementById('gallery-container');
             if (!container) return;
@@ -203,15 +217,17 @@
 
             const order = ['sale', 'exhibit', 'events'];
             order.forEach((cat, idx) => {
-                const label = document.createElement('div'); label.className = 'section-label'; label.innerText = l.sections[idx];
+                const label = document.createElement('div'); label.className = 'section-label'; label.innerText = l.sections[idx] || "Untitled";
                 container.appendChild(label);
                 const grid = document.createElement('div'); grid.className = 'main-grid';
-                l[cat].forEach((item, i) => {
-                    const card = document.createElement('div'); card.className = 'item-card';
-                    card.onclick = () => openModal(item);
-                    card.innerHTML = `<div class="card-header">FILE: 00${i+1} <span>[X]</span></div><div class="card-img-wrap"><img src="${item.cover || item.img}"></div><div class="card-title">${item.title}</div>`;
-                    grid.appendChild(card);
-                });
+                if (l[cat]) {
+                    l[cat].forEach((item, i) => {
+                        const card = document.createElement('div'); card.className = 'item-card';
+                        card.onclick = () => openModal(item);
+                        card.innerHTML = `<div class="card-header">FILE: 00${i+1} <span>[X]</span></div><div class="card-img-wrap"><img src="${item.cover || item.img}"></div><div class="card-title">${item.title}</div>`;
+                        grid.appendChild(card);
+                    });
+                }
                 container.appendChild(grid);
             });
 
@@ -221,18 +237,34 @@
                 <div>
                     <div class="footer-title">${l.footerContactTitle}</div>
                     <div class="member-zone">
-                        <img src="avatar_rotion.jpg" class="member-avatar">
-                        <img src="avatar_423.jpg" class="member-avatar">
+                        <a href="https://www.instagram.com/rotion87" target="_blank" title="Rotion's IG">
+                            <img src="avatar_rotion.jpg" class="member-avatar" style="cursor:pointer; border: 2px solid var(--win-blue);">
+                        </a>
+                        <a href="https://www.instagram.com/l72uo_" target="_blank" title="423's IG">
+                            <img src="avatar_423.jpg" class="member-avatar" style="cursor:pointer; border: 2px solid var(--win-blue);">
+                        </a>
                         <button class="info-icon-btn" onclick="openAbout()">i</button>
                     </div>
-                    <p style="font-size:0.75em;"><a href="https://www.instagram.com/goodfun.team/" target="_blank">Instagram: @goodfun.team</a></p>
+                    <p style="font-size:0.75em; margin-top:8px;">
+                        <a href="https://www.instagram.com/goodfun.team" target="_blank" style="color:var(--win-blue); font-weight:bold; text-decoration:underline;">
+                            IG: @goodfun.team
+                        </a>
+                    </p>
                 </div>
                 <div style="text-align:right;">
                     <div class="footer-title">${l.footerAboutTitle}</div>
-                    <p style="font-size:0.7em; color:#444;">點擊 (i) 圖示查看詳細簡介</p>
+                    <p style="font-size:0.7em; color:#444;">Click avatars for IG<br>點擊 Logo 回到頂端</p>
                 </div>
                 <div class="copyright-bar">${l.copyright}</div>`;
             container.appendChild(footer);
+        }
+
+        // 回到頂端功能
+        function scrollToTop() {
+            const container = document.getElementById('gallery-container');
+            if (container) {
+                container.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
         function openAbout() {
@@ -282,7 +314,6 @@
             }
         }
 
-        // 啟動
         window.onload = () => {
             render(); 
             updateTimer(); 
